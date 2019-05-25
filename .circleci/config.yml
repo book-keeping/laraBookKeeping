@@ -1,0 +1,36 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:latest
+    working_directory: ~/laraBookKeeping
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "book-keeping/composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          command: composer install -n --prefer-dist
+          working_directory: ~/laraBookKeeping/book-keeping
+      - save_cache:
+          key: v1-dependencies-{{ checksum "book-keeping/composer.json" }}
+          paths:
+            - ./book-keeping/vendor
+      - run:
+          command: cp .env.example .env && php artisan key:generate
+          working_directory: ~/laraBookKeeping/book-keeping
+      - run: mkdir -p build/logs
+      # run tests with phpunit or codecept
+      - run:
+          command: vendor/bin/phpunit --coverage-clover ../build/logs/clover.xml
+          working_directory: ~/laraBookKeeping/book-keeping
+      - run: php book-keeping/vendor/bin/php-coveralls -vvv
