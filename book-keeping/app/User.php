@@ -60,4 +60,23 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
         $this->notify((new ResetPasswordNotification($token)));
     }
+
+    /**
+     * Get the Index (e-mail address or name) of user who password reset links are sent.
+     *
+     * @param string $index_name
+     *
+     * @return string
+     */
+    public function getIndexForPasswordReset($index_name)
+    {
+        switch ($index_name) {
+            case 'email':
+                return $this->email;
+                break;
+            case 'name':
+                return $this->name;
+                break;
+        }
+    }
 }
