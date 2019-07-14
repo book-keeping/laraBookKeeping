@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -35,5 +36,28 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Display the password reset view for the given token.
+     *
+     * If no token is present, display the link request form.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string|null              $token
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function showResetForm(Request $request, $token = null)
+    {
+        $user = $this->broker()->getUser($credentials = $request->only('email', 'name'));
+
+        if (is_null($user) || !$this->broker()->getRepository()->exists($user, $token)) {
+            return redirect(route('password.request'))->with('invalid-link', trans('passwords.link'));
+        } else {
+            return view('auth.passwords.reset')->with(
+                ['token' => $token, 'email' => $request->email]
+            );
+        }
     }
 }

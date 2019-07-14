@@ -13,6 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @if (session('invalid-link'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('invalid-link') }}
+                        </div>
+                    @endif
 
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
