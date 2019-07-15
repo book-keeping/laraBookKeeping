@@ -56,8 +56,21 @@ class ResetPasswordController extends Controller
             return redirect(route('password.request'))->with('invalid-link', trans('passwords.link'));
         } else {
             return view('auth.passwords.reset')->with(
-                ['token' => $token, 'email' => $request->email]
+                ['token' => $token, 'email' => $user->getIndexForPasswordReset('email')]
             );
         }
+    }
+
+    /**
+     * Get the response for a failed password reset.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string                   $response
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        return redirect(route('password.request'))->with('invalid-link', trans('passwords.link'));
     }
 }
