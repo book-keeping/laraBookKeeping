@@ -56,9 +56,37 @@ class ResetPasswordController extends Controller
             return redirect(route('password.request'))->with('invalid-link', trans('passwords.link'));
         } else {
             return view('auth.passwords.reset')->with(
-                ['token' => $token, 'email' => $user->getIndexForPasswordReset('email')]
+                ['token' => $token, 'name' => $user->getIndexForPasswordReset('name')]
             );
         }
+    }
+
+    /**
+     * Get the password reset validation rules.
+     *
+     * @return array
+     */
+    protected function rules()
+    {
+        return [
+            'token'    => 'required',
+            'name'     => 'required',
+            'password' => 'required|confirmed|min:8',
+        ];
+    }
+
+    /**
+     * Get the password reset credentials from the request.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return $request->only(
+            'name', 'password', 'password_confirmation', 'token'
+        );
     }
 
     /**

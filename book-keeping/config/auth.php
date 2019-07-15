@@ -97,7 +97,7 @@ return [
             'provider'   => 'users',
             'table'      => 'password_resets',
             'expire'     => 60,
-            'index_name' => 'email',
+            'index_name' => 'name',
         ],
     ],
 
