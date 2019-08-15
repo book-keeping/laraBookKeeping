@@ -1,0 +1,13 @@
+.circleci/
+.git/
+.gitignore
+.coveralls.yml
+
+book-keeping/.editorconfig
+book-keeping/.env.example
+book-keeping/.gitattributes
+book-keeping/.styleci.yml
+book-keeping/phpunit.xml
+book-keeping/tests
+
+
