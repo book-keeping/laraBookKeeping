@@ -21,11 +21,10 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # Copy the code of BookKeeping
 COPY ./book-keeping /var/book-keeping
 
-# Install the packages and modify files as follows
-#  - correct owner of files that are loaded to apache
+# Install the packages and modify files related to apache as follows
+#  - Change owner of files that are loaded to apache
 #  - Link from apache Document Root
 #  - Remove a file for IIS (not for apache)
-#  - Link from Laravel logs to apache Document Root
 RUN cd /var/book-keeping \
     && composer install --optimize-autoloader --no-dev \
     && chown -R www-data:www-data /var/book-keeping \
