@@ -14,8 +14,13 @@ class CreateSlipGroupsTable extends Migration
     public function up()
     {
         Schema::create('bk2_0_slip_groups', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('slip_group_id')->primary();
+            $table->uuid('book_bound_on');
+            $table->foreign('book_bound_on')->references('book_id')->on('bk2_0_books');
+            $table->string('slip_group_outline', 200);
+            $table->string('slip_group_memo', 500);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

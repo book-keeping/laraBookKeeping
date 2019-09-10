@@ -14,8 +14,10 @@ class CreateBooksTable extends Migration
     public function up()
     {
         Schema::create('bk2_0_books', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('book_id')->primary();
+            $table->string('book_name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

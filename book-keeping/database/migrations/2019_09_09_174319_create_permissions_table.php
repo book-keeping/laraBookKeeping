@@ -14,7 +14,13 @@ class CreatePermissionsTable extends Migration
     public function up()
     {
         Schema::create('bk2_0_permissions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('permission_id')->primary();
+            $table->unsignedBigInteger('permitted_user');
+            $table->foreign('permitted_user')->references('id')->on('users');
+            $table->uuid('readable_book');
+            $table->foreign('readable_book')->references('book_id')->on('bk2_0_books');
+            $table->boolean('modifiable');
+            $table->boolean('is_owner');
             $table->timestamps();
         });
     }
