@@ -21,6 +21,7 @@ class CreatePermissionsTable extends Migration
             $table->foreign('readable_book')->references('book_id')->on('bk2_0_books');
             $table->boolean('modifiable');
             $table->boolean('is_owner');
+            $table->boolean('is_default');
             $table->timestamps();
         });
     }
