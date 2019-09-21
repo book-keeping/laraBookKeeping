@@ -2,9 +2,7 @@
 
 namespace App\DataProvider\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
-
-class SlipEntry extends Model
+class SlipEntry extends UuidModel
 {
     /**
      * The table associated with the model.
@@ -19,18 +17,4 @@ class SlipEntry extends Model
      * @var string
      */
     protected $primaryKey = 'slip_entry_id';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
 }

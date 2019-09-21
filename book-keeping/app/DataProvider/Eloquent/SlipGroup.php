@@ -2,9 +2,7 @@
 
 namespace App\DataProvider\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
-
-class SlipGroup extends Model
+class SlipGroup extends UuidModel
 {
     /**
      * The table associated with the model.
@@ -19,18 +17,4 @@ class SlipGroup extends Model
      * @var string
      */
     protected $primaryKey = 'slip_group_id';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
 }
