@@ -23,6 +23,7 @@ class CreatePermissionsTable extends Migration
             $table->boolean('is_owner');
             $table->boolean('is_default');
             $table->timestamps();
+            $table->unique(['permitted_user', 'readable_book']);
         });
     }
 
