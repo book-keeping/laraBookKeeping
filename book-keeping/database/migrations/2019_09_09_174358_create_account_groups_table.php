@@ -19,8 +19,8 @@ class CreateAccountGroupsTable extends Migration
             $table->foreign('book_bound_on')->references('book_id')->on('bk2_0_books');
             $table->enum('account_type', ['asset', 'liability', 'expense', 'revenue']);
             $table->string('title', 40);
-            $table->unsignedBigInteger('bk_uid');
-            $table->unsignedBigInteger('bk_code');
+            $table->unsignedBigInteger('bk_uid')->nullable();
+            $table->unsignedBigInteger('bk_code')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
