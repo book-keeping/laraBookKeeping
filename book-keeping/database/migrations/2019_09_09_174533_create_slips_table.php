@@ -18,7 +18,7 @@ class CreateSlipsTable extends Migration
             $table->uuid('book_bound_on');
             $table->foreign('book_bound_on')->references('book_id')->on('bk2_0_books');
             $table->string('slip_outline', 200);
-            $table->string('slip_memo', 500);
+            $table->string('slip_memo', 500)->nullable();
             $table->date('date');
             $table->timestamps();
             $table->softDeletes();
