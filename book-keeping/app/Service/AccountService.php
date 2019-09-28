@@ -50,7 +50,7 @@ class AccountService
     private $accountGroup;
 
     /**
-     * Create a new BookService instance.
+     * Create a new AccountService instance.
      *
      * @param \App\DataProvider\AccountRepositoryInterface      $account
      * @param \App\DataProvider\AccountGroupRepositoryInterface $accountGroup
