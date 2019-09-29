@@ -20,6 +20,7 @@ class CreateSlipsTable extends Migration
             $table->string('slip_outline', 200);
             $table->string('slip_memo', 500)->nullable();
             $table->date('date');
+            $table->boolean('is_draft');
             $table->timestamps();
             $table->softDeletes();
         });
