@@ -5,7 +5,7 @@ namespace App\DataProvider;
 interface BudgetRepositoryInterface
 {
     /**
-     * Create new Budget.
+     * Create new budget.
      *
      * @param string $bookId
      * @param string $accountId

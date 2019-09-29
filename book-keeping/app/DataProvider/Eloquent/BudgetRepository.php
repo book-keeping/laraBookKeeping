@@ -7,7 +7,7 @@ use App\DataProvider\BudgetRepositoryInterface;
 class BudgetRepository implements BudgetRepositoryInterface
 {
     /**
-     * Create new Budget.
+     * Create new budget.
      *
      * @param string $bookId
      * @param string $accountId

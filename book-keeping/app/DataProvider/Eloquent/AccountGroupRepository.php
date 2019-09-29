@@ -7,7 +7,7 @@ use App\DataProvider\AccountGroupRepositoryInterface;
 class AccountGroupRepository implements AccountGroupRepositoryInterface
 {
     /**
-     * Create new Account Group.
+     * Create new account group.
      *
      * @param string $bookId
      * @param string $accountType

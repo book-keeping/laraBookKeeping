@@ -5,7 +5,7 @@ namespace App\DataProvider;
 interface AccountGroupRepositoryInterface
 {
     /**
-     * Create new Account Group.
+     * Create new account group.
      *
      * @param string $bookId
      * @param string $accountType
