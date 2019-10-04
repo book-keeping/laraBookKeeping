@@ -10,10 +10,11 @@ interface AccountGroupRepositoryInterface
      * @param string $bookId
      * @param string $accountType
      * @param string $title
+     * @param bool   $isCurrent
      * @param int    $bk_uid
      * @param int    $bk_code
      *
      * @return string $accountGroupId
      */
-    public function create(string $bookId, string $accountType, string $title, int $bk_uid, int $bk_code) : string;
+    public function create(string $bookId, string $accountType, string $title, bool $isCurrent, int $bk_uid, int $bk_code) : string;
 }

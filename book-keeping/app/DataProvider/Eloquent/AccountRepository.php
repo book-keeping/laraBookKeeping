@@ -40,7 +40,7 @@ class AccountRepository implements AccountRepositoryInterface
      */
     public function searchAccount(string $bookId) : array
     {
-        $list = Account::select('account_type', 'account_group_id', 'account_group_title',
+        $list = Account::select('account_type', 'account_group_id', 'account_group_title', 'is_current',
                     'account_id', 'account_title', 'description', 'selectable', 'bk2_0_accounts.bk_code', 'bk2_0_accounts.created_at')
             ->join('bk2_0_account_groups', 'bk2_0_account_groups.account_group_id', '=', 'bk2_0_accounts.account_group_bound_on')
             ->where('book_bound_on', $bookId)

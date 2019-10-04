@@ -85,14 +85,15 @@ class AccountService
      * @param string $bookId
      * @param string $accountType
      * @param string $title
+     * @param bool   $isCurrent
      * @param int    $bk_uid
      * @param int    $bk_code
      *
      * @return string $accountGroupId
      */
-    public function createAccountGroup(string $bookId, string $accountType, string $title, int $bk_uid = null, int $bk_code = null) : string
+    public function createAccountGroup(string $bookId, string $accountType, string $title, bool $isCurrent = false, int $bk_uid = null, int $bk_code = null) : string
     {
-        $accountGroupId = $this->accountGroup->create($bookId, $accountType, $title, $bk_uid, $bk_code);
+        $accountGroupId = $this->accountGroup->create($bookId, $accountType, $title, $isCurrent, $bk_uid, $bk_code);
 
         return $accountGroupId;
     }
