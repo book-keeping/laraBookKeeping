@@ -105,10 +105,15 @@ class AccountService
      *
      * @return array
      */
-    public function retrieveAccount(string $bookId): array
+    public function retrieveAccounts(string $bookId): array
     {
-        $account = $this->account->searchAccount($bookId);
+        $accounts = [];
+        $accountList = $this->account->searchAccount($bookId);
 
-        return $account;
+        foreach ($accountList as $accountItem) {
+            $accounts[$accountItem['account_id']] = $accountItem;
+        }
+
+        return $accounts;
     }
 }
