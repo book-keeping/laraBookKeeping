@@ -1,0 +1,226 @@
+#titlelogo h1 {
+	margin-top:0px;
+	margin-bottom:10px;
+	padding-left:10px;
+}
+#logout {
+	float:right;
+	text-align:right;
+	margin-bottom:0px;
+	padding-top:5px;
+	padding-right:10px;
+}
+#biblewords {
+	padding-left:50px;
+}
+#navibar {
+	padding-left:10px;
+	margin-top:10px;
+}
+#msgbox {
+	width:400px;
+	margin:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	padding-top:20px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+	background-color:#EEEEEE;
+	border: double 5px #333333;
+}
+#accounts h3 {
+	margin-top:0px;
+}
+#accounts table {
+	border-collapse: collapse;
+}
+#accounts td.main {
+	vertical-align:top;
+	padding:10px;
+}
+#accounts td.side {
+	vertical-align:top;
+	padding:10px;
+	width:200px;
+	border-right:solid 1px #888888;
+	background-color:#EEEEEE;
+}
+#accounts td.top {
+	vertical-align:top;
+	padding:10px;
+	width:1100px;
+	background-color:#EEEEEE;
+}
+#accounts td.intop {
+	padding: 3px;
+}
+#accounts th.inmain {
+	background-color:#999999;
+	border:1px solid #000000;
+	padding:3px;
+}
+#accounts td.inmain {
+	border: 1px solid #000000;
+	padding: 3px;
+}
+#accounts td.bud_inmain {
+	text-align: right;
+	border: 1px solid #000000;
+	padding: 3px;
+}
+#accounts tr.evn {
+	background-color:#EEEEEE;
+}
+#accounts tr.odd {
+	background-color:#DDDDDD;
+}
+#accountbook table {
+	border-collapse: collapse;
+}
+#accountbook td, #accountbook th {
+	padding: 3px;
+}
+#accountbook th {
+	border-top: double;
+	border-bottom: solid 1px;
+}
+#accountbook th.debit {
+	border-right: double;
+}
+#accountbook th.tx {
+	border-right: solid 1px;
+}
+#accountbook td.debit {
+	text-align: right;
+	border-right: double;
+}
+#accountbook td.credit {
+	text-align: right;
+}
+#accountbook td.tx {
+	border-right: solid 1px;
+}
+#accountbook td.txn {
+	text-align: right;
+	border-right: solid 1px;
+}
+#accountbook td.txc {
+	font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+	text-align: right;
+	border-right: solid 1px;
+}
+#accountbook td.leftspace {
+	padding-left:30px;
+}
+#accountbook td.footer {
+	border-top:double
+}
+#accountbook td.main {
+	vertical-align:top;
+	padding:10px;
+}
+#accountbook td.top {
+	vertical-align:top;
+	padding:10px;
+	width:1100px;
+	background-color:#EEEEEE;
+}
+#phpinfo .center{
+	margin:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	padding-top:20px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+}
+#phpinfo h1 {
+	font-size: 150%;
+	text-align: center;
+}
+#phpinfo h2 {
+	font-size: 125%;
+	text-align: center;
+}
+#phpinfo table {
+	border-collapse: collapse;
+	width:600px;
+}
+#phpinfo td, #phpinfo th {
+	border: solid 1px;
+	padding: 3px;
+}
+#phpinfo td.noborder {
+	border: none;
+}
+#phpinfo tr.h {
+	background-color: #9999cc;
+	font-weight: bold;
+	color: #000000;
+}
+#phpinfo td.v {
+	background-color: #cccccc;
+	color: #000000;
+}
+#phpinfo td.e {
+	background-color: #ccccff;
+	font-weight: bold;
+	color: #000000;
+}
+#import {
+	padding:10px;
+}
+#debug {
+	margin-top:20px;
+	margin-bottom:20px;
+	padding-left:10px;
+	padding-right:10px;
+}
+#debug table {
+	border-collapse:collapse;
+	border-color:#000000;
+}
+#debug th {
+	background-color:#888888;
+}
+#debug td {
+	padding-right:5px;
+	padding-left:5px;
+}
+#debug tr.evn {
+	background-color:#EEEEEE;
+}
+#debug tr.odd {
+	background-color:#DDDDDD;
+}
+#debug tr.err {
+	background-color:#FFBBBB;
+}
+body {
+	margin:0px;
+	padding:0px;
+}
+hr {
+	background-color: #000000;
+	border: 0px;
+	height: 1px;
+	color: #000000;
+	margin-bottom:0px;
+}
+address {
+	text-align:right;
+	background-color:#111111;
+	color:#CCCCCC;
+	padding-bottom:5px;
+	padding-right:5px;
+	border:none;
+	clear: both;
+}
+a {
+	color:#000000;
+	text-decoration:none;
+}
+a:hover {
+	text-decoration:underline;
+}
