@@ -18,3 +18,5 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/page/v1/top', v1\ShowTopActionHTML::class)->name('v1_top');
