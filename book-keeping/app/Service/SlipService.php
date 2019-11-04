@@ -55,6 +55,34 @@ class SlipService
     }
 
     /**
+     * Retrieve the amount flow of each account between specified data.
+     *
+     * @param string $fromDate
+     * @param string $toDate
+     * @param string $bookId
+     *
+     * @return array
+     */
+    public function retrieveAmountFlows(string $fromDate, string $toDate, string $bookId) : array
+    {
+        return $this->slipEntry->calculateSum($fromDate, $toDate, $bookId);
+    }
+
+    /**
+     * Retrieve slip entries between specified date.
+     *
+     * @param string $fromDate
+     * @param string $toDate
+     * @param string $bookId
+     *
+     * @return array
+     */
+    public function retrieveSlipEntries(string $fromDate, string $toDate, string $bookId) : array
+    {
+        return $this->slipEntry->searchSlipEntries($fromDate, $toDate, $bookId);
+    }
+
+    /**
      * Submit the slip.
      *
      * @param string $slipId
