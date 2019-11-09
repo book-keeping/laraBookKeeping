@@ -8,9 +8,21 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:latest
+      - image: circleci/mysql:latest
+        command: mysqld --default-authentication-plugin=mysql_native_password
+    environment:
+      - DB_DATABASE=testing_circleci
+      - DB_USERNAME=root
+      - DB_PASSWORD=
     working_directory: ~/laraBookKeeping
     steps:
       - checkout
+      - run:
+          name: Install MySQL packages
+          command: |
+            sudo -E docker-php-ext-install pdo_mysql
+            sudo apt update
+            sudo apt install -y default-mysql-client
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -29,6 +41,8 @@ jobs:
           command: cp .env.example .env && php artisan key:generate
           working_directory: ~/laraBookKeeping/book-keeping
       - run: mkdir -p build/logs
+      - run: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run: mysql -h 127.0.0.1 -u root -e "create database testing_circleci;"
       # run tests with phpunit or codecept
       - run:
           command: vendor/bin/phpunit --coverage-clover ../build/logs/clover.xml
