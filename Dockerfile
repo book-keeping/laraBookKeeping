@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7.3-apache
 LABEL  maintainer "haessal <haessal@mizutamauki.net>"
 
 # Enabla apache module 'rewrite'
