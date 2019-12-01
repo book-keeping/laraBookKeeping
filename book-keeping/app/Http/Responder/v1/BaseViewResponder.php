@@ -106,8 +106,8 @@ class BaseViewResponder
         foreach ($slips as $slipId => $slip) {
             foreach ($slip['items'] as $slipEntryId => $slipEntry) {
                 $slipentryline[] = [
-                    'no'      => substr($slipEntryId, 1, 6).'..',
-                    'slipno'  => substr($slipId, 1, 6).'..',
+                    'no'      => substr($slipEntryId, 0, 6).'..',
+                    'slipno'  => substr($slipId, 0, 6).'..',
                     'date'    => $slip['date'],
                     'debit'   => $slipEntry['debit']['account_title'],
                     'credit'  => $slipEntry['credit']['account_title'],
