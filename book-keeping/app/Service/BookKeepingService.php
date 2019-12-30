@@ -69,7 +69,7 @@ class BookKeepingService
         $slips = [];
 
         foreach ($slipEntries as $entry) {
-            if (!array_key_exists($entry['slip_id'], $slips)) {
+            if (!array_key_exists($entry['slip_id'], $slips)) {  /* This is the first time that the entry which belongs to the slip appears. */
                 $slips[$entry['slip_id']] = [
                     'date'         => $entry['date'],
                     'slip_outline' => $entry['slip_outline'],
@@ -116,7 +116,7 @@ class BookKeepingService
         ];
 
         foreach ($amountFlows as $accountId => $sumVaule) {
-            if ($sumVaule['debit'] != $sumVaule['credit']) {
+            if (($sumVaule['debit'] - $sumVaule['credit']) != 0) {
                 $accountType = $accounts[$accountId]['account_type'];
                 if (($accountType == AccountService::ACCOUNT_TYPE_ASSET) || ($accountType == AccountService::ACCOUNT_TYPE_EXPENSE)) {
                     $amount = $sumVaule['debit'] - $sumVaule['credit'];
@@ -125,7 +125,7 @@ class BookKeepingService
                 }
                 $accountGroupId = $accounts[$accountId]['account_group_id'];
                 $statements[$accountType]['amount'] += $amount;
-                if (!array_key_exists($accountGroupId, $statements[$accountType]['groups'])) {
+                if (!array_key_exists($accountGroupId, $statements[$accountType]['groups'])) {  /* This is the first time that the account which belongs to the group appears. */
                     $statements[$accountType]['groups'][$accountGroupId] = [
                         'title'     => $accounts[$accountId]['account_group_title'],
                         'isCurrent' => $accounts[$accountId]['is_current'],
