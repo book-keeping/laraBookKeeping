@@ -17,7 +17,7 @@ class SlipRepository implements SlipRepositoryInterface
      *
      * @return string $slipId
      */
-    public function create(string $bookId, string $outline, string $date, $memo, bool $isDraft) : string
+    public function create(string $bookId, string $outline, string $date, string $memo, bool $isDraft) : string
     {
         $slip = new Slip();
         $slip->book_bound_on = $bookId;
@@ -36,7 +36,7 @@ class SlipRepository implements SlipRepositoryInterface
      * @param string $slipId
      * @param bool   $isDraft
      */
-    public function updateIsDraft($slipId, bool $isDraft)
+    public function updateIsDraft(string $slipId, bool $isDraft)
     {
         $slip = Slip::find($slipId);
         $slip->is_draft = $isDraft;

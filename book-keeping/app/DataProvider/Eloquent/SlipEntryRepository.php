@@ -97,7 +97,7 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      * @param string $toDate
      * @param string $bookId
      *
-     * @return array
+     * @return Illuminate\Database\Query\Builder
      */
     private function getSlipEntriesQuery(string $fromDate, string $toDate, string $bookId)
     {

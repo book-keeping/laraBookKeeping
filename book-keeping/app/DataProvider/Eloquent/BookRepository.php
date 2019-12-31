@@ -13,7 +13,7 @@ class BookRepository implements BookRepositoryInterface
      *
      * @return string $bookId
      */
-    public function create($title) : string
+    public function create(string $title) : string
     {
         $book = new Book();
         $book->book_name = $title;

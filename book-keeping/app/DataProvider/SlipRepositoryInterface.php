@@ -15,7 +15,7 @@ interface SlipRepositoryInterface
      *
      * @return string $slipId
      */
-    public function create(string $bookId, string $outline, string $date, $memo, bool $isDraft) : string;
+    public function create(string $bookId, string $outline, string $date, string $memo, bool $isDraft) : string;
 
     /**
      * Update the flag which indicates that the slip is draft.
@@ -23,5 +23,5 @@ interface SlipRepositoryInterface
      * @param string $slipId
      * @param bool   $isDraft
      */
-    public function updateIsDraft($slipId, bool $isDraft);
+    public function updateIsDraft(string $slipId, bool $isDraft);
 }
