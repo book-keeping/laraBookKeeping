@@ -16,5 +16,5 @@ interface AccountGroupRepositoryInterface
      *
      * @return string $accountGroupId
      */
-    public function create(string $bookId, string $accountType, string $title, bool $isCurrent, int $bk_uid, int $bk_code): string;
+    public function create(string $bookId, string $accountType, string $title, bool $isCurrent, $bk_uid, $bk_code): string;
 }
