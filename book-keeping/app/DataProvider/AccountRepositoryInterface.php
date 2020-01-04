@@ -15,7 +15,7 @@ interface AccountRepositoryInterface
      *
      * @return string $accountId
      */
-    public function create(string $accountGroupId, string $title, string $description, int $bk_uid, int $bk_code): string;
+    public function create(string $accountGroupId, string $title, string $description, $bk_uid, $bk_code): string;
 
     /**
      * Search account.

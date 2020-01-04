@@ -17,7 +17,7 @@ class AccountRepository implements AccountRepositoryInterface
      *
      * @return string $accountId
      */
-    public function create(string $accountGroupId, string $title, string $description, int $bk_uid, int $bk_code): string
+    public function create(string $accountGroupId, string $title, string $description, $bk_uid, $bk_code): string
     {
         $account = new Account();
         $account->account_group_bound_on = $accountGroupId;
