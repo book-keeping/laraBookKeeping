@@ -12,7 +12,7 @@ interface PermissionRepositoryInterface
      *
      * @return string $permissionId
      */
-    public function create(int $userId, string $bookId) : string;
+    public function create(int $userId, string $bookId): string;
 
     /**
      * Find default book of the user.
@@ -30,5 +30,5 @@ interface PermissionRepositoryInterface
      *
      * @return array
      */
-    public function searchBookList(int $userId) : array;
+    public function searchBookList(int $userId): array;
 }

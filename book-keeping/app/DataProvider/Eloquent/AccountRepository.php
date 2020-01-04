@@ -17,7 +17,7 @@ class AccountRepository implements AccountRepositoryInterface
      *
      * @return string $accountId
      */
-    public function create(string $accountGroupId, string $title, string $description, int $bk_uid, int $bk_code) : string
+    public function create(string $accountGroupId, string $title, string $description, int $bk_uid, int $bk_code): string
     {
         $account = new Account();
         $account->account_group_bound_on = $accountGroupId;
@@ -38,7 +38,7 @@ class AccountRepository implements AccountRepositoryInterface
      *
      * @return array
      */
-    public function searchAccount(string $bookId) : array
+    public function searchAccount(string $bookId): array
     {
         $list = Account::select('account_type', 'account_group_id', 'account_group_title', 'is_current',
                     'account_id', 'account_title', 'description', 'selectable', 'bk2_0_accounts.bk_code', 'bk2_0_accounts.created_at')

@@ -72,7 +72,7 @@ class AccountService
      *
      * @return string $accountId
      */
-    public function createAccount(string $accountGroupId, string $title, string $description, int $bk_uid = null, int $bk_code = null) : string
+    public function createAccount(string $accountGroupId, string $title, string $description, int $bk_uid = null, int $bk_code = null): string
     {
         $accountId = $this->account->create($accountGroupId, $title, $description, $bk_uid, $bk_code);
 
@@ -91,7 +91,7 @@ class AccountService
      *
      * @return string $accountGroupId
      */
-    public function createAccountGroup(string $bookId, string $accountType, string $title, bool $isCurrent = false, int $bk_uid = null, int $bk_code = null) : string
+    public function createAccountGroup(string $bookId, string $accountType, string $title, bool $isCurrent = false, int $bk_uid = null, int $bk_code = null): string
     {
         $accountGroupId = $this->accountGroup->create($bookId, $accountType, $title, $isCurrent, $bk_uid, $bk_code);
 

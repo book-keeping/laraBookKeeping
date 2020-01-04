@@ -44,7 +44,7 @@ class SlipService
      *
      * @return string $slipId
      */
-    public function createSlipAsDraft(string $bookId, string $outline, string $date, array $entries, string $memo = null) : string
+    public function createSlipAsDraft(string $bookId, string $outline, string $date, array $entries, string $memo = null): string
     {
         $slipId = $this->slip->create($bookId, $outline, $date, $memo, true);
         foreach ($entries as &$entry) {
@@ -63,7 +63,7 @@ class SlipService
      *
      * @return array
      */
-    public function retrieveAmountFlows(string $fromDate, string $toDate, string $bookId) : array
+    public function retrieveAmountFlows(string $fromDate, string $toDate, string $bookId): array
     {
         return $this->slipEntry->calculateSum($fromDate, $toDate, $bookId);
     }
@@ -77,7 +77,7 @@ class SlipService
      *
      * @return array
      */
-    public function retrieveSlipEntries(string $fromDate, string $toDate, string $bookId) : array
+    public function retrieveSlipEntries(string $fromDate, string $toDate, string $bookId): array
     {
         return $this->slipEntry->searchSlipEntries($fromDate, $toDate, $bookId);
     }

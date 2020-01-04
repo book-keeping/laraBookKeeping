@@ -33,7 +33,7 @@ class BudgetService
      *
      * @return string $budgetId
      */
-    public function createBudget(string $bookId, string $accountId, string $date, int $amount) : string
+    public function createBudget(string $bookId, string $accountId, string $date, int $amount): string
     {
         $budgetId = $this->budget->create($bookId, $accountId, $date, $amount);
 

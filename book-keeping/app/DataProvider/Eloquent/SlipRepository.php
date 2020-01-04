@@ -17,7 +17,7 @@ class SlipRepository implements SlipRepositoryInterface
      *
      * @return string $slipId
      */
-    public function create(string $bookId, string $outline, string $date, string $memo, bool $isDraft) : string
+    public function create(string $bookId, string $outline, string $date, string $memo, bool $isDraft): string
     {
         $slip = new Slip();
         $slip->book_bound_on = $bookId;

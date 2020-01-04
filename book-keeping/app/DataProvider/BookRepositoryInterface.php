@@ -11,5 +11,5 @@ interface BookRepositoryInterface
      *
      * @return string $bookId
      */
-    public function create(string $title) : string;
+    public function create(string $title): string;
 }

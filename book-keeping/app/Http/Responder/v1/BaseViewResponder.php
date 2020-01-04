@@ -38,7 +38,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    public function navilinks() : array
+    public function navilinks(): array
     {
         return [
             ['link' => 'v1_top', 'caption' => __('Top')],
@@ -52,7 +52,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    public function sortAccountInAscendingCodeOrder(array $groupedList) : array
+    public function sortAccountInAscendingCodeOrder(array $groupedList): array
     {
         return $this->sortAccountGrouptListInAscendingCodeOrder($groupedList);
     }
@@ -64,7 +64,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    public function translateBalanceSheetFormat(array $statements) : array
+    public function translateBalanceSheetFormat(array $statements): array
     {
         return $this->translateStatementsFormat($statements, [
             'debitTitle'             => 'Assets',
@@ -82,7 +82,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    public function translateIncomeStatementFormat(array $statements) : array
+    public function translateIncomeStatementFormat(array $statements): array
     {
         return $this->translateStatementsFormat($statements, [
             'debitTitle'             => 'Expense',
@@ -100,7 +100,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    public function translateSlipsFormat(array $slips) : array
+    public function translateSlipsFormat(array $slips): array
     {
         $slipentryline = [];
         foreach ($slips as $slipId => $slip) {
@@ -130,7 +130,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    private function getIdsSortedInAscendingOrder(array $listWithKeyword, string $keyword, string $isCurrent = 'isCurrent') : array
+    private function getIdsSortedInAscendingOrder(array $listWithKeyword, string $keyword, string $isCurrent = 'isCurrent'): array
     {
         $sortedIds1 = [];
         $sortedIds2 = [];
@@ -164,7 +164,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    private function sortAccountGrouptListInAscendingCodeOrder(array $groupedList) : array
+    private function sortAccountGrouptListInAscendingCodeOrder(array $groupedList): array
     {
         $reordered = [];
         $sortedKeys = $this->getIdsSortedInAscendingOrder($groupedList, 'bk_code');
@@ -187,7 +187,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    private function sortAccountListInAscendingCodeOrder(array $list) : array
+    private function sortAccountListInAscendingCodeOrder(array $list): array
     {
         $reordered = [];
         $sortedKeys = $this->getIdsSortedInAscendingOrder($list, 'bk_code');
@@ -208,7 +208,7 @@ class BaseViewResponder
      *
      * @return array
      */
-    private function translateStatementsFormat(array $statements, array $parameters) : array
+    private function translateStatementsFormat(array $statements, array $parameters): array
     {
         $debitTitle = $parameters['debitTitle'];
         $debitGroup = $parameters['debitGroup'];

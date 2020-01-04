@@ -14,7 +14,7 @@ class PermissionRepository implements PermissionRepositoryInterface
      *
      * @return string $permissionId
      */
-    public function create(int $userId, string $bookId) : string
+    public function create(int $userId, string $bookId): string
     {
         $is_default = $this->isRegisteredUser($userId) ? false : true;
         $is_owner = $this->isRegisteredBook($bookId) ? false : true;
@@ -55,7 +55,7 @@ class PermissionRepository implements PermissionRepositoryInterface
      *
      * @return array
      */
-    public function searchBookList(int $userId) : array
+    public function searchBookList(int $userId): array
     {
         $list = Permission::select('book_id', 'book_name', 'modifiable', 'is_owner', 'is_default', 'bk2_0_books.created_at')
             ->join('bk2_0_books', 'bk2_0_books.book_id', '=', 'bk2_0_permissions.readable_book')
@@ -74,7 +74,7 @@ class PermissionRepository implements PermissionRepositoryInterface
      *
      * @return bool
      */
-    private function isRegisteredBook(string $bookId) : bool
+    private function isRegisteredBook(string $bookId): bool
     {
         $count = Permission::where('readable_book', $bookId)->count();
 
@@ -88,7 +88,7 @@ class PermissionRepository implements PermissionRepositoryInterface
      *
      * @return bool
      */
-    private function isRegisteredUser(int $userId) : bool
+    private function isRegisteredUser(int $userId): bool
     {
         $count = Permission::where('permitted_user', $userId)->count();
 

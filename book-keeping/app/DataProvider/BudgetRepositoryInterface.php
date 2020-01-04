@@ -14,5 +14,5 @@ interface BudgetRepositoryInterface
      *
      * @return string $budgetId
      */
-    public function create(string $bookId, string $accountId, string $date, int $amount) : string;
+    public function create(string $bookId, string $accountId, string $date, int $amount): string;
 }

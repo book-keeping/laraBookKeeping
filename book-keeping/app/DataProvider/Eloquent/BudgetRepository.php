@@ -16,7 +16,7 @@ class BudgetRepository implements BudgetRepositoryInterface
      *
      * @return string $budgetId
      */
-    public function create(string $bookId, string $accountId, string $date, int $amount) : string
+    public function create(string $bookId, string $accountId, string $date, int $amount): string
     {
         $budget = new Budget();
         $budget->book_bound_on = $bookId;

@@ -15,7 +15,7 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      *
      * @return array
      */
-    public function calculateSum(string $fromDate, string $toDate, string $bookId) : array
+    public function calculateSum(string $fromDate, string $toDate, string $bookId): array
     {
         $debitSumList = $this->getSlipEntriesQuery($fromDate, $toDate, $bookId)
             ->groupBy('debit')
@@ -56,7 +56,7 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      *
      * @return string $slipEntryId
      */
-    public function create(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline) : string
+    public function create(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline): string
     {
         $slipEntry = new SlipEntry();
         $slipEntry->slip_bound_on = $slipId;
@@ -79,7 +79,7 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      *
      * @return array
      */
-    public function searchSlipEntries(string $fromDate, string $toDate, string $bookId) : array
+    public function searchSlipEntries(string $fromDate, string $toDate, string $bookId): array
     {
         $list = $this->getSlipEntriesQuery($fromDate, $toDate, $bookId)
             ->select('slip_id', 'date', 'slip_outline', 'slip_memo',

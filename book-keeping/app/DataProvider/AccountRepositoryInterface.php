@@ -15,7 +15,7 @@ interface AccountRepositoryInterface
      *
      * @return string $accountId
      */
-    public function create(string $accountGroupId, string $title, string $description, int $bk_uid, int $bk_code) : string;
+    public function create(string $accountGroupId, string $title, string $description, int $bk_uid, int $bk_code): string;
 
     /**
      * Search account.
@@ -24,5 +24,5 @@ interface AccountRepositoryInterface
      *
      * @return array
      */
-    public function searchAccount(string $bookId) : array;
+    public function searchAccount(string $bookId): array;
 }

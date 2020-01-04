@@ -18,7 +18,7 @@ class AccountGroupRepository implements AccountGroupRepositoryInterface
      *
      * @return string $accountGroupId
      */
-    public function create(string $bookId, string $accountType, string $title, bool $isCurrent, int $bk_uid, int $bk_code) : string
+    public function create(string $bookId, string $accountType, string $title, bool $isCurrent, int $bk_uid, int $bk_code): string
     {
         $accountGroup = new AccountGroup();
         $accountGroup->book_bound_on = $bookId;

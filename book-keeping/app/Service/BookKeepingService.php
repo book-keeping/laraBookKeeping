@@ -59,7 +59,7 @@ class BookKeepingService
      *
      * @return array
      */
-    public function retrieveSlips(string $fromDate, string $toDate, string $bookId = null) : array
+    public function retrieveSlips(string $fromDate, string $toDate, string $bookId = null): array
     {
         if (is_null($bookId)) {
             $bookId = $this->book->retrieveDefaultBook(Auth::id());
@@ -98,7 +98,7 @@ class BookKeepingService
      *
      * @return array
      */
-    public function retrieveStatements(string $fromDate, string $toDate, string $bookId = null) : array
+    public function retrieveStatements(string $fromDate, string $toDate, string $bookId = null): array
     {
         if (is_null($bookId)) {
             $bookId = $this->book->retrieveDefaultBook(Auth::id());
