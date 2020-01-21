@@ -196,6 +196,87 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
     /**
      * @test
      */
+    public function translateBalanceSheetFormat_FormattedBalanceSheetIsReturnedWithoutCurrentNetAsset()
+    {
+        $statements = [
+            'asset' => [
+                'amount' => 24863926,
+                'groups' => [
+                    'c46db1a8-daf3-4cd0-befd-2539885d8406' => [
+                        'title' => 'GroupTitle1', 'isCurrent' => 1, 'amount' => 267830,
+                        'items' => [
+                            '12c52f0f-3fd1-4076-bab0-521c6903ebe9' => ['title' => 'ItemTitle11', 'amount' => 218842],
+                            '26934102-c58a-42d1-b884-d0cc729d1eeb' => ['title' => 'ItemTitle12', 'amount' => 27000],
+                        ],
+                    ],
+                ],
+            ],
+            'liability' => [
+                'amount' => 357386,
+                'groups' => [
+                    'e0c81e5c-3b81-4237-837e-e004c2695ee1' => [
+                        'title' => 'GroupTitle2', 'isCurrent' => 1, 'amount' => 33235,
+                        'items' => [
+                            '62cb01ca-fc2f-44f9-a846-43a5a67f7491' => ['title' => 'ItemTitle21', 'amount' => 11187],
+                        ],
+                    ],
+                    'f4d64c3f-991e-4d52-bd10-946587589cac' => [
+                        'title' => 'GroupTitle3', 'isCurrent' => 1, 'amount' => 324159,
+                        'items' => [
+                            'fcadddd5-c5b3-4296-a2cd-81af02db5016' => ['title' => 'ItemTitle31', 'amount' => 22048],
+                            'bf9fbc93-f496-4b5c-ab6f-6e0b09f7b20a' => ['title' => 'ItemTitle32', 'amount' => 324151],
+                        ],
+                    ],
+                ],
+            ],
+            'net_asset'         => ['amount' => 24506540],
+        ];
+        $formattedBalanceSheet_expected = [
+            [
+                'debit'  => ['title' => __('Assets'), 'amount' => '24,863,926', 'bold' => true, 'italic' => true],
+                'credit' => ['title' => __('Liabilities'), 'amount' => '357,386', 'bold' => true, 'italic' => true],
+            ],
+            [
+                'debit'  => ['title' => 'GroupTitle1', 'amount' => '267,830', 'bold' => false, 'italic' => true],
+                'credit' => ['title' => 'GroupTitle2', 'amount' => '33,235', 'bold' => false, 'italic' => true],
+            ],
+            [
+                'debit'  => ['title' => 'ItemTitle11', 'amount' => '218,842', 'bold' => false, 'italic' => false],
+                'credit' => ['title' => 'ItemTitle21', 'amount' => '11,187', 'bold' => false, 'italic' => false],
+            ],
+            [
+                'debit'  => ['title' => 'ItemTitle12', 'amount' => '27,000', 'bold' => false, 'italic' => false],
+                'credit' => ['title' => 'GroupTitle3', 'amount' => '324,159', 'bold' => false, 'italic' => true],
+            ],
+            [
+                'credit' => ['title' => 'ItemTitle31', 'amount' => '22,048', 'bold' => false, 'italic' => false],
+                'debit'  => ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false],
+            ],
+            [
+                'credit' => ['title' => 'ItemTitle32', 'amount' => '324,151', 'bold' => false, 'italic' => false],
+                'debit'  => ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false],
+            ],
+            [
+                'credit' => ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false],
+                'debit'  => ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false],
+            ],
+            [
+                'credit' => ['title' => __('Net Asset'), 'amount' => '24,506,540', 'bold' => true, 'italic' => true],
+                'debit'  => ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false],
+            ],
+        ];
+        $ResponseMock = Mockery::mock(Response::class);
+        $ViewFactoryMock = Mockery::mock(Factory::class);
+
+        $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
+        $formattedBalanceSheet_actual = $responder->translateBalanceSheetFormat($statements);
+
+        $this->assertSame($formattedBalanceSheet_expected, $formattedBalanceSheet_actual);
+    }
+
+    /**
+     * @test
+     */
     public function translateIncomeStatementFormat_FormattedIncomeStatementIsReturned()
     {
         $statements = [
