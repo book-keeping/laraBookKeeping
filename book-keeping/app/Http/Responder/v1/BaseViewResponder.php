@@ -42,6 +42,7 @@ class BaseViewResponder
     {
         return [
             ['link' => 'v1_top', 'caption' => __('Top')],
+            ['link' => 'v1_statements', 'caption' => __('Statements')],
         ];
     }
 

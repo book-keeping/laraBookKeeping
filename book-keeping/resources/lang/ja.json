@@ -1,4 +1,5 @@
 {
+    "Accounting period" : "会計期間",
     "Amount" : "金額",
     "Assets" : "資産",
     "Balance sheet" : "貸借対照表",
@@ -8,13 +9,19 @@
     "Date" : "日付",
     "Debit" : "借方",
     "Expense" : "費用",
+    "From:" : "自:",
     "Income statement" : "損益計算書",
     "Journal" : "仕訳帳",
     "Liabilities" : "負債",
     "Net Asset" : "純資産",
     "Net Income" : "当期利益",
     "Outline" : "概要",
+    "Period-end Balance sheet" : "期末貸借対照表",
+    "Previous Period-end Balance sheet" : "前期末貸借対照表",
     "Revenue" : "収益",
+    "Statements" : "財務諸表",
     "Top" : "トップ",
+    "To:" : "至:",
+    "Trial Balance Of Real Flow" : "実在フロー試算表",
     "'s state" : "の家計状況"
 }
