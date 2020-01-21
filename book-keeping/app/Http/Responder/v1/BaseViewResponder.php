@@ -276,7 +276,7 @@ class BaseViewResponder
         }
         if ($creditTitle == 'Liabilities') {
             $debitcreditline[$credit_count++]['credit'] = ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false];
-            if ($displayCurrentNetAsset) {
+            if ($displayCurrentNetAsset && array_key_exists('current_net_asset', $statements)) {
                 $debitcreditline[$credit_count++]['credit'] = [
                     'title'  => __('Current Net Asset'),
                     'amount' => number_format($statements['current_net_asset']['amount']),
