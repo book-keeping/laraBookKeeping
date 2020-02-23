@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service\BookKeepingService;
 
-class AuthenticatedBookKeepingAction extends Controller
+class AuthenticatedBookKeepingAction extends AuthenticatedAction
 {
     /**
      * BookKeeping service instance.
@@ -20,8 +20,7 @@ class AuthenticatedBookKeepingAction extends Controller
      */
     public function __construct(BookKeepingService $BookKeeping)
     {
-        $this->middleware('auth');
-        $this->middleware('verified');
+        parent::__construct();
         $this->BookKeeping = $BookKeeping;
     }
 }
