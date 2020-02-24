@@ -14,6 +14,7 @@ class SettingsViewResponder extends BaseLayoutViewResponder
     public function navilinks(): array
     {
         return [
+            ['link' => 'settings_tokens', 'caption' => __('Personal access tokens')],
         ];
     }
 }
