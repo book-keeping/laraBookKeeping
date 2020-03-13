@@ -41,7 +41,6 @@ class PermissionRepository implements PermissionRepositoryInterface
         $list = Permission::select('book_id')
             ->join('bk2_0_books', 'bk2_0_books.book_id', '=', 'bk2_0_permissions.readable_book')
             ->where('permitted_user', $userId)
-            ->whereNull('deleted_at')
             ->where('is_default', true)
             ->first();
 
@@ -60,7 +59,6 @@ class PermissionRepository implements PermissionRepositoryInterface
         $list = Permission::select('book_id', 'book_name', 'modifiable', 'is_owner', 'is_default', 'bk2_0_books.created_at')
             ->join('bk2_0_books', 'bk2_0_books.book_id', '=', 'bk2_0_permissions.readable_book')
             ->where('permitted_user', $userId)
-            ->whereNull('deleted_at')
             ->orderBy('bk2_0_books.created_at')
             ->get()->toArray();
 

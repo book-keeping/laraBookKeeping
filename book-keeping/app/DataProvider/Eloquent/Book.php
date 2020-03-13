@@ -2,7 +2,7 @@
 
 namespace App\DataProvider\Eloquent;
 
-class Book extends UuidModel
+class Book extends BookKeepingBasicModel
 {
     /**
      * The table associated with the model.

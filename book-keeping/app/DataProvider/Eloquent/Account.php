@@ -2,7 +2,7 @@
 
 namespace App\DataProvider\Eloquent;
 
-class Account extends UuidModel
+class Account extends BookKeepingBasicModel
 {
     /**
      * The table associated with the model.

@@ -2,7 +2,7 @@
 
 namespace App\DataProvider\Eloquent;
 
-class Budget extends UuidModel
+class Budget extends BookKeepingBasicModel
 {
     /**
      * The table associated with the model.

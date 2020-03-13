@@ -2,7 +2,7 @@
 
 namespace App\DataProvider\Eloquent;
 
-class Permission extends UuidModel
+class Permission extends BookKeepingBasicModel
 {
     /**
      * The table associated with the model.

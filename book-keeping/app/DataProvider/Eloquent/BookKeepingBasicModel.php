@@ -3,10 +3,13 @@
 namespace App\DataProvider\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-abstract class UuidModel extends Model
+abstract class BookKeepingBasicModel extends Model
 {
+    use SoftDeletes;
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *

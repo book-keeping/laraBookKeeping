@@ -2,7 +2,7 @@
 
 namespace App\DataProvider\Eloquent;
 
-class Slip extends UuidModel
+class Slip extends BookKeepingBasicModel
 {
     /**
      * The table associated with the model.
