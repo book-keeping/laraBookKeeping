@@ -47,14 +47,14 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
         $outline = 'outline10';
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $slipId = factory(Slip::class)->create([
-            'book_bound_on' => $bookId,
+            'book_id'       => $bookId,
             'slip_outline'  => $slipOutline,
             'slip_memo'     => $memo,
             'date'          => $date,
             'is_draft'      => $isDraft,
         ])->slip_id;
         $slipEntryId1 = factory(SlipEntry::class)->create([
-            'slip_bound_on' => $slipId,
+            'slip_id'       => $slipId,
             'debit'         => $accountId1,
             'credit'        => $accountId2,
             'amount'        => 10,
@@ -62,7 +62,7 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
             'outline'       => $outline,
         ])->slip_entry_id;
         $slipEntryId2 = factory(SlipEntry::class)->create([
-            'slip_bound_on' => $slipId,
+            'slip_id'       => $slipId,
             'debit'         => $accountId1,
             'credit'        => $accountId3,
             'amount'        => 200,
@@ -70,7 +70,7 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
             'outline'       => $outline,
         ])->slip_entry_id;
         $slipEntryId3 = factory(SlipEntry::class)->create([
-            'slip_bound_on' => $slipId,
+            'slip_id'       => $slipId,
             'debit'         => $accountId2,
             'credit'        => $accountId3,
             'amount'        => 3000,
@@ -110,7 +110,7 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
 
         $this->assertDatabaseHas('bk2_0_slip_entries', [
             'slip_entry_id'  => $slipEntryId,
-            'slip_bound_on'  => $slipId,
+            'slip_id'        => $slipId,
             'debit'          => $debit,
             'credit'         => $credit,
             'amount'         => $amount,
@@ -138,14 +138,14 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
         $outline = 'outline4';
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $slipId = factory(Slip::class)->create([
-            'book_bound_on' => $bookId,
+            'book_id'       => $bookId,
             'slip_outline'  => $slipOutline,
             'slip_memo'     => $memo,
             'date'          => $date,
             'is_draft'      => $isDraft,
         ])->slip_id;
         $slipEntryId = factory(SlipEntry::class)->create([
-            'slip_bound_on' => $slipId,
+            'slip_id'       => $slipId,
             'debit'         => $debit,
             'credit'        => $credit,
             'amount'        => $amount,

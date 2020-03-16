@@ -42,7 +42,7 @@ class DataProvider_Eloquent_BudgetRepositoryTest extends DataProvider_BudgetRepo
 
         $this->assertDatabaseHas('bk2_0_budgets', [
             'budget_id'     => $budgetId,
-            'book_bound_on' => $bookId,
+            'book_id'       => $bookId,
             'account_code'  => $accountId,
             'date'          => $date,
             'amount'        => $amount,

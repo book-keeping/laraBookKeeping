@@ -45,7 +45,7 @@ class DataProvider_Eloquent_AccountRepositoryTest extends DataProvider_AccountRe
 
         $this->assertDatabaseHas('bk2_0_accounts', [
             'account_id'                   => $accountId,
-            'account_group_bound_on'       => $accountGroupId,
+            'account_group_id'             => $accountGroupId,
             'account_title'                => $title,
             'description'                  => $description,
             'selectable'                   => true,
@@ -62,7 +62,7 @@ class DataProvider_Eloquent_AccountRepositoryTest extends DataProvider_AccountRe
         $bookId = (string) Str::uuid();
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $accountGroupId = factory(AccountGroup::class)->create([
-            'book_bound_on'       => $bookId,
+            'book_id'             => $bookId,
             'account_type'        => 'asset',
             'account_group_title' => 'dummy group title',
             'bk_uid'              => 32,
@@ -70,7 +70,7 @@ class DataProvider_Eloquent_AccountRepositoryTest extends DataProvider_AccountRe
             'is_current'          => true,
         ])->account_group_id;
         $accountId = factory(Account::class)->create([
-            'account_group_bound_on' => $accountGroupId,
+            'account_group_id'       => $accountGroupId,
             'account_title'          => 'dummy title',
             'description'            => 'description',
             'selectable'             => true,

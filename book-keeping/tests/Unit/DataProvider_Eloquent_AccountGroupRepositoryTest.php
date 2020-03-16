@@ -44,7 +44,7 @@ class DataProvider_Eloquent_AccountGroupRepositoryTest extends DataProvider_Acco
 
         $this->assertDatabaseHas('bk2_0_account_groups', [
             'account_group_id'    => $accountGroupId,
-            'book_bound_on'       => $bookId,
+            'book_id'             => $bookId,
             'account_type'        => $accountType,
             'account_group_title' => $title,
             'bk_uid'              => $bk_uid,

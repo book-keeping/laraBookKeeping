@@ -44,7 +44,7 @@ class DataProvider_Eloquent_SlipRepositoryTest extends DataProvider_SlipReposito
 
         $this->assertDatabaseHas('bk2_0_slips', [
             'slip_id'       => $slipId,
-            'book_bound_on' => $bookId,
+            'book_id'       => $bookId,
             'slip_outline'  => $outline,
             'slip_memo'     => $memo,
             'date'          => $date,
@@ -65,7 +65,7 @@ class DataProvider_Eloquent_SlipRepositoryTest extends DataProvider_SlipReposito
         $isDraft_updated = true;
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $slipId = factory(Slip::class)->create([
-            'book_bound_on' => $bookId,
+            'book_id'       => $bookId,
             'slip_outline'  => $outline,
             'slip_memo'     => $memo,
             'date'          => $date,
@@ -77,7 +77,7 @@ class DataProvider_Eloquent_SlipRepositoryTest extends DataProvider_SlipReposito
 
         $this->assertDatabaseHas('bk2_0_slips', [
             'slip_id'       => $slipId,
-            'book_bound_on' => $bookId,
+            'book_id'       => $bookId,
             'slip_outline'  => $outline,
             'slip_memo'     => $memo,
             'date'          => $date,
