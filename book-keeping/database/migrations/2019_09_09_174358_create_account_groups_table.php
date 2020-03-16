@@ -20,7 +20,7 @@ class CreateAccountGroupsTable extends Migration
             $table->enum('account_type', ['asset', 'liability', 'expense', 'revenue']);
             $table->string('account_group_title', 40);
             $table->unsignedBigInteger('bk_uid')->nullable();
-            $table->unsignedBigInteger('bk_code')->nullable();
+            $table->unsignedBigInteger('account_group_bk_code')->nullable();
             $table->boolean('is_current');
             $table->timestamps();
             $table->softDeletes();

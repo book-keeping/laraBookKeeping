@@ -25,7 +25,7 @@ class AccountRepository implements AccountRepositoryInterface
         $account->description = $description;
         $account->selectable = true;
         $account->bk_uid = $bk_uid;
-        $account->bk_code = $bk_code;
+        $account->account_bk_code = $bk_code;
         $account->save();
 
         return $account->account_id;
@@ -49,7 +49,7 @@ class AccountRepository implements AccountRepositoryInterface
             'account_title',
             'description',
             'selectable',
-            'bk2_0_accounts.bk_code',
+            'account_bk_code',
             'bk2_0_accounts.created_at'
         )
             ->join('bk2_0_account_groups', 'bk2_0_account_groups.account_group_id', '=', 'bk2_0_accounts.account_group_id')

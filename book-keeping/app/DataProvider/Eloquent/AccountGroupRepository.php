@@ -26,7 +26,7 @@ class AccountGroupRepository implements AccountGroupRepositoryInterface
         $accountGroup->account_group_title = $title;
         $accountGroup->is_current = $isCurrent;
         $accountGroup->bk_uid = $bk_uid;
-        $accountGroup->bk_code = $bk_code;
+        $accountGroup->account_group_bk_code = $bk_code;
         $accountGroup->save();
 
         return $accountGroup->account_group_id;
