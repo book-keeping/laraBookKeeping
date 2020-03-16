@@ -15,8 +15,8 @@ class CreateSlipEntriesTable extends Migration
     {
         Schema::create('bk2_0_slip_entries', function (Blueprint $table) {
             $table->uuid('slip_entry_id')->primary();
-            $table->uuid('slip_bound_on');
-            $table->foreign('slip_bound_on')->references('slip_id')->on('bk2_0_slips');
+            $table->uuid('slip_id');
+            $table->foreign('slip_id')->references('slip_id')->on('bk2_0_slips');
             $table->uuid('debit');
             $table->foreign('debit')->references('account_id')->on('bk2_0_accounts');
             $table->uuid('credit');

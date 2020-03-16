@@ -19,7 +19,7 @@ class BudgetRepository implements BudgetRepositoryInterface
     public function create(string $bookId, string $accountId, string $date, int $amount): string
     {
         $budget = new Budget();
-        $budget->book_bound_on = $bookId;
+        $budget->book_id = $bookId;
         $budget->account_code = $accountId;
         $budget->date = $date;
         $budget->amount = $amount;

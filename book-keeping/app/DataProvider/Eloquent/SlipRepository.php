@@ -20,7 +20,7 @@ class SlipRepository implements SlipRepositoryInterface
     public function create(string $bookId, string $outline, string $date, $memo, bool $isDraft): string
     {
         $slip = new Slip();
-        $slip->book_bound_on = $bookId;
+        $slip->book_id = $bookId;
         $slip->slip_outline = $outline;
         $slip->slip_memo = $memo;
         $slip->date = $date;

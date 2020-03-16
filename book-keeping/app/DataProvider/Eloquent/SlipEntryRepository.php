@@ -59,7 +59,7 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
     public function create(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline): string
     {
         $slipEntry = new SlipEntry();
-        $slipEntry->slip_bound_on = $slipId;
+        $slipEntry->slip_id = $slipId;
         $slipEntry->debit = $debit;
         $slipEntry->credit = $credit;
         $slipEntry->amount = $amount;
@@ -83,7 +83,7 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
     {
         $list = $this->getSlipEntriesQuery($fromDate, $toDate, $bookId)
             ->select(
-                'slip_id',
+                'bk2_0_slips.slip_id',
                 'date',
                 'slip_outline',
                 'slip_memo',
@@ -111,8 +111,8 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      */
     private function getSlipEntriesQuery(string $fromDate, string $toDate, string $bookId)
     {
-        return SlipEntry::join('bk2_0_slips', 'bk2_0_slips.slip_id', '=', 'bk2_0_slip_entries.slip_bound_on')
-            ->where('book_bound_on', $bookId)
+        return SlipEntry::join('bk2_0_slips', 'bk2_0_slips.slip_id', '=', 'bk2_0_slip_entries.slip_id')
+            ->where('book_id', $bookId)
             ->where('is_draft', false)
             ->whereNull('bk2_0_slips.deleted_at')
             ->whereNull('bk2_0_slip_entries.deleted_at')

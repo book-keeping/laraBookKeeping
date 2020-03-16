@@ -20,7 +20,7 @@ class AccountRepository implements AccountRepositoryInterface
     public function create(string $accountGroupId, string $title, string $description, $bk_uid, $bk_code): string
     {
         $account = new Account();
-        $account->account_group_bound_on = $accountGroupId;
+        $account->account_group_id = $accountGroupId;
         $account->account_title = $title;
         $account->description = $description;
         $account->selectable = true;
@@ -42,7 +42,7 @@ class AccountRepository implements AccountRepositoryInterface
     {
         $list = Account::select(
             'account_type',
-            'account_group_id',
+            'bk2_0_account_groups.account_group_id',
             'account_group_title',
             'is_current',
             'account_id',
@@ -52,8 +52,8 @@ class AccountRepository implements AccountRepositoryInterface
             'bk2_0_accounts.bk_code',
             'bk2_0_accounts.created_at'
         )
-            ->join('bk2_0_account_groups', 'bk2_0_account_groups.account_group_id', '=', 'bk2_0_accounts.account_group_bound_on')
-            ->where('book_bound_on', $bookId)
+            ->join('bk2_0_account_groups', 'bk2_0_account_groups.account_group_id', '=', 'bk2_0_accounts.account_group_id')
+            ->where('book_id', $bookId)
             ->whereNull('bk2_0_account_groups.deleted_at')
             ->whereNull('bk2_0_accounts.deleted_at')
             ->orderBy('account_type')

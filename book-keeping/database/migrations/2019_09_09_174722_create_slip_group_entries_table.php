@@ -15,8 +15,8 @@ class CreateSlipGroupEntriesTable extends Migration
     {
         Schema::create('bk2_0_slip_group_entries', function (Blueprint $table) {
             $table->uuid('slip_group_entry_id')->primary();
-            $table->uuid('slip_group_bound_on');
-            $table->foreign('slip_group_bound_on')->references('slip_group_id')->on('bk2_0_slip_groups');
+            $table->uuid('slip_group_id');
+            $table->foreign('slip_group_id')->references('slip_group_id')->on('bk2_0_slip_groups');
             $table->uuid('related_slip');
             $table->foreign('related_slip')->references('slip_id')->on('bk2_0_slips');
             $table->timestamps();

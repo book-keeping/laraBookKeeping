@@ -21,7 +21,7 @@ class AccountGroupRepository implements AccountGroupRepositoryInterface
     public function create(string $bookId, string $accountType, string $title, bool $isCurrent, $bk_uid, $bk_code): string
     {
         $accountGroup = new AccountGroup();
-        $accountGroup->book_bound_on = $bookId;
+        $accountGroup->book_id = $bookId;
         $accountGroup->account_type = $accountType;
         $accountGroup->account_group_title = $title;
         $accountGroup->is_current = $isCurrent;

@@ -15,8 +15,8 @@ class CreateSlipsTable extends Migration
     {
         Schema::create('bk2_0_slips', function (Blueprint $table) {
             $table->uuid('slip_id')->primary();
-            $table->uuid('book_bound_on');
-            $table->foreign('book_bound_on')->references('book_id')->on('bk2_0_books');
+            $table->uuid('book_id');
+            $table->foreign('book_id')->references('book_id')->on('bk2_0_books');
             $table->string('slip_outline', 200);
             $table->string('slip_memo', 500)->nullable();
             $table->date('date');

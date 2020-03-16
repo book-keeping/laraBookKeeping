@@ -15,8 +15,8 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('bk2_0_accounts', function (Blueprint $table) {
             $table->uuid('account_id')->primary();
-            $table->uuid('account_group_bound_on');
-            $table->foreign('account_group_bound_on')->references('account_group_id')->on('bk2_0_account_groups');
+            $table->uuid('account_group_id');
+            $table->foreign('account_group_id')->references('account_group_id')->on('bk2_0_account_groups');
             $table->string('account_title', 40);
             $table->string('description', 200);
             $table->boolean('selectable');
