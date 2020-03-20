@@ -94,6 +94,8 @@ class DataProvider_Eloquent_AccountRepositoryTest extends DataProvider_AccountRe
                 'selectable',
                 'account_bk_code',
                 'created_at',
+                'account_group_bk_code',
+                'account_group_created_at',
             ], array_keys($accountList[0]));
         }
     }
