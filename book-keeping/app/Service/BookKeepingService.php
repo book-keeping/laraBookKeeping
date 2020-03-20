@@ -130,7 +130,7 @@ class BookKeepingService
                         'title'     => $accounts[$accountId]['account_group_title'],
                         'isCurrent' => $accounts[$accountId]['is_current'],
                         'amount'    => 0,
-                        'bk_code'   => $accounts[$accountId]['account_bk_code'] - ($accounts[$accountId]['account_bk_code'] % 100),
+                        'bk_code'   => $accounts[$accountId]['account_group_bk_code'],
                         'items'     => [],
                     ];
                 }

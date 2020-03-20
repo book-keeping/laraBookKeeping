@@ -50,7 +50,9 @@ class AccountRepository implements AccountRepositoryInterface
             'description',
             'selectable',
             'account_bk_code',
-            'bk2_0_accounts.created_at'
+            'bk2_0_accounts.created_at',
+            'account_group_bk_code',
+            'bk2_0_account_groups.created_at as account_group_created_at',
         )
             ->join('bk2_0_account_groups', 'bk2_0_account_groups.account_group_id', '=', 'bk2_0_accounts.account_group_id')
             ->where('book_id', $bookId)
