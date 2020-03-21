@@ -209,7 +209,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'account_group_id'    => $accountGroupId_1,
                 'account_group_title' => 'accountGroupTitle_1',
                 'is_current'          => 0,
-                'bk_code'             => 1201,
+                'account_bk_code'     => 1201,
                 'account_title'       => 'accountTitle_1',
             ],
             $accountId_2 => [
@@ -217,7 +217,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'account_group_id'    => $accountGroupId_1,
                 'account_group_title' => 'accountGroupTitle_1',
                 'is_current'          => 0,
-                'bk_code'             => 1202,
+                'account_bk_code'     => 1202,
                 'account_title'       => 'accountTitle_2',
             ],
             $accountId_3 => [
@@ -225,7 +225,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'account_group_id'    => $accountGroupId_2,
                 'account_group_title' => 'accountGroupTitle_2',
                 'is_current'          => 0,
-                'bk_code'             => 2303,
+                'account_bk_code'     => 2303,
                 'account_title'       => 'accountTitle_3',
             ],
             $accountId_4 => [
@@ -233,7 +233,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'account_group_id'    => $accountGroupId_3,
                 'account_group_title' => 'accountGroupTitle_3',
                 'is_current'          => 0,
-                'bk_code'             => 4104,
+                'account_bk_code'     => 4104,
                 'account_title'       => 'accountTitle_4',
             ],
             $accountId_5 => [
@@ -241,7 +241,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'account_group_id'    => $accountGroupId_4,
                 'account_group_title' => 'accountGroupTitle_4',
                 'is_current'          => 0,
-                'bk_code'             => 5105,
+                'account_bk_code'     => 5105,
                 'account_title'       => 'accountTitle_5',
             ],
             $accountId_6 => [
@@ -249,7 +249,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'account_group_id'    => $accountGroupId_5,
                 'account_group_title' => 'accountGroupTitle_5',
                 'is_current'          => 1,
-                'bk_code'             => 1106,
+                'account_bk_code'     => 1106,
                 'account_title'       => 'accountTitle_6',
             ],
             $accountId_7 => [
@@ -257,7 +257,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'account_group_id'    => $accountGroupId_6,
                 'account_group_title' => 'accountGroupTitle_6',
                 'is_current'          => 1,
-                'bk_code'             => 2207,
+                'account_bk_code'     => 2207,
                 'account_title'       => 'accountTitle_7',
             ],
             $accountId_8 => [
@@ -265,7 +265,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'account_group_id'    => $accountGroupId_3,
                 'account_group_title' => 'accountGroupTitle_3',
                 'is_current'          => 0,
-                'bk_code'             => 4108,
+                'account_bk_code'     => 4108,
                 'account_title'       => 'accountTitle_8',
             ],
         ];

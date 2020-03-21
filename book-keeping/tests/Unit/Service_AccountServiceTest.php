@@ -74,9 +74,9 @@ class Service_AccountServiceTest extends TestCase
         $account_id_1 = (string) Str::uuid();
         $account_id_2 = (string) Str::uuid();
         $account_id_3 = (string) Str::uuid();
-        $accountItem_1 = ['account_id' => $account_id_1, 'account_title' => 'title1', 'selectable' => true, 'bk_code' => 1101];
-        $accountItem_2 = ['account_id' => $account_id_2, 'account_title' => 'title2', 'selectable' => true, 'bk_code' => 1201];
-        $accountItem_3 = ['account_id' => $account_id_3, 'account_title' => 'title3', 'selectable' => false, 'bk_code' => 1102];
+        $accountItem_1 = ['account_id' => $account_id_1, 'account_title' => 'title1', 'selectable' => true, 'account_bk_code' => 1101];
+        $accountItem_2 = ['account_id' => $account_id_2, 'account_title' => 'title2', 'selectable' => true, 'account_bk_code' => 1201];
+        $accountItem_3 = ['account_id' => $account_id_3, 'account_title' => 'title3', 'selectable' => false, 'account_bk_code' => 1102];
         $accountGroupMock = Mockery::mock(AccountGroupRepositoryInterface::class);
         $accountMock = Mockery::mock(AccountRepositoryInterface::class);
         $accountMock->shouldReceive('searchAccount')
