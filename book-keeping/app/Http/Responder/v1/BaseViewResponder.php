@@ -170,12 +170,8 @@ class BaseViewResponder
         $reordered = [];
         $sortedKeys = $this->getIdsSortedInAscendingOrder($groupedList, 'bk_code');
         foreach ($sortedKeys as $groupId => $keyword) {
-            $reordered[$groupId] = [
-                'title'     => $groupedList[$groupId]['title'],
-                'isCurrent' => $groupedList[$groupId]['isCurrent'],
-                'amount'    => $groupedList[$groupId]['amount'],
-                'items'     => $this->sortAccountListInAscendingCodeOrder($groupedList[$groupId]['items']),
-            ];
+            $reordered[$groupId] = $groupedList[$groupId];
+            $reordered[$groupId]['items'] = $this->sortAccountListInAscendingCodeOrder($groupedList[$groupId]['items']);
         }
 
         return $reordered;
@@ -193,10 +189,7 @@ class BaseViewResponder
         $reordered = [];
         $sortedKeys = $this->getIdsSortedInAscendingOrder($list, 'bk_code');
         foreach ($sortedKeys as $id => $keyword) {
-            $reordered[$id] = [
-                'title'     => $list[$id]['title'],
-                'amount'    => $list[$id]['amount'],
-            ];
+            $reordered[$id] = $list[$id];
         }
 
         return $reordered;
