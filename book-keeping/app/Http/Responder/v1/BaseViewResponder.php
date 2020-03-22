@@ -126,36 +126,36 @@ class BaseViewResponder
      * Get associative array which has account ID as key sorted in ascending order of value that is specified keyword.
      *
      * @param array $listWithKeyword
-     * @param array $keyword
-     * @param array $isCurrent
      *
      * @return array
      */
-    private function getIdsSortedInAscendingOrder(array $listWithKeyword, string $keyword, string $isCurrent = 'isCurrent'): array
+    private function getIdsSortedInAscendingOrder(array $listWithKeyword): array
     {
-        $sortedIds1 = [];
-        $sortedIds2 = [];
+        $sortedIds_isCurrent_withCode = [];
+        $sortedIds_isCurrent_withoutCode = [];
+        $sortedIds_isNotCurrent_withCode = [];
+        $sortedIds_isNotCurrent_withoutCode = [];
         foreach ($listWithKeyword as $Ids => $item) {
-            if (($keyword == 'bk_code') && is_null($item[$keyword])) {
-                $value = 9999;
-            } else {
-                $value = $item[$keyword];
-            }
-
-            if (array_key_exists($isCurrent, $item)) {
-                if ($item[$isCurrent]) {
-                    $sortedIds1[$Ids] = $value;
+            if (array_key_exists('isCurrent', $item) && ($item['isCurrent'] == true)) {
+                if (!is_null($item['bk_code'])) {
+                    $sortedIds_isCurrent_withCode[$Ids] = $item['bk_code'];
                 } else {
-                    $sortedIds2[$Ids] = $value;
+                    $sortedIds_isCurrent_withoutCode[$Ids] = $item['createdAt'];
                 }
             } else {
-                $sortedIds2[$Ids] = $value;
+                if (!is_null($item['bk_code'])) {
+                    $sortedIds_isNotCurrent_withCode[$Ids] = $item['bk_code'];
+                } else {
+                    $sortedIds_isNotCurrent_withoutCode[$Ids] = $item['createdAt'];
+                }
             }
         }
-        asort($sortedIds1);
-        asort($sortedIds2);
+        asort($sortedIds_isCurrent_withCode);
+        asort($sortedIds_isCurrent_withoutCode);
+        asort($sortedIds_isNotCurrent_withCode);
+        asort($sortedIds_isNotCurrent_withoutCode);
 
-        return $sortedIds1 + $sortedIds2;
+        return $sortedIds_isCurrent_withCode + $sortedIds_isCurrent_withoutCode + $sortedIds_isNotCurrent_withCode + $sortedIds_isNotCurrent_withoutCode;
     }
 
     /**
@@ -168,7 +168,7 @@ class BaseViewResponder
     private function sortAccountGrouptListInAscendingCodeOrder(array $groupedList): array
     {
         $reordered = [];
-        $sortedKeys = $this->getIdsSortedInAscendingOrder($groupedList, 'bk_code');
+        $sortedKeys = $this->getIdsSortedInAscendingOrder($groupedList);
         foreach ($sortedKeys as $groupId => $keyword) {
             $reordered[$groupId] = $groupedList[$groupId];
             $reordered[$groupId]['items'] = $this->sortAccountListInAscendingCodeOrder($groupedList[$groupId]['items']);
@@ -187,7 +187,7 @@ class BaseViewResponder
     private function sortAccountListInAscendingCodeOrder(array $list): array
     {
         $reordered = [];
-        $sortedKeys = $this->getIdsSortedInAscendingOrder($list, 'bk_code');
+        $sortedKeys = $this->getIdsSortedInAscendingOrder($list);
         foreach ($sortedKeys as $id => $keyword) {
             $reordered[$id] = $list[$id];
         }

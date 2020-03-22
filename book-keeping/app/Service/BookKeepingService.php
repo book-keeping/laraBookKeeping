@@ -131,6 +131,7 @@ class BookKeepingService
                         'isCurrent' => $accounts[$accountId]['is_current'],
                         'amount'    => 0,
                         'bk_code'   => $accounts[$accountId]['account_group_bk_code'],
+                        'createdAt' => $accounts[$accountId]['account_group_created_at'],
                         'items'     => [],
                     ];
                 }
@@ -144,9 +145,10 @@ class BookKeepingService
                     }
                 }
                 $statements[$accountType]['groups'][$accountGroupId]['items'][$accountId] = [
-                    'title'   => $accounts[$accountId]['account_title'],
-                    'amount'  => $amount,
-                    'bk_code' => $accounts[$accountId]['account_bk_code'],
+                    'title'     => $accounts[$accountId]['account_title'],
+                    'amount'    => $amount,
+                    'bk_code'   => $accounts[$accountId]['account_bk_code'],
+                    'createdAt' => $accounts[$accountId]['created_at'],
                 ];
             }
         }
