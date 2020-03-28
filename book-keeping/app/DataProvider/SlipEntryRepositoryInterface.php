@@ -30,6 +30,33 @@ interface SlipEntryRepositoryInterface
     public function create(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline): string;
 
     /**
+     * Delete the specified slip entry.
+     *
+     * @param string $slipEntryId
+     *
+     * @return void
+     */
+    public function delete(string $slipEntryId);
+
+    /**
+     * Find slip entry.
+     *
+     * @param string $slipEntryId
+     *
+     * @return array | null
+     */
+    public function findById(string $slipEntryId): ?array;
+
+    /**
+     * Find the slip entries that belongs to the specified slip.
+     *
+     * @param string $slipId
+     *
+     * @return array
+     */
+    public function findAllBySlipId(string $slipId): array;
+
+    /**
      * Search slip entries between specified date.
      *
      * @param string $fromDate

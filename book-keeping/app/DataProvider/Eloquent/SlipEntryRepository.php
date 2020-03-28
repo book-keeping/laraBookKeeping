@@ -71,6 +71,54 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
     }
 
     /**
+     * Delete the specified slip entry.
+     *
+     * @param string $slipEntryId
+     *
+     * @return void
+     */
+    public function delete(string $slipEntryId)
+    {
+        $slipEntry = SlipEntry::find($slipEntryId);
+        if (!is_null($slipEntry)) {
+            $slipEntry->delete();
+        }
+    }
+
+    /**
+     * Find the slip entries that belongs to the specified slip.
+     *
+     * @param string $slipId
+     *
+     * @return array
+     */
+    public function findAllBySlipId(string $slipId): array
+    {
+        $list = SlipEntry::select('slip_entry_id', 'slip_id', 'debit', 'credit', 'amount', 'client', 'outline')
+            ->where('slip_id', $slipId)
+            ->orderBy('created_at')
+            ->get()->toArray();
+
+        return $list;
+    }
+
+    /**
+     * Find slip entry.
+     *
+     * @param string $slipEntryId
+     *
+     * @return array | null
+     */
+    public function findById(string $slipEntryId): ?array
+    {
+        $slipEntry = SlipEntry::select('slip_entry_id', 'slip_id', 'debit', 'credit', 'amount', 'client', 'outline')
+            ->where('slip_entry_id', $slipEntryId)
+            ->first();
+
+        return is_null($slipEntry) ? null : $slipEntry->toArray();
+    }
+
+    /**
      * Search slip entries between specified date.
      *
      * @param string $fromDate

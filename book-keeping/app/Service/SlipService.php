@@ -55,6 +55,47 @@ class SlipService
     }
 
     /**
+     * Create a new slip entry.
+     *
+     * @param string $slipId
+     * @param string $debit
+     * @param string $credit
+     * @param int    $amount
+     * @param string $client
+     * @param string $outline
+     *
+     * @return string $slipEntryId
+     */
+    public function createSlipEntry(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline): string
+    {
+        return $this->slipEntry->create($slipId, $debit, $credit, $amount, $client, $outline);
+    }
+
+    /**
+     * Delete the specified slip.
+     *
+     * @param string $slipId
+     *
+     * @return void
+     */
+    public function deleteSlip(string $slipId)
+    {
+        $this->slip->delete($slipId);
+    }
+
+    /**
+     * Delete the specified slip entry.
+     *
+     * @param string $slipEntryId
+     *
+     * @return void
+     */
+    public function deleteSlipEntry(string $slipEntryId)
+    {
+        $this->slipEntry->delete($slipEntryId);
+    }
+
+    /**
      * Retrieve the amount flow of each account between specified data.
      *
      * @param string $fromDate
@@ -66,6 +107,18 @@ class SlipService
     public function retrieveAmountFlows(string $fromDate, string $toDate, string $bookId): array
     {
         return $this->slipEntry->calculateSum($fromDate, $toDate, $bookId);
+    }
+
+    /**
+     * Retrieve draft slips.
+     *
+     * @param string $bookId
+     *
+     * @return array
+     */
+    public function retrieveDraftSlips(string $bookId): array
+    {
+        return $this->slip->findAllDraftByBookId($bookId);
     }
 
     /**
@@ -83,6 +136,32 @@ class SlipService
     }
 
     /**
+     * Retrieve slip entries bound to specify slip.
+     *
+     * @param string $slipId
+     *
+     * @return array
+     */
+    public function retrieveSlipEntriesBoundTo(string $slipId): array
+    {
+        return $this->slipEntry->findAllBySlipId($slipId);
+    }
+
+    /**
+     * Retrieve slip that bound specify slip entry.
+     *
+     * @param string $slipEntryId
+     *
+     * @return string | null
+     */
+    public function retrieveSlipThatBound(string $slipEntryId)
+    {
+        $slipEntry = $this->slipEntry->findById($slipEntryId);
+
+        return is_null($slipEntry) ? null : $slipEntry['slip_id'];
+    }
+
+    /**
      * Submit the slip.
      *
      * @param string $slipId
@@ -90,5 +169,16 @@ class SlipService
     public function submitSlip(string $slipId)
     {
         $this->slip->updateIsDraft($slipId, false);
+    }
+
+    /**
+     * Update the slip date.
+     *
+     * @param string $slipId
+     * @param string $date
+     */
+    public function updateDate(string $slipId, string $date)
+    {
+        $this->slip->update($slipId, ['date' => $date]);
     }
 }
