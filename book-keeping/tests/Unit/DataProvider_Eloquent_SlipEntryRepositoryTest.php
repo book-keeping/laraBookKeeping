@@ -122,6 +122,114 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
     /**
      * @test
      */
+    public function delete_OneRecordIsSoftDeleted()
+    {
+        $slipId = (string) Str::uuid();
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $client = 'client5';
+        $outline = 'outline5';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipEntryId = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => 1234,
+            'client'        => $client,
+            'outline'       => $outline,
+        ])->slip_entry_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $this->slipEntry->delete($slipEntryId);
+
+        $this->assertSoftDeleted('bk2_0_slip_entries', [
+            'slip_entry_id' => $slipEntryId,
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => 1234,
+            'client'        => $client,
+            'outline'       => $outline,
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function findAllBySlipId_ReturnSlipEntries()
+    {
+        $slipId = (string) Str::uuid();
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $amount = 2468;
+        $client = 'client6';
+        $outline = 'outline6';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipEntryId = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => $amount,
+            'client'        => $client,
+            'outline'       => $outline,
+        ])->slip_entry_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $slipEntries_expected = [
+            [
+                'slip_entry_id' => $slipEntryId,
+                'slip_id'       => $slipId,
+                'debit'         => $accountId1,
+                'credit'        => $accountId2,
+                'amount'        => $amount,
+                'client'        => $client,
+                'outline'       => $outline,
+            ],
+        ];
+
+        $slipEntries_actual = $this->slipEntry->findAllBySlipId($slipId);
+
+        $this->assertSame($slipEntries_expected, $slipEntries_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function findById_ReturnOneSlipEntry()
+    {
+        $slipId = (string) Str::uuid();
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $amount = 36912;
+        $client = 'client7';
+        $outline = 'outline7';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipEntryId = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => $amount,
+            'client'        => $client,
+            'outline'       => $outline,
+        ])->slip_entry_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $slipEntry_expected = [
+            'slip_entry_id' => $slipEntryId,
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => $amount,
+            'client'        => $client,
+            'outline'       => $outline,
+        ];
+
+        $slipEntry_actual = $this->slipEntry->findById($slipEntryId);
+
+        $this->assertSame($slipEntry_expected, $slipEntry_actual);
+    }
+
+    /**
+     * @test
+     */
     public function searchSlipEntries_ReturnedArrayHasKeysAsSlipEntry()
     {
         $fromDate = '2019-09-15';
