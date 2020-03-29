@@ -42,4 +42,45 @@ abstract class DataProvider_SlipRepositoryInterfaceTest extends TestCase
 
         $this->assertTrue(is_string($slipId));
     }
+
+    /**
+     * @test
+     */
+    public function delete_CalledWithString()
+    {
+        $slipId = (string) Str::uuid();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $this->slip->delete($slipId);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function findAllDraftByBookId_ReturnValueTypeIsArray()
+    {
+        $bookId = (string) Str::uuid();
+
+        $slips = $this->slip->findAllDraftByBookId($bookId);
+
+        $this->assertIsArray($slips);
+    }
+
+    /**
+     * @test
+     */
+    public function update_CalledWithStringAndArray()
+    {
+        $slipId = (string) Str::uuid();
+        $newData = [];
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $this->slip->update($slipId, $newData);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $this->assertTrue(true);
+    }
 }
