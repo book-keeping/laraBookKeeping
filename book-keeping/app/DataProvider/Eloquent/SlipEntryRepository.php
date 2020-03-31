@@ -82,8 +82,18 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
     public function searchSlipEntries(string $fromDate, string $toDate, string $bookId): array
     {
         $list = $this->getSlipEntriesQuery($fromDate, $toDate, $bookId)
-            ->select('slip_id', 'date', 'slip_outline', 'slip_memo',
-                'slip_entry_id', 'debit', 'credit', 'amount', 'client', 'outline')
+            ->select(
+                'slip_id',
+                'date',
+                'slip_outline',
+                'slip_memo',
+                'slip_entry_id',
+                'debit',
+                'credit',
+                'amount',
+                'client',
+                'outline'
+            )
             ->orderBy('date')
             ->get()->toArray();
 

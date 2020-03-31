@@ -29,9 +29,14 @@ class ExDatabaseTokenRepository extends DatabaseTokenRepository
      *
      * @return void
      */
-    public function __construct(ConnectionInterface $connection, HasherContract $hasher,
-                                $table, $hashKey, $index_name, $expires = 60)
-    {
+    public function __construct(
+        ConnectionInterface $connection,
+        HasherContract $hasher,
+        $table,
+        $hashKey,
+        $index_name,
+        $expires = 60
+    ) {
         $this->table = $table;
         $this->hasher = $hasher;
         $this->hashKey = $hashKey;
@@ -99,7 +104,8 @@ class ExDatabaseTokenRepository extends DatabaseTokenRepository
     public function exists(CanResetPasswordContract $user, $token)
     {
         $record = (array) $this->getTable()->where(
-            $this->index_name, $user->getIndexForPasswordReset($this->index_name)
+            $this->index_name,
+            $user->getIndexForPasswordReset($this->index_name)
         )->first();
 
         return $record &&
