@@ -8,6 +8,7 @@ use App\Service\BookService;
 use App\Service\BudgetService;
 use App\Service\SlipService;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Mockery;
 use Tests\TestCase;
@@ -17,6 +18,569 @@ class Service_BookKeepingServiceTest extends TestCase
     public function tearDown(): void
     {
         Mockery::close();
+        Carbon::setTestNow();
+    }
+
+    /**
+     * @test
+     */
+    public function createSlipEntryAsDraft_CreateNewSlipForTheDefaultBook()
+    {
+        $bookId = (string) Str::uuid();
+        $userId = 29;
+        $user = new User();
+        $user->id = $userId;
+        $this->be($user);
+        $debit = (string) Str::uuid();
+        $credit = (string) Str::uuid();
+        $amount = 3600;
+        $client = 'client37';
+        $outline = 'outline38';
+        $bookMock = Mockery::mock(BookService::class);
+        $bookMock->shouldReceive('retrieveDefaultBook')
+            ->once()
+            ->with($userId)
+            ->andReturn($bookId);
+        $accountMock = Mockery::mock(AccountService::class);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveDraftSlips')
+            ->once()
+            ->with($bookId)
+            ->andReturn([]);
+        $slipMock->shouldReceive('createSlipAsDraft')
+            ->once()
+            ->with($bookId, $outline, '2019-12-02', [
+                ['debit' => $debit, 'client' => $client, 'outline' => $outline, 'credit' => $credit, 'amount' => $amount],
+            ]);
+        $slipMock->shouldNotReceive('createSlipEntry');
+        Carbon::setTestNow(new Carbon('2019-12-02 09:59:59'));
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $BookKeeping->createSlipEntryAsDraft($debit, $client, $outline, $credit, $amount);
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function createSlipEntryAsDraft_AddEntryToSlipTheSpecifiedBook()
+    {
+        $bookId = (string) Str::uuid();
+        $slipId = (string) Str::uuid();
+        $debit = (string) Str::uuid();
+        $credit = (string) Str::uuid();
+        $amount = 7900;
+        $client = 'client80';
+        $outline = 'outline81';
+        $bookMock = Mockery::mock(BookService::class);
+        $accountMock = Mockery::mock(AccountService::class);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveDraftSlips')
+            ->once()
+            ->with($bookId)
+            ->andReturn([['slip_id' => $slipId]]);
+        $slipMock->shouldNotReceive('createSlipAsDraft');
+        $slipMock->shouldReceive('createSlipEntry')
+            ->once()
+            ->with($slipId, $debit, $credit, $amount, $client, $outline);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $BookKeeping->createSlipEntryAsDraft($debit, $client, $outline, $credit, $amount, $bookId);
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function deleteSlipEntryAsDraft_DeleteOnlySlipEntryWhenAnotherSlipEntryIsRemaining()
+    {
+        $slipId = (string) Str::uuid();
+        $slipEntryId = (string) Str::uuid();
+        $slipEntryId_r = (string) Str::uuid();
+        $debit = (string) Str::uuid();
+        $credit = (string) Str::uuid();
+        $bookMock = Mockery::mock(BookService::class);
+        $accountMock = Mockery::mock(AccountService::class);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveSlipThatBound')
+            ->once()
+            ->with($slipEntryId)
+            ->andReturn($slipId);
+        $slipMock->shouldNotReceive('deleteSlipEntry')
+            ->once()
+            ->with($slipEntryId);
+        $slipMock->shouldReceive('retrieveSlipEntriesBoundTo')
+            ->once()
+            ->with($slipId)
+            ->andReturn([
+                [
+                    'slip_entry_id' => $slipEntryId_r,
+                    'slip_id'       => $slipId,
+                    'debit'         => $debit,
+                    'credit'        => $credit,
+                    'amount'        => 1340,
+                    'client'        => 'client135',
+                    'outline'       => 'outline136',
+                ],
+            ]);
+        $slipMock->shouldNotReceive('deleteSlip');
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $BookKeeping->deleteSlipEntryAsDraft($slipEntryId);
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function deleteSlipEntryAsDraft_DeleteSlipTooWhenTheSlipEntryIsLastOne()
+    {
+        $slipId = (string) Str::uuid();
+        $slipEntryId = (string) Str::uuid();
+        $bookMock = Mockery::mock(BookService::class);
+        $accountMock = Mockery::mock(AccountService::class);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveSlipThatBound')
+            ->once()
+            ->with($slipEntryId)
+            ->andReturn($slipId);
+        $slipMock->shouldNotReceive('deleteSlipEntry')
+            ->once()
+            ->with($slipEntryId);
+        $slipMock->shouldReceive('retrieveSlipEntriesBoundTo')
+            ->once()
+            ->with($slipId)
+            ->andReturn([]);
+        $slipMock->shouldReceive('deleteSlip')
+            ->once()
+            ->with($slipId);
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $BookKeeping->deleteSlipEntryAsDraft($slipEntryId);
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function retrieveAccountsForSelect_RetrieveTheDefaultBookAccounts()
+    {
+        $bookId = (string) Str::uuid();
+        $userId = 184;
+        $user = new User();
+        $user->id = $userId;
+        $this->be($user);
+        $accountId_1 = (string) Str::uuid();
+        $accountId_2 = (string) Str::uuid();
+        $accountId_3 = (string) Str::uuid();
+        $accountId_4 = (string) Str::uuid();
+        $accountId_5 = (string) Str::uuid();
+        $accountId_6 = (string) Str::uuid();
+        $accountId_7 = (string) Str::uuid();
+        $accountId_8 = (string) Str::uuid();
+        $accountGroupId_1 = (string) Str::uuid();
+        $accountGroupId_2 = (string) Str::uuid();
+        $accountGroupId_3 = (string) Str::uuid();
+        $accountGroupId_4 = (string) Str::uuid();
+        $accountGroupId_5 = (string) Str::uuid();
+        $accounts = [
+            $accountId_1 => [
+                'account_type'             => AccountService::ACCOUNT_TYPE_ASSET,
+                'account_group_id'         => $accountGroupId_1,
+                'account_group_title'      => 'accountGroupTitle_1',
+                'is_current'               => 0,
+                'account_id'               => $accountId_1,
+                'account_title'            => 'accountTitle_1',
+                'description'              => 'description_1',
+                'selectable'               => 1,
+                'account_bk_code'          => 1201,
+                'created_at'               => '2019-12-02 12:00:01',
+                'account_group_bk_code'    => 1200,
+                'account_group_created_at' => '2019-12-01 12:00:12',
+            ],
+            $accountId_2 => [
+                'account_type'             => AccountService::ACCOUNT_TYPE_LIABILITY,
+                'account_group_id'         => $accountGroupId_2,
+                'account_group_title'      => 'accountGroupTitle_2',
+                'is_current'               => 0,
+                'account_id'               => $accountId_2,
+                'account_title'            => 'accountTitle_2',
+                'description'              => 'description_2',
+                'selectable'               => 1,
+                'account_bk_code'          => 2302,
+                'created_at'               => '2019-12-02 12:00:02',
+                'account_group_bk_code'    => 2300,
+                'account_group_created_at' => '2019-12-01 12:00:23',
+            ],
+            $accountId_3 => [
+                'account_type'             => AccountService::ACCOUNT_TYPE_LIABILITY,
+                'account_group_id'         => $accountGroupId_2,
+                'account_group_title'      => 'accountGroupTitle_2',
+                'is_current'               => 0,
+                'account_id'               => $accountId_3,
+                'account_title'            => 'accountTitle_3',
+                'description'              => 'description_3',
+                'selectable'               => 1,
+                'account_bk_code'          => 2303,
+                'created_at'               => '2019-12-02 12:00:03',
+                'account_group_bk_code'    => 2300,
+                'account_group_created_at' => '2019-12-01 12:00:23',
+            ],
+            $accountId_4 => [
+                'account_type'             => AccountService::ACCOUNT_TYPE_LIABILITY,
+                'account_group_id'         => $accountGroupId_3,
+                'account_group_title'      => 'accountGroupTitle_3',
+                'is_current'               => 0,
+                'account_id'               => $accountId_4,
+                'account_title'            => 'accountTitle_4',
+                'description'              => 'description_4',
+                'selectable'               => 1,
+                'account_bk_code'          => 2404,
+                'created_at'               => '2019-12-02 12:00:04',
+                'account_group_bk_code'    => 2400,
+                'account_group_created_at' => '2019-12-01 12:00:24',
+            ],
+            $accountId_5 => [
+                'account_type'             => AccountService::ACCOUNT_TYPE_EXPENSE,
+                'account_group_id'         => $accountGroupId_4,
+                'account_group_title'      => 'accountGroupTitle_4',
+                'is_current'               => 0,
+                'account_id'               => $accountId_5,
+                'account_title'            => 'accountTitle_5',
+                'description'              => 'description_5',
+                'selectable'               => 0,
+                'account_bk_code'          => 4105,
+                'created_at'               => '2019-12-02 12:00:05',
+                'account_group_bk_code'    => 4100,
+                'account_group_created_at' => '2019-12-01 12:00:41',
+            ],
+            $accountId_6 => [
+                'account_type'             => AccountService::ACCOUNT_TYPE_REVENUE,
+                'account_group_id'         => $accountGroupId_5,
+                'account_group_title'      => 'accountGroupTitle_5',
+                'is_current'               => 1,
+                'account_id'               => $accountId_6,
+                'account_title'            => 'accountTitle_6',
+                'description'              => 'description_6',
+                'selectable'               => 1,
+                'account_bk_code'          => 5106,
+                'created_at'               => '2019-12-02 12:00:06',
+                'account_group_bk_code'    => 5100,
+                'account_group_created_at' => '2019-12-01 12:00:51',
+            ],
+            $accountId_7 => [
+                'account_type'             => AccountService::ACCOUNT_TYPE_REVENUE,
+                'account_group_id'         => $accountGroupId_5,
+                'account_group_title'      => 'accountGroupTitle_5',
+                'is_current'               => 1,
+                'account_id'               => $accountId_7,
+                'account_title'            => 'accountTitle_7',
+                'description'              => 'description_7',
+                'selectable'               => 0,
+                'account_bk_code'          => 5107,
+                'created_at'               => '2019-12-02 12:00:07',
+                'account_group_bk_code'    => 5100,
+                'account_group_created_at' => '2019-12-01 12:00:51',
+            ],
+            $accountId_8 => [
+                'account_type'             => AccountService::ACCOUNT_TYPE_REVENUE,
+                'account_group_id'         => $accountGroupId_5,
+                'account_group_title'      => 'accountGroupTitle_5',
+                'is_current'               => 1,
+                'account_id'               => $accountId_8,
+                'account_title'            => 'accountTitle_8',
+                'description'              => 'description_8',
+                'selectable'               => 1,
+                'account_bk_code'          => 5108,
+                'created_at'               => '2019-12-02 12:00:08',
+                'account_group_bk_code'    => 5100,
+                'account_group_created_at' => '2019-12-01 12:00:51',
+            ],
+        ];
+        $accounts_expected = [
+            'asset' => [
+                'groups' => [
+                    $accountGroupId_1 => [
+                        'isCurrent'    => 0,
+                        'bk_code'      => 1200,
+                        'createdAt'    => '2019-12-01 12:00:12',
+                        'items'        => [
+                            $accountId_1 => [
+                                'title'    => 'accountTitle_1',
+                                'bk_code'  => 1201,
+                                'createdAt'=> '2019-12-02 12:00:01',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'liability' => [
+                'groups' => [
+                    $accountGroupId_2 => [
+                        'isCurrent'    => 0,
+                        'bk_code'      => 2300,
+                        'createdAt'    => '2019-12-01 12:00:23',
+                        'items'        => [
+                            $accountId_2 => [
+                                'title'    => 'accountTitle_2',
+                                'bk_code'  => 2302,
+                                'createdAt'=> '2019-12-02 12:00:02',
+                            ],
+                            $accountId_3 => [
+                                'title'    => 'accountTitle_3',
+                                'bk_code'  => 2303,
+                                'createdAt'=> '2019-12-02 12:00:03',
+                            ],
+                        ],
+                    ],
+                    $accountGroupId_3 => [
+                        'isCurrent'    => 0,
+                        'bk_code'      => 2400,
+                        'createdAt'    => '2019-12-01 12:00:24',
+                        'items'        => [
+                            $accountId_4 => [
+                                'title'    => 'accountTitle_4',
+                                'bk_code'  => 2404,
+                                'createdAt'=> '2019-12-02 12:00:04',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'expense' => [
+                'groups' => [],
+            ],
+            'revenue' => [
+                'groups' => [
+                    $accountGroupId_5 => [
+                        'isCurrent'    => 1,
+                        'bk_code'      => 5100,
+                        'createdAt'    => '2019-12-01 12:00:51',
+                        'items'        => [
+                            $accountId_6 => [
+                                'title'    => 'accountTitle_6',
+                                'bk_code'  => 5106,
+                                'createdAt'=> '2019-12-02 12:00:06',
+                            ],
+                            $accountId_8 => [
+                                'title'    => 'accountTitle_8',
+                                'bk_code'  => 5108,
+                                'createdAt'=> '2019-12-02 12:00:08',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        $bookMock = Mockery::mock(BookService::class);
+        $bookMock->shouldReceive('retrieveDefaultBook')
+            ->once()
+            ->with($userId)
+            ->andReturn($bookId);
+        $accountMock = Mockery::mock(AccountService::class);
+        $accountMock->shouldReceive('retrieveAccounts')
+            ->once()
+            ->with($bookId)
+            ->andReturn($accounts);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $accounts_actual = $BookKeeping->retrieveAccountsForSelect();
+
+        $this->assertSame($accounts_expected, $accounts_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function retrieveAccountsForSelect_RetrieveTheSpecifiedBookAccounts()
+    {
+        $bookId = (string) Str::uuid();
+        $accounts_expected = [
+            'asset'     => ['groups' => []],
+            'liability' => ['groups' => []],
+            'expense'   => ['groups' => []],
+            'revenue'   => ['groups' => []],
+        ];
+        $bookMock = Mockery::mock(BookService::class);
+        $accountMock = Mockery::mock(AccountService::class);
+        $accountMock->shouldReceive('retrieveAccounts')
+            ->once()
+            ->with($bookId)
+            ->andReturn([]);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $accounts_actual = $BookKeeping->retrieveAccountsForSelect($bookId);
+
+        $this->assertSame($accounts_expected, $accounts_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function retrieveDraftSlips_RetrieveTheDefaultBookDraftSlips()
+    {
+        $bookId = (string) Str::uuid();
+        $userId = 434;
+        $user = new User();
+        $user->id = $userId;
+        $this->be($user);
+        $accountId_1 = (string) Str::uuid();
+        $accountId_2 = (string) Str::uuid();
+        $accountId_3 = (string) Str::uuid();
+        $accountId_4 = (string) Str::uuid();
+        $accountId_5 = (string) Str::uuid();
+        $accountId_6 = (string) Str::uuid();
+        $slipEentryId_1 = (string) Str::uuid();
+        $slipEentryId_2 = (string) Str::uuid();
+        $slipEentryId_3 = (string) Str::uuid();
+        $slipId_1 = (string) Str::uuid();
+        $slipId_2 = (string) Str::uuid();
+        $accounts = [
+            $accountId_1 => ['account_title' => 'accountTitle_1'],
+            $accountId_2 => ['account_title' => 'accountTitle_2'],
+            $accountId_3 => ['account_title' => 'accountTitle_3'],
+            $accountId_4 => ['account_title' => 'accountTitle_4'],
+            $accountId_5 => ['account_title' => 'accountTitle_5'],
+            $accountId_6 => ['account_title' => 'accountTitle_6'],
+        ];
+        $slips = [
+            ['slip_id' => $slipId_1, 'date' => '2019-10-03', 'slip_outline' => 'slipOutline_3', 'slip_memo' => 'slipMemo_3'],
+            ['slip_id' => $slipId_2, 'date' => '2019-10-04', 'slip_outline' => 'slipOutline_4', 'slip_memo' => 'slipMemo_4'],
+        ];
+        $slipEntries_1 = [
+            [
+                'slip_entry_id' => $slipEentryId_1,
+                'slip_id'       => $slipId_1,
+                'debit'         => $accountId_1,
+                'credit'        => $accountId_2,
+                'amount'        => 4670,
+                'client'        => 'client_468',
+                'outline'       => 'outline_469',
+            ],
+        ];
+        $slipEntries_2 = [
+            [
+                'slip_entry_id' => $slipEentryId_2,
+                'slip_id'       => $slipId_2,
+                'debit'         => $accountId_3,
+                'credit'        => $accountId_4,
+                'amount'        => 4780,
+                'client'        => 'client_479',
+                'outline'       => 'outline_480',
+            ],
+            [
+                'slip_entry_id' => $slipEentryId_3,
+                'slip_id'       => $slipId_2,
+                'debit'         => $accountId_5,
+                'credit'        => $accountId_6,
+                'amount'        => 4870,
+                'client'        => 'client_488',
+                'outline'       => 'outline_489',
+            ],
+        ];
+        $slips_expected = [
+            $slipId_1 => [
+                'date'         => '2019-10-03',
+                'slip_outline' => 'slipOutline_3',
+                'slip_memo'    => 'slipMemo_3',
+                'items'        => [
+                    $slipEentryId_1 => [
+                        'debit'   => ['account_id' => $accountId_1, 'account_title' => 'accountTitle_1'],
+                        'credit'  => ['account_id' => $accountId_2, 'account_title' => 'accountTitle_2'],
+                        'amount'  => 4670,
+                        'client'  => 'client_468',
+                        'outline' => 'outline_469',
+                    ],
+                ],
+            ],
+            $slipId_2 => [
+                'date'         => '2019-10-04',
+                'slip_outline' => 'slipOutline_4',
+                'slip_memo'    => 'slipMemo_4',
+                'items'        => [
+                    $slipEentryId_2 => [
+                        'debit'   => ['account_id' => $accountId_3, 'account_title' => 'accountTitle_3'],
+                        'credit'  => ['account_id' => $accountId_4, 'account_title' => 'accountTitle_4'],
+                        'amount'  => 4780,
+                        'client'  => 'client_479',
+                        'outline' => 'outline_480',
+                    ],
+                    $slipEentryId_3 => [
+                        'debit'   => ['account_id' => $accountId_5, 'account_title' => 'accountTitle_5'],
+                        'credit'  => ['account_id' => $accountId_6, 'account_title' => 'accountTitle_6'],
+                        'amount'  => 4870,
+                        'client'  => 'client_488',
+                        'outline' => 'outline_489',
+                    ],
+                ],
+            ],
+        ];
+        $bookMock = Mockery::mock(BookService::class);
+        $bookMock->shouldReceive('retrieveDefaultBook')
+            ->once()
+            ->with($userId)
+            ->andReturn($bookId);
+        $accountMock = Mockery::mock(AccountService::class);
+        $accountMock->shouldReceive('retrieveAccounts')
+            ->once()
+            ->with($bookId)
+            ->andReturn($accounts);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveDraftSlips')
+            ->once()
+            ->with($bookId)
+            ->andReturn($slips);
+        $slipMock->shouldReceive('retrieveSlipEntriesBoundTo')
+            ->once()
+            ->with($slipId_1)
+            ->andReturn($slipEntries_1);
+        $slipMock->shouldReceive('retrieveSlipEntriesBoundTo')
+            ->once()
+            ->with($slipId_2)
+            ->andReturn($slipEntries_2);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $slips_actual = $BookKeeping->retrieveDraftSlips();
+
+        $this->assertSame($slips_expected, $slips_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function retrieveDraftSlips_RetrieveTheSpecifiedBookDraftSlips()
+    {
+        $bookId = (string) Str::uuid();
+        $slips_expected = [];
+        $bookMock = Mockery::mock(BookService::class);
+        $accountMock = Mockery::mock(AccountService::class);
+        $accountMock->shouldReceive('retrieveAccounts')
+            ->once()
+            ->with($bookId)
+            ->andReturn([]);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveDraftSlips')
+            ->once()
+            ->with($bookId)
+            ->andReturn([]);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $slips_actual = $BookKeeping->retrieveDraftSlips($bookId);
+
+        $this->assertSame($slips_expected, $slips_actual);
     }
 
     /**
@@ -470,5 +1034,66 @@ class Service_BookKeepingServiceTest extends TestCase
         $statements_actual = $BookKeeping->retrieveStatements($fromDate, $toDate, $bookId);
 
         $this->assertSame($statements_expected, $statements_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function submitDraftSlip_SubmitDraftSlipForTheDefaultBook()
+    {
+        $bookId = (string) Str::uuid();
+        $userId = 1045;
+        $user = new User();
+        $user->id = $userId;
+        $this->be($user);
+        $slipId = (string) Str::uuid();
+        $date = '2020-04-03';
+        $bookMock = Mockery::mock(BookService::class);
+        $bookMock->shouldReceive('retrieveDefaultBook')
+            ->once()
+            ->with($userId)
+            ->andReturn($bookId);
+        $accountMock = Mockery::mock(AccountService::class);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveDraftSlips')
+            ->once()
+            ->with($bookId)
+            ->andReturn([['slip_id' => $slipId]]);
+        $slipMock->shouldReceive('updateDate')
+            ->once()
+            ->with($slipId, $date);
+        $slipMock->shouldReceive('submitSlip')
+            ->once()
+            ->with($slipId);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $BookKeeping->submitDraftSlip($date);
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function submitDraftSlip_SubmitDraftSlipForTheSpecifiedBookButThereIsNoTarget()
+    {
+        $bookId = (string) Str::uuid();
+        $date = '2020-04-04';
+        $bookMock = Mockery::mock(BookService::class);
+        $accountMock = Mockery::mock(AccountService::class);
+        $budgetMock = Mockery::mock(BudgetService::class);
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveDraftSlips')
+            ->once()
+            ->with($bookId)
+            ->andReturn([]);
+        $slipMock->shouldNotReceive('updateDate');
+        $slipMock->shouldNotReceive('submitSlip');
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $BookKeeping->submitDraftSlip($date, $bookId);
+
+        $this->assertTrue(true);
     }
 }
