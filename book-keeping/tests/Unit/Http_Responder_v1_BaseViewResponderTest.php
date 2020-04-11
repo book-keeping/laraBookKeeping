@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Http\Responder\v1\BaseViewResponder;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use Mockery;
 use Tests\TestCase;
 
@@ -109,6 +110,121 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
         $reordered_actual = $responder->sortAccountInAscendingCodeOrder($groupedList);
 
         $this->assertSame($reordered_expected, $reordered_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function translateAccountListFormat_FormattedAccountListIsReturned()
+    {
+        $accountId_1 = (string) Str::uuid();
+        $accountId_2 = (string) Str::uuid();
+        $accountId_3 = (string) Str::uuid();
+        $accountId_4 = (string) Str::uuid();
+        $accountId_5 = (string) Str::uuid();
+        $accountId_6 = (string) Str::uuid();
+        $accountGroupId_1 = (string) Str::uuid();
+        $accountGroupId_2 = (string) Str::uuid();
+        $accountGroupId_3 = (string) Str::uuid();
+        $accountGroupId_4 = (string) Str::uuid();
+        $accountGroupId_5 = (string) Str::uuid();
+        $accounts = [
+            'asset' => [
+                'groups' => [
+                    $accountGroupId_1 => [
+                        'isCurrent'    => 0,
+                        'bk_code'      => 1200,
+                        'createdAt'    => '2019-12-01 12:00:12',
+                        'items'        => [
+                            $accountId_1 => [
+                                'title'    => 'accountTitle_1',
+                                'bk_code'  => 1201,
+                                'createdAt'=> '2019-12-02 12:00:01',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'liability' => [
+                'groups' => [
+                    $accountGroupId_2 => [
+                        'isCurrent'    => 0,
+                        'bk_code'      => 2300,
+                        'createdAt'    => '2019-12-01 12:00:23',
+                        'items'        => [
+                            $accountId_2 => [
+                                'title'    => 'accountTitle_2',
+                                'bk_code'  => 2302,
+                                'createdAt'=> '2019-12-02 12:00:02',
+                            ],
+                            $accountId_3 => [
+                                'title'    => 'accountTitle_3',
+                                'bk_code'  => 2303,
+                                'createdAt'=> '2019-12-02 12:00:03',
+                            ],
+                        ],
+                    ],
+                    $accountGroupId_3 => [
+                        'isCurrent'    => 0,
+                        'bk_code'      => 2400,
+                        'createdAt'    => '2019-12-01 12:00:24',
+                        'items'        => [
+                            $accountId_4 => [
+                                'title'    => 'accountTitle_4',
+                                'bk_code'  => 2404,
+                                'createdAt'=> '2019-12-02 12:00:04',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'expense' => [
+                'groups' => [],
+            ],
+            'revenue' => [
+                'groups' => [
+                    $accountGroupId_4 => [
+                        'isCurrent'    => 1,
+                        'bk_code'      => 5100,
+                        'createdAt'    => '2019-12-01 12:00:51',
+                        'items'        => [
+                            $accountId_5 => [
+                                'title'    => 'accountTitle_5',
+                                'bk_code'  => 5105,
+                                'createdAt'=> '2019-12-02 12:00:06',
+                            ],
+                        ],
+                    ],
+                    $accountGroupId_5 => [
+                        'isCurrent'    => 1,
+                        'bk_code'      => 5200,
+                        'createdAt'    => '2019-12-01 12:00:51',
+                        'items'        => [
+                            $accountId_6 => [
+                                'title'    => 'accountTitle_6',
+                                'bk_code'  => 5206,
+                                'createdAt'=> '2019-12-02 12:00:06',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        $formattedAccountList_expected = [
+            $accountId_1 => 'accountTitle_1',
+            $accountId_2 => 'accountTitle_2',
+            $accountId_3 => 'accountTitle_3',
+            $accountId_4 => 'accountTitle_4',
+            $accountId_5 => 'accountTitle_5',
+            $accountId_6 => 'accountTitle_6',
+        ];
+        $ResponseMock = Mockery::mock(Response::class);
+        $ViewFactoryMock = Mockery::mock(Factory::class);
+
+        $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
+        $formattedAccountList_actual = $responder->translateAccountListFormat($accounts);
+
+        $this->assertSame($formattedAccountList_expected, $formattedAccountList_actual);
     }
 
     /**
@@ -276,6 +392,89 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
         $formattedBalanceSheet_actual = $responder->translateBalanceSheetFormat($statements);
 
         $this->assertSame($formattedBalanceSheet_expected, $formattedBalanceSheet_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function translateDraftSlipFormat_FormattedDraftSlipIsReturned()
+    {
+        $accountId_1 = (string) Str::uuid();
+        $accountId_2 = (string) Str::uuid();
+        $accountId_3 = (string) Str::uuid();
+        $accountId_4 = (string) Str::uuid();
+        $accountId_5 = (string) Str::uuid();
+        $accountId_6 = (string) Str::uuid();
+        $slipEntryId_1 = (string) Str::uuid();
+        $slipEntryId_2 = (string) Str::uuid();
+        $slipEntryId_3 = (string) Str::uuid();
+        $slipId_1 = (string) Str::uuid();
+        $slip = [
+            $slipId_1 => [
+                'date'         => '2019-11-04',
+                'slip_outline' => 'slipOutline_4',
+                'slip_memo'    => 'slipMemo_4',
+                'items'        => [
+                    $slipEntryId_1 => [
+                        'debit'   => ['account_id' => $accountId_1, 'account_title' => 'accountTitle_1'],
+                        'credit'  => ['account_id' => $accountId_2, 'account_title' => 'accountTitle_2'],
+                        'amount'  => 4210,
+                        'client'  => 'client_422',
+                        'outline' => 'outline_423',
+                    ],
+                    $slipEntryId_2 => [
+                        'debit'   => ['account_id' => $accountId_3, 'account_title' => 'accountTitle_3'],
+                        'credit'  => ['account_id' => $accountId_4, 'account_title' => 'accountTitle_4'],
+                        'amount'  => 4280,
+                        'client'  => 'client_429',
+                        'outline' => 'outline_430',
+                    ],
+                    $slipEntryId_3 => [
+                        'debit'   => ['account_id' => $accountId_5, 'account_title' => 'accountTitle_5'],
+                        'credit'  => ['account_id' => $accountId_6, 'account_title' => 'accountTitle_6'],
+                        'amount'  => 4350,
+                        'client'  => 'client_436',
+                        'outline' => 'outline_437',
+                    ],
+                ],
+            ],
+        ];
+        $formattedDraftSlip_expected = [
+            $slipEntryId_1 => [
+                'no'      => substr($slipEntryId_1, 0, 6).'..',
+                'debit'   => 'accountTitle_1',
+                'client'  => 'client_422',
+                'outline' => 'outline_423',
+                'credit'  => 'accountTitle_2',
+                'amount'  => 4210,
+                'trclass' => 'evn',
+            ],
+            $slipEntryId_2 => [
+                'no'      => substr($slipEntryId_2, 0, 6).'..',
+                'debit'   => 'accountTitle_3',
+                'client'  => 'client_429',
+                'outline' => 'outline_430',
+                'credit'  => 'accountTitle_4',
+                'amount'  => 4280,
+                'trclass' => 'odd',
+            ],
+            $slipEntryId_3 => [
+                'no'      => substr($slipEntryId_3, 0, 6).'..',
+                'debit'   => 'accountTitle_5',
+                'client'  => 'client_436',
+                'outline' => 'outline_437',
+                'credit'  => 'accountTitle_6',
+                'amount'  => 4350,
+                'trclass' => 'evn',
+            ],
+        ];
+        $ResponseMock = Mockery::mock(Response::class);
+        $ViewFactoryMock = Mockery::mock(Factory::class);
+
+        $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
+        $formattedDraftSlip_actual = $responder->translateDraftSlipFormat($slip);
+
+        $this->assertSame($formattedDraftSlip_expected, $formattedDraftSlip_actual);
     }
 
     /**
