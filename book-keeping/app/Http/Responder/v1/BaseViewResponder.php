@@ -59,6 +59,28 @@ class BaseViewResponder
     }
 
     /**
+     * Translate account list format for view.
+     *
+     * @param array $accounts
+     *
+     * @return array
+     */
+    public function translateAccountListFormat(array $accounts): array
+    {
+        $account_title_list = [];
+
+        foreach ($accounts as $accountType) {
+            foreach ($accountType['groups'] as $accountGroupItem) {
+                foreach ($accountGroupItem['items'] as $accountId => $accountItem) {
+                    $account_title_list[$accountId] = $accountItem['title'];
+                }
+            }
+        }
+
+        return $account_title_list;
+    }
+
+    /**
      * Translate balance sheet format for view.
      *
      * @param array $statements
@@ -74,6 +96,38 @@ class BaseViewResponder
             'creditGroup'            => 'liability',
             'displayCurrentNetAsset' => true,
         ]);
+    }
+
+    /**
+     * Translate draft slips format for view.
+     *
+     * @param array $slips
+     *
+     * @return array
+     */
+    public function translateDraftSlipFormat(array $slip): array
+    {
+        $formatted = [];
+        $slipId = key($slip);
+        $trclass = 'evn';
+        foreach ($slip[$slipId]['items'] as $slipEntryId => $slipEntryItem) {
+            $formatted[$slipEntryId] = [
+                'no'      => substr($slipEntryId, 0, 6).'..',
+                'debit'   => $slipEntryItem['debit']['account_title'],
+                'client'  => $slipEntryItem['client'],
+                'outline' => $slipEntryItem['outline'],
+                'credit'  => $slipEntryItem['credit']['account_title'],
+                'amount'  => $slipEntryItem['amount'],
+                'trclass' => $trclass,
+            ];
+            if ($trclass == 'evn') {
+                $trclass = 'odd';
+            } else {
+                $trclass = 'evn';
+            }
+        }
+
+        return $formatted;
     }
 
     /**
