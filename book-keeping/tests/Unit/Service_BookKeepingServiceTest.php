@@ -441,9 +441,9 @@ class Service_BookKeepingServiceTest extends TestCase
         $accountId_4 = (string) Str::uuid();
         $accountId_5 = (string) Str::uuid();
         $accountId_6 = (string) Str::uuid();
-        $slipEentryId_1 = (string) Str::uuid();
-        $slipEentryId_2 = (string) Str::uuid();
-        $slipEentryId_3 = (string) Str::uuid();
+        $slipEntryId_1 = (string) Str::uuid();
+        $slipEntryId_2 = (string) Str::uuid();
+        $slipEntryId_3 = (string) Str::uuid();
         $slipId_1 = (string) Str::uuid();
         $slipId_2 = (string) Str::uuid();
         $accounts = [
@@ -460,7 +460,7 @@ class Service_BookKeepingServiceTest extends TestCase
         ];
         $slipEntries_1 = [
             [
-                'slip_entry_id' => $slipEentryId_1,
+                'slip_entry_id' => $slipEntryId_1,
                 'slip_id'       => $slipId_1,
                 'debit'         => $accountId_1,
                 'credit'        => $accountId_2,
@@ -471,7 +471,7 @@ class Service_BookKeepingServiceTest extends TestCase
         ];
         $slipEntries_2 = [
             [
-                'slip_entry_id' => $slipEentryId_2,
+                'slip_entry_id' => $slipEntryId_2,
                 'slip_id'       => $slipId_2,
                 'debit'         => $accountId_3,
                 'credit'        => $accountId_4,
@@ -480,7 +480,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'outline'       => 'outline_480',
             ],
             [
-                'slip_entry_id' => $slipEentryId_3,
+                'slip_entry_id' => $slipEntryId_3,
                 'slip_id'       => $slipId_2,
                 'debit'         => $accountId_5,
                 'credit'        => $accountId_6,
@@ -495,7 +495,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'slip_outline' => 'slipOutline_3',
                 'slip_memo'    => 'slipMemo_3',
                 'items'        => [
-                    $slipEentryId_1 => [
+                    $slipEntryId_1 => [
                         'debit'   => ['account_id' => $accountId_1, 'account_title' => 'accountTitle_1'],
                         'credit'  => ['account_id' => $accountId_2, 'account_title' => 'accountTitle_2'],
                         'amount'  => 4670,
@@ -509,14 +509,14 @@ class Service_BookKeepingServiceTest extends TestCase
                 'slip_outline' => 'slipOutline_4',
                 'slip_memo'    => 'slipMemo_4',
                 'items'        => [
-                    $slipEentryId_2 => [
+                    $slipEntryId_2 => [
                         'debit'   => ['account_id' => $accountId_3, 'account_title' => 'accountTitle_3'],
                         'credit'  => ['account_id' => $accountId_4, 'account_title' => 'accountTitle_4'],
                         'amount'  => 4780,
                         'client'  => 'client_479',
                         'outline' => 'outline_480',
                     ],
-                    $slipEentryId_3 => [
+                    $slipEntryId_3 => [
                         'debit'   => ['account_id' => $accountId_5, 'account_title' => 'accountTitle_5'],
                         'credit'  => ['account_id' => $accountId_6, 'account_title' => 'accountTitle_6'],
                         'amount'  => 4870,
@@ -601,9 +601,9 @@ class Service_BookKeepingServiceTest extends TestCase
         $accountId_4 = (string) Str::uuid();
         $accountId_5 = (string) Str::uuid();
         $accountId_6 = (string) Str::uuid();
-        $slipEentryId_1 = (string) Str::uuid();
-        $slipEentryId_2 = (string) Str::uuid();
-        $slipEentryId_3 = (string) Str::uuid();
+        $slipEntryId_1 = (string) Str::uuid();
+        $slipEntryId_2 = (string) Str::uuid();
+        $slipEntryId_3 = (string) Str::uuid();
         $slipId_1 = (string) Str::uuid();
         $slipId_2 = (string) Str::uuid();
         $accounts = [
@@ -620,7 +620,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'date'          => '2019-09-15',
                 'slip_outline'  => 'slipOutline_1',
                 'slip_memo'     => 'slipMemo_1',
-                'slip_entry_id' => $slipEentryId_1,
+                'slip_entry_id' => $slipEntryId_1,
                 'debit'         => $accountId_1,
                 'credit'        => $accountId_2,
                 'amount'        => 100,
@@ -632,7 +632,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'date'          => '2019-09-25',
                 'slip_outline'  => 'slipOutline_2',
                 'slip_memo'     => 'slipMemo_2',
-                'slip_entry_id' => $slipEentryId_2,
+                'slip_entry_id' => $slipEntryId_2,
                 'debit'         => $accountId_3,
                 'credit'        => $accountId_4,
                 'amount'        => 2000,
@@ -644,7 +644,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'date'          => '2019-09-15',
                 'slip_outline'  => 'slipOutline_1',
                 'slip_memo'     => 'slipMemo_1',
-                'slip_entry_id' => $slipEentryId_3,
+                'slip_entry_id' => $slipEntryId_3,
                 'debit'         => $accountId_5,
                 'credit'        => $accountId_6,
                 'amount'        => 30000,
@@ -658,14 +658,14 @@ class Service_BookKeepingServiceTest extends TestCase
                 'slip_outline' => 'slipOutline_1',
                 'slip_memo'    => 'slipMemo_1',
                 'items'        => [
-                    $slipEentryId_1 => [
+                    $slipEntryId_1 => [
                         'debit'   => ['account_id' => $accountId_1, 'account_title' => 'accountTitle_1'],
                         'credit'  => ['account_id' => $accountId_2, 'account_title' => 'accountTitle_2'],
                         'amount'  => 100,
                         'client'  => 'client_1',
                         'outline' => 'outline_1',
                     ],
-                    $slipEentryId_3 => [
+                    $slipEntryId_3 => [
                         'debit'   => ['account_id' => $accountId_5, 'account_title' => 'accountTitle_5'],
                         'credit'  => ['account_id' => $accountId_6, 'account_title' => 'accountTitle_6'],
                         'amount'  => 30000,
@@ -679,7 +679,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 'slip_outline' => 'slipOutline_2',
                 'slip_memo'    => 'slipMemo_2',
                 'items'        => [
-                    $slipEentryId_2 => [
+                    $slipEntryId_2 => [
                         'debit'   => ['account_id' => $accountId_3, 'account_title' => 'accountTitle_3'],
                         'credit'  => ['account_id' => $accountId_4, 'account_title' => 'accountTitle_4'],
                         'amount'  => 2000,
