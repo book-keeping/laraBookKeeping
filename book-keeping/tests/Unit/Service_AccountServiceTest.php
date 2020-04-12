@@ -27,7 +27,9 @@ class Service_AccountServiceTest extends TestCase
         $bk_uid = 22;
         $bk_code = 1101;
         $accountId_expected = (string) Str::uuid();
+        /** @var \App\DataProvider\AccountGroupRepositoryInterface|\Mockery\MockInterface $accountGroupMock */
         $accountGroupMock = Mockery::mock(AccountGroupRepositoryInterface::class);
+        /** @var \App\DataProvider\AccountRepositoryInterface|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountRepositoryInterface::class);
         $accountMock->shouldReceive('create')
             ->once()
@@ -52,7 +54,9 @@ class Service_AccountServiceTest extends TestCase
         $bk_uid = 22;
         $bk_code = 1101;
         $accountGroupId_expected = (string) Str::uuid();
+        /** @var \App\DataProvider\AccountGroupRepositoryInterface|\Mockery\MockInterface $accountGroupMock */
         $accountGroupMock = Mockery::mock(AccountGroupRepositoryInterface::class);
+        /** @var \App\DataProvider\AccountRepositoryInterface|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountRepositoryInterface::class);
         $accountGroupMock->shouldReceive('create')
             ->once()
@@ -77,7 +81,9 @@ class Service_AccountServiceTest extends TestCase
         $accountItem_1 = ['account_id' => $account_id_1, 'account_title' => 'title1', 'selectable' => true, 'account_bk_code' => 1101];
         $accountItem_2 = ['account_id' => $account_id_2, 'account_title' => 'title2', 'selectable' => true, 'account_bk_code' => 1201];
         $accountItem_3 = ['account_id' => $account_id_3, 'account_title' => 'title3', 'selectable' => false, 'account_bk_code' => 1102];
+        /** @var \App\DataProvider\AccountGroupRepositoryInterface|\Mockery\MockInterface $accountGroupMock */
         $accountGroupMock = Mockery::mock(AccountGroupRepositoryInterface::class);
+        /** @var \App\DataProvider\AccountRepositoryInterface|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountRepositoryInterface::class);
         $accountMock->shouldReceive('searchAccount')
             ->once()

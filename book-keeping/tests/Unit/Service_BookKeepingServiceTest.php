@@ -36,13 +36,17 @@ class Service_BookKeepingServiceTest extends TestCase
         $amount = 3600;
         $client = 'client37';
         $outline = 'outline38';
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldReceive('retrieveDefaultBook')
             ->once()
             ->with($userId)
             ->andReturn($bookId);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveDraftSlips')
             ->once()
@@ -74,9 +78,13 @@ class Service_BookKeepingServiceTest extends TestCase
         $amount = 7900;
         $client = 'client80';
         $outline = 'outline81';
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveDraftSlips')
             ->once()
@@ -103,9 +111,13 @@ class Service_BookKeepingServiceTest extends TestCase
         $slipEntryId_r = (string) Str::uuid();
         $debit = (string) Str::uuid();
         $credit = (string) Str::uuid();
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveSlipThatBound')
             ->once()
@@ -143,9 +155,13 @@ class Service_BookKeepingServiceTest extends TestCase
     {
         $slipId = (string) Str::uuid();
         $slipEntryId = (string) Str::uuid();
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveSlipThatBound')
             ->once()
@@ -379,17 +395,21 @@ class Service_BookKeepingServiceTest extends TestCase
                 ],
             ],
         ];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldReceive('retrieveDefaultBook')
             ->once()
             ->with($userId)
             ->andReturn($bookId);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
         $accountMock->shouldReceive('retrieveAccounts')
             ->once()
             ->with($bookId)
             ->andReturn($accounts);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
 
         $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
@@ -410,13 +430,17 @@ class Service_BookKeepingServiceTest extends TestCase
             'expense'   => ['groups' => []],
             'revenue'   => ['groups' => []],
         ];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
         $accountMock->shouldReceive('retrieveAccounts')
             ->once()
             ->with($bookId)
             ->andReturn([]);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
 
         $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
@@ -526,17 +550,21 @@ class Service_BookKeepingServiceTest extends TestCase
                 ],
             ],
         ];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldReceive('retrieveDefaultBook')
             ->once()
             ->with($userId)
             ->andReturn($bookId);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
         $accountMock->shouldReceive('retrieveAccounts')
             ->once()
             ->with($bookId)
             ->andReturn($accounts);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveDraftSlips')
             ->once()
@@ -564,13 +592,17 @@ class Service_BookKeepingServiceTest extends TestCase
     {
         $bookId = (string) Str::uuid();
         $slips_expected = [];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
         $accountMock->shouldReceive('retrieveAccounts')
             ->once()
             ->with($bookId)
             ->andReturn([]);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveDraftSlips')
             ->once()
@@ -689,17 +721,21 @@ class Service_BookKeepingServiceTest extends TestCase
                 ],
             ],
         ];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldReceive('retrieveDefaultBook')
             ->once()
             ->with($userId)
             ->andReturn($bookId);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
         $accountMock->shouldReceive('retrieveAccounts')
             ->once()
             ->with($bookId)
             ->andReturn($accounts);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveSlipEntries')
             ->once()
@@ -721,14 +757,18 @@ class Service_BookKeepingServiceTest extends TestCase
         $toDate = '2019-10-31';
         $bookId = (string) Str::uuid();
         $slips_expected = [];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldNotReceive('retrieveDefaultBook');
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
         $accountMock->shouldReceive('retrieveAccounts')
             ->once()
             ->with($bookId)
             ->andReturn([]);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveSlipEntries')
             ->once()
@@ -976,17 +1016,21 @@ class Service_BookKeepingServiceTest extends TestCase
             'net_income'                           => ['amount' => -800],
             'net_asset'                            => ['amount' => -1200],
         ];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldReceive('retrieveDefaultBook')
             ->once()
             ->with($userId)
             ->andReturn($bookId);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
         $accountMock->shouldReceive('retrieveAccounts')
             ->once()
             ->with($bookId)
             ->andReturn($accounts);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveAmountFlows')
             ->once()
@@ -1016,14 +1060,18 @@ class Service_BookKeepingServiceTest extends TestCase
             'net_income'                           => ['amount' => 0],
             'net_asset'                            => ['amount' => 0],
         ];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldNotReceive('retrieveDefaultBook');
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
         $accountMock->shouldReceive('retrieveAccounts')
             ->once()
             ->with($bookId)
             ->andReturn([]);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveAmountFlows')
             ->once()
@@ -1048,13 +1096,17 @@ class Service_BookKeepingServiceTest extends TestCase
         $this->be($user);
         $slipId = (string) Str::uuid();
         $date = '2020-04-03';
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldReceive('retrieveDefaultBook')
             ->once()
             ->with($userId)
             ->andReturn($bookId);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveDraftSlips')
             ->once()
@@ -1080,9 +1132,13 @@ class Service_BookKeepingServiceTest extends TestCase
     {
         $bookId = (string) Str::uuid();
         $date = '2020-04-04';
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
         $accountMock = Mockery::mock(AccountService::class);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveDraftSlips')
             ->once()

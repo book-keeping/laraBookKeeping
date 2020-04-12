@@ -25,6 +25,7 @@ class Service_BudgetServiceTest extends TestCase
         $date = '2019-09-01';
         $amount = 10000;
         $budgetId_expected = (string) Str::uuid();
+        /** @var \App\DataProvider\BudgetRepositoryInterface|\Mockery\MockInterface $budgetMock */
         $budgetMock = Mockery::mock(BudgetRepositoryInterface::class);
         $budgetMock->shouldReceive('create')
             ->once()

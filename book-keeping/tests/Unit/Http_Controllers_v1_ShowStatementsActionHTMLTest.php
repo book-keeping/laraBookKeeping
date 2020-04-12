@@ -53,6 +53,7 @@ class Http_Controllers_v1_ShowStatementsActionHTMLTest extends TestCase
             ],
         ];
         $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
         $BookKeepingMock->shouldReceive('retrieveStatements')
             ->once()
@@ -70,11 +71,13 @@ class Http_Controllers_v1_ShowStatementsActionHTMLTest extends TestCase
             ->once()
             ->with($beginning_date, $end_date)
             ->andReturn($context['slips']);
+        /** @var \App\Http\Responder\v1\ShowStatementsViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(ShowStatementsViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('isMethod')
             ->once()
@@ -132,6 +135,7 @@ class Http_Controllers_v1_ShowStatementsActionHTMLTest extends TestCase
             ],
         ];
         $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
         $BookKeepingMock->shouldReceive('retrieveStatements')
             ->once()
@@ -149,11 +153,13 @@ class Http_Controllers_v1_ShowStatementsActionHTMLTest extends TestCase
             ->once()
             ->with($beginning_date, $end_date)
             ->andReturn($context['slips']);
+        /** @var \App\Http\Responder\v1\ShowStatementsViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(ShowStatementsViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('isMethod')
             ->once()

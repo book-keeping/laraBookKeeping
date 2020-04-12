@@ -47,6 +47,7 @@ class Service_AccessTokenServiceTest extends TestCase
      */
     public function delete_DeleteTheToken()
     {
+        /** @var \App\User|\Mockery\MockInterface $userMock */
         $userMock = Mockery::mock(User::class);
         $userMock->shouldReceive('forceFill')
             ->once()
@@ -81,6 +82,7 @@ class Service_AccessTokenServiceTest extends TestCase
      */
     public function generate_SaveAndReturnTheGeneratedToken()
     {
+        /** @var \App\User|\Mockery\MockInterface $userMock */
         $userMock = Mockery::mock(User::class);
         $userMock->shouldReceive('forceFill')
             ->once()

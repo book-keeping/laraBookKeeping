@@ -20,7 +20,9 @@ class Http_Responder_Settings_SettingsViewResponderTest extends TestCase
      */
     public function navilinks_ReturnArray()
     {
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new SettingsViewResponder($ResponseMock, $ViewFactoryMock);

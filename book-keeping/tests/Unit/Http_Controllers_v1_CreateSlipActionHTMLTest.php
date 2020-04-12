@@ -67,6 +67,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
             'totalamount' => 0,
         ];
         $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
         $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
             ->once()
@@ -74,11 +75,13 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $BookKeepingMock->shouldReceive('retrieveDraftSlips')
             ->once()
             ->andReturn($context['draftslip']);
+        /** @var \App\Http\Responder\v1\CreateSlipViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(CreateSlipViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('isMethod')
             ->once()
@@ -174,6 +177,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
             'totalamount' => 3120,
         ];
         $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
         $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
             ->once()
@@ -192,11 +196,13 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $BookKeepingMock->shouldReceive('retrieveDraftSlips')
             ->once()
             ->andReturn($context['draftslip']);
+        /** @var \App\Http\Responder\v1\CreateSlipViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(CreateSlipViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('isMethod')
             ->once()
@@ -302,6 +308,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
             'totalamount' => 2950,
         ];
         $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
         $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
             ->once()
@@ -314,11 +321,13 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $BookKeepingMock->shouldReceive('retrieveDraftSlips')
             ->once()
             ->andReturn($context['draftslip']);
+        /** @var \App\Http\Responder\v1\CreateSlipViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(CreateSlipViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('isMethod')
             ->once()
@@ -389,6 +398,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
             'totalamount' => 0,
         ];
         $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
         $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
             ->once()
@@ -401,11 +411,13 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $BookKeepingMock->shouldReceive('retrieveDraftSlips')
             ->once()
             ->andReturn($context['draftslip']);
+        /** @var \App\Http\Responder\v1\CreateSlipViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(CreateSlipViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('isMethod')
             ->once()
@@ -472,6 +484,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
             'totalamount' => 0,
         ];
         $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
         $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
             ->once()
@@ -482,11 +495,13 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $BookKeepingMock->shouldReceive('retrieveDraftSlips')
             ->once()
             ->andReturn($context['draftslip']);
+        /** @var \App\Http\Responder\v1\CreateSlipViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(CreateSlipViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('isMethod')
             ->once()
@@ -513,7 +528,9 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
      */
     public function validateDateFormat($date, $success_expected)
     {
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
+        /** @var \App\Http\Responder\v1\CreateSlipViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(CreateSlipViewResponder::class);
 
         $controller = new CreateSlipActionHTML($BookKeepingMock, $responderMock);
@@ -547,7 +564,9 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
      */
     public function validateForCreateSlipEntry($debit, $client, $outline, $credit, $amount, $success_expected)
     {
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
+        /** @var \App\Http\Responder\v1\CreateSlipViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(CreateSlipViewResponder::class);
 
         $controller = new CreateSlipActionHTML($BookKeepingMock, $responderMock);

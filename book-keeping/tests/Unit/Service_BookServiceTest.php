@@ -26,11 +26,13 @@ class Service_BookServiceTest extends TestCase
         $title = 'title';
         $bookId_expected = (string) Str::uuid();
         $permissionId = (string) Str::uuid();
+        /** @var \App\DataProvider\BookRepositoryInterface|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookRepositoryInterface::class);
         $bookMock->shouldReceive('create')
             ->once()
             ->with($title)
             ->andReturn($bookId_expected);
+        /** @var \App\DataProvider\PermissionRepositoryInterface|\Mockery\MockInterface $permissionMock */
         $permissionMock = Mockery::mock(PermissionRepositoryInterface::class);
         $permissionMock->shouldReceive('create')
             ->once()
@@ -52,7 +54,9 @@ class Service_BookServiceTest extends TestCase
             ['book_id' => (string) Str::uuid(), 'book_name' => 'book1', 'modifiable' => true, 'is_owner' => true, 'is_default' => true, 'created_at' => new Carbon()],
             ['book_id' => (string) Str::uuid(), 'book_name' => 'book2', 'modifiable' => true, 'is_owner' => false, 'is_default' => false, 'created_at' => new Carbon()],
         ];
+        /** @var \App\DataProvider\BookRepositoryInterface|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookRepositoryInterface::class);
+        /** @var \App\DataProvider\PermissionRepositoryInterface|\Mockery\MockInterface $permissionMock */
         $permissionMock = Mockery::mock(PermissionRepositoryInterface::class);
         $permissionMock->shouldReceive('searchBookList')
             ->once()
@@ -72,7 +76,9 @@ class Service_BookServiceTest extends TestCase
     {
         $userId = 1;
         $bookId_expected = (string) Str::uuid();
+        /** @var \App\DataProvider\BookRepositoryInterface|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookRepositoryInterface::class);
+        /** @var \App\DataProvider\PermissionRepositoryInterface|\Mockery\MockInterface $permissionMock */
         $permissionMock = Mockery::mock(PermissionRepositoryInterface::class);
         $permissionMock->shouldReceive('findDefaultBook')
             ->once()

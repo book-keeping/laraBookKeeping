@@ -34,11 +34,13 @@ class Service_SlipServiceTest extends TestCase
             ['debit' => $accountId3, 'credit' => $accountId4, 'amount' => 2200, 'client' => 'client22', 'outline' => 'outline22'],
         ];
         $slipId_expected = (string) Str::uuid();
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
         $slipMock->shouldReceive('create')
             ->once()
             ->with($bookId, $outline, $date, $memo, true)
             ->andReturn($slipId_expected);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('create')
             ->once()
@@ -65,7 +67,9 @@ class Service_SlipServiceTest extends TestCase
         $client = 'client4';
         $outline = 'outline4';
         $slipEntryId_expected = (string) Str::uuid();
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('create')
             ->once()
@@ -84,10 +88,12 @@ class Service_SlipServiceTest extends TestCase
     public function deleteSlip_CallRepositoryWithArgumentsAsItIs()
     {
         $slipId = (string) Str::uuid();
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
         $slipMock->shouldReceive('delete')
             ->once()
             ->with($slipId);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
 
         $slip = new SlipService($slipMock, $slipEntryMock);
@@ -102,7 +108,9 @@ class Service_SlipServiceTest extends TestCase
     public function deleteSlipEntry_CallRepositoryWithArgumentsAsItIs()
     {
         $slipEntryId = (string) Str::uuid();
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('delete')
             ->once()
@@ -130,7 +138,9 @@ class Service_SlipServiceTest extends TestCase
             $accountId2 => ['debit' => 3000, 'credit' => 10],
             $accountId3 => ['debit' => 0, 'credit' => 3200],
         ];
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('calculateSum')
             ->once()
@@ -153,11 +163,13 @@ class Service_SlipServiceTest extends TestCase
         $slips_expected = [
             ['slip_id' => $slipId, 'date' => '2019-10-03', 'slip_outline' => 'outline', 'slip_memo' => 'memo'],
         ];
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
         $slipMock->shouldReceive('findAllDraftByBookId')
             ->once()
             ->with($bookId)
             ->andReturn($slips_expected);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
 
         $slip = new SlipService($slipMock, $slipEntryMock);
@@ -193,7 +205,9 @@ class Service_SlipServiceTest extends TestCase
                 'outline'       => 'outline3',
             ],
         ];
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('searchSlipEntries')
             ->once()
@@ -226,7 +240,9 @@ class Service_SlipServiceTest extends TestCase
                 'outline'       => 'outline5',
             ],
         ];
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('findAllBySlipId')
             ->once()
@@ -257,7 +273,9 @@ class Service_SlipServiceTest extends TestCase
             'client'        => 'client6',
             'outline'       => 'outline6',
         ];
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('findById')
             ->once()
@@ -276,7 +294,9 @@ class Service_SlipServiceTest extends TestCase
     public function retrieveSlipThatBound_CallRepositoryWithArgumentsAsItIsAndReturnNull()
     {
         $slipEntryId = (string) Str::uuid();
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('findById')
             ->once()
@@ -295,10 +315,12 @@ class Service_SlipServiceTest extends TestCase
     public function submitSlip_CallRepositoryWithArgumentsAsItIs()
     {
         $slipId = (string) Str::uuid();
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
         $slipMock->shouldReceive('updateIsDraft')
             ->once()
             ->with($slipId, false);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
 
         $slip = new SlipService($slipMock, $slipEntryMock);
@@ -314,10 +336,12 @@ class Service_SlipServiceTest extends TestCase
     {
         $slipId = (string) Str::uuid();
         $date = '2019-11-01';
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
         $slipMock->shouldReceive('update')
             ->once()
             ->with($slipId, ['date' => $date]);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
 
         $slip = new SlipService($slipMock, $slipEntryMock);

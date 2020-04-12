@@ -45,6 +45,7 @@ class Http_Controllers_v1_ShowTopActionHTMLTest extends TestCase
             ],
         ];
         $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
         $BookKeepingMock->shouldReceive('retrieveStatements')
             ->once()
@@ -58,11 +59,13 @@ class Http_Controllers_v1_ShowTopActionHTMLTest extends TestCase
             ->once()
             ->with($today, $today)
             ->andReturn($context['slips']);
+        /** @var \App\Http\Responder\v1\ShowTopViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(ShowTopViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
 
         $controller = new ShowTopActionHTML($BookKeepingMock, $responderMock);

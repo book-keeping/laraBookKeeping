@@ -132,9 +132,11 @@ class Http_Responder_v1_CreateSlipViewResponderTest extends TestCase
             ],
             'totalamount' => 2490,
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
         $ResponseMock->shouldReceive('setContent')->once();
         $ResponseMock->shouldReceive('setStatusCode')->once();
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
         $ViewFactoryMock->shouldReceive('make')->once();
 

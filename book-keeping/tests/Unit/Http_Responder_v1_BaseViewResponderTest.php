@@ -21,7 +21,9 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
      */
     public function navilinks_NaviListIsReturned()
     {
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
@@ -103,7 +105,9 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
                 ],
             ],
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
@@ -218,7 +222,9 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
             $accountId_5 => 'accountTitle_5',
             $accountId_6 => 'accountTitle_6',
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
@@ -304,7 +310,9 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
                 'debit'  => ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false],
             ],
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
@@ -385,7 +393,9 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
                 'debit'  => ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false],
             ],
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
@@ -468,7 +478,9 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
                 'trclass' => 'evn',
             ],
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
@@ -559,7 +571,9 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
                 'credit' => ['title' => '', 'amount' => '', 'bold' => false, 'italic' => false],
             ],
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
@@ -660,7 +674,9 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
                 'outline' => 'outline3',
             ],
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);

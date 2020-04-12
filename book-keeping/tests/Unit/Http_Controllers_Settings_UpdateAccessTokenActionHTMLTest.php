@@ -32,6 +32,7 @@ class Http_Controllers_Settings_UpdateAccessTokenActionHTMLTest extends TestCase
             'timestamp' => $timestamp,
         ];
         $response_expected = new Response();
+        /** @var \App\Service\AccessTokenService|\Mockery\MockInterface $accessTokenMock */
         $accessTokenMock = Mockery::mock(AccessTokenService::class);
         $accessTokenMock->shouldReceive('setUser')
             ->once()
@@ -42,11 +43,13 @@ class Http_Controllers_Settings_UpdateAccessTokenActionHTMLTest extends TestCase
         $accessTokenMock->shouldReceive('createdAt')
             ->once()
             ->andReturn($timestamp);
+        /** @var \App\Http\Responder\Settings\UpdateAccessTokenViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(UpdateAccessTokenViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('user')
             ->once()
@@ -79,6 +82,7 @@ class Http_Controllers_Settings_UpdateAccessTokenActionHTMLTest extends TestCase
             'timestamp' => $timestamp,
         ];
         $response_expected = new Response();
+        /** @var \App\Service\AccessTokenService|\Mockery\MockInterface $accessTokenMock */
         $accessTokenMock = Mockery::mock(AccessTokenService::class);
         $accessTokenMock->shouldReceive('setUser')
             ->once()
@@ -90,11 +94,13 @@ class Http_Controllers_Settings_UpdateAccessTokenActionHTMLTest extends TestCase
         $accessTokenMock->shouldReceive('createdAt')
             ->once()
             ->andReturn($timestamp);
+        /** @var \App\Http\Responder\Settings\UpdateAccessTokenViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(UpdateAccessTokenViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('user')
             ->once()
@@ -126,6 +132,7 @@ class Http_Controllers_Settings_UpdateAccessTokenActionHTMLTest extends TestCase
             'timestamp' => $timestamp,
         ];
         $response_expected = new Response();
+        /** @var \App\Service\AccessTokenService|\Mockery\MockInterface $accessTokenMock */
         $accessTokenMock = Mockery::mock(AccessTokenService::class);
         $accessTokenMock->shouldReceive('setUser')
             ->once()
@@ -135,11 +142,13 @@ class Http_Controllers_Settings_UpdateAccessTokenActionHTMLTest extends TestCase
         $accessTokenMock->shouldReceive('createdAt')
             ->once()
             ->andReturn($timestamp);
+        /** @var \App\Http\Responder\Settings\UpdateAccessTokenViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(UpdateAccessTokenViewResponder::class);
         $responderMock->shouldReceive('response')
             ->once()
             ->with($context)
             ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
         $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('user')
             ->once()

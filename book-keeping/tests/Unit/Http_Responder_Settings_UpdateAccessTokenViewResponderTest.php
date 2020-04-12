@@ -26,9 +26,11 @@ class Http_Responder_Settings_UpdateAccessTokenViewResponderTest extends TestCas
             'token'     => Str::random(60),
             'timestamp' => new Carbon(),
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
         $ResponseMock->shouldReceive('setContent')->once();
         $ResponseMock->shouldReceive('setStatusCode')->once();
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
         $ViewFactoryMock->shouldReceive('make')->once();
 
@@ -47,9 +49,11 @@ class Http_Responder_Settings_UpdateAccessTokenViewResponderTest extends TestCas
             'token'     => null,
             'timestamp' => null,
         ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
         $ResponseMock = Mockery::mock(Response::class);
         $ResponseMock->shouldReceive('setContent')->once();
         $ResponseMock->shouldReceive('setStatusCode')->once();
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
         $ViewFactoryMock = Mockery::mock(Factory::class);
         $ViewFactoryMock->shouldReceive('make')->once();
 
