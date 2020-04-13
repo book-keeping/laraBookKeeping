@@ -1,15 +1,20 @@
 {
+    "Account Group Title" : "科目グループ名",
+    "Account Title" : "科目名",
     "Accounting period" : "会計期間",
+    "Accounts List" : "勘定科目一覧",
     "Add" : "追加",
     "Amount" : "金額",
     "Assets" : "資産",
     "Balance sheet" : "貸借対照表",
     "Client" : "取引相手",
+    "Code" : "コード",
     "Credit" : "貸方",
     "Current Net Asset" : "当座純資産",
     "Date" : "日付",
     "Debit" : "借方",
     "Delete" : "削除",
+    "Description" : "説明",
     "Expense" : "費用",
     "From:" : "自:",
     "Generate new token" : "新しくトークンを発行する",
@@ -32,6 +37,7 @@
     "Total" : "合計",
     "To:" : "至:",
     "Trial Balance Of Real Flow" : "実在フロー試算表",
+    "Type" : "種別",
     "You won’t be able to see it again!" : "この文字列は再表示できません。",
     "'s state" : "の家計状況"
 }

@@ -44,6 +44,7 @@ class BaseViewResponder
             ['link' => 'v1_top', 'caption' => __('Top')],
             ['link' => 'v1_slip', 'caption' => __('Slip')],
             ['link' => 'v1_statements', 'caption' => __('Statements')],
+            ['link' => 'v1_accountslist', 'caption' => __('Accounts List')],
         ];
     }
 
