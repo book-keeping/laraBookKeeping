@@ -32,7 +32,7 @@ class Http_Responder_v1_CreateSlipViewResponderTest extends TestCase
         $slipEntryId_1 = (string) Str::uuid();
         $slipEntryId_2 = (string) Str::uuid();
         $slipId_1 = (string) Str::uuid();
-        $countext = [
+        $context = [
             'accounts' => [
                 'asset' => [
                     'groups' => [
@@ -141,7 +141,7 @@ class Http_Responder_v1_CreateSlipViewResponderTest extends TestCase
         $ViewFactoryMock->shouldReceive('make')->once();
 
         $responder = new CreateSlipViewResponder($ResponseMock, $ViewFactoryMock);
-        $response = $responder->response($countext);
+        $response = $responder->response($context);
 
         $this->assertTrue(true);
     }
