@@ -69,7 +69,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $response_expected = new Response();
         /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
-        $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
+        $BookKeepingMock->shouldReceive('retrieveAccounts')
             ->once()
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldReceive('retrieveDraftSlips')
@@ -179,7 +179,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $response_expected = new Response();
         /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
-        $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
+        $BookKeepingMock->shouldReceive('retrieveAccounts')
             ->once()
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldReceive('createSlipEntryAsDraft')
@@ -310,7 +310,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $response_expected = new Response();
         /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
-        $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
+        $BookKeepingMock->shouldReceive('retrieveAccounts')
             ->once()
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldNotReceive('createSlipEntryAsDraft');
@@ -400,7 +400,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $response_expected = new Response();
         /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
-        $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
+        $BookKeepingMock->shouldReceive('retrieveAccounts')
             ->once()
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldNotReceive('createSlipEntryAsDraft');
@@ -486,7 +486,7 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $response_expected = new Response();
         /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
-        $BookKeepingMock->shouldReceive('retrieveAccountsForSelect')
+        $BookKeepingMock->shouldReceive('retrieveAccounts')
             ->once()
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldNotReceive('createSlipEntryAsDraft');
