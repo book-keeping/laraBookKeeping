@@ -324,12 +324,14 @@ class Service_BookKeepingServiceTest extends TestCase
             'asset' => [
                 'groups' => [
                     $accountGroupId_1 => [
+                        'title'        => 'accountGroupTitle_1',
                         'isCurrent'    => 0,
                         'bk_code'      => 1200,
                         'createdAt'    => '2019-12-01 12:00:12',
                         'items'        => [
                             $accountId_1 => [
                                 'title'    => 'accountTitle_1',
+                                'description' => 'description_1',
                                 'bk_code'  => 1201,
                                 'createdAt'=> '2019-12-02 12:00:01',
                             ],
@@ -340,29 +342,34 @@ class Service_BookKeepingServiceTest extends TestCase
             'liability' => [
                 'groups' => [
                     $accountGroupId_2 => [
+                        'title'        => 'accountGroupTitle_2',
                         'isCurrent'    => 0,
                         'bk_code'      => 2300,
                         'createdAt'    => '2019-12-01 12:00:23',
                         'items'        => [
                             $accountId_2 => [
                                 'title'    => 'accountTitle_2',
+                                'description' => 'description_2',
                                 'bk_code'  => 2302,
                                 'createdAt'=> '2019-12-02 12:00:02',
                             ],
                             $accountId_3 => [
                                 'title'    => 'accountTitle_3',
+                                'description' => 'description_3',
                                 'bk_code'  => 2303,
                                 'createdAt'=> '2019-12-02 12:00:03',
                             ],
                         ],
                     ],
                     $accountGroupId_3 => [
+                        'title'        => 'accountGroupTitle_3',
                         'isCurrent'    => 0,
                         'bk_code'      => 2400,
                         'createdAt'    => '2019-12-01 12:00:24',
                         'items'        => [
                             $accountId_4 => [
                                 'title'    => 'accountTitle_4',
+                                'description' => 'description_4',
                                 'bk_code'  => 2404,
                                 'createdAt'=> '2019-12-02 12:00:04',
                             ],
@@ -376,17 +383,20 @@ class Service_BookKeepingServiceTest extends TestCase
             'revenue' => [
                 'groups' => [
                     $accountGroupId_5 => [
+                        'title'        => 'accountGroupTitle_5',
                         'isCurrent'    => 1,
                         'bk_code'      => 5100,
                         'createdAt'    => '2019-12-01 12:00:51',
                         'items'        => [
                             $accountId_6 => [
                                 'title'    => 'accountTitle_6',
+                                'description' => 'description_6',
                                 'bk_code'  => 5106,
                                 'createdAt'=> '2019-12-02 12:00:06',
                             ],
                             $accountId_8 => [
                                 'title'    => 'accountTitle_8',
+                                'description' => 'description_8',
                                 'bk_code'  => 5108,
                                 'createdAt'=> '2019-12-02 12:00:08',
                             ],
@@ -462,12 +472,14 @@ class Service_BookKeepingServiceTest extends TestCase
             'asset' => [
                 'groups' => [
                     $accountGroupId_1 => [
+                        'title'     => 'accountGroupTitle_1',
                         'isCurrent' => 0,
                         'bk_code'   => 1200,
                         'createdAt' => '2019-12-01 12:00:12',
                         'items'     => [
                             $accountId_1 => [
                                 'title'    => 'accountTitle_1',
+                                'description' => 'description_1',
                                 'bk_code'  => 1201,
                                 'createdAt'=> '2019-12-02 12:00:01',
                             ],
@@ -478,12 +490,14 @@ class Service_BookKeepingServiceTest extends TestCase
             'liability' => [
                 'groups' => [
                     $accountGroupId_2 => [
+                        'title'     => 'accountGroupTitle_2',
                         'isCurrent' => 0,
                         'bk_code'   => 2300,
                         'createdAt' => '2019-12-01 12:00:23',
                         'items'     => [
                             $accountId_2 => [
                                 'title'    => 'accountTitle_2',
+                                'description' => 'description_2',
                                 'bk_code'  => 2302,
                                 'createdAt'=> '2019-12-02 12:00:02',
                             ],
