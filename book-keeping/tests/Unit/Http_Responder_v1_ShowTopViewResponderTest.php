@@ -20,7 +20,7 @@ class Http_Responder_v1_ShowTopViewResponderTest extends TestCase
      */
     public function response_ReturnResponse()
     {
-        $countext = [
+        $context = [
             'date'             => '2019-09-30',
             'income_statement' => [
                 'expense' => [
@@ -200,7 +200,7 @@ class Http_Responder_v1_ShowTopViewResponderTest extends TestCase
         $ViewFactoryMock->shouldReceive('make')->once();
 
         $responder = new ShowTopViewResponder($ResponseMock, $ViewFactoryMock);
-        $response = $responder->response($countext);
+        $response = $responder->response($context);
 
         $this->assertTrue(true);
     }

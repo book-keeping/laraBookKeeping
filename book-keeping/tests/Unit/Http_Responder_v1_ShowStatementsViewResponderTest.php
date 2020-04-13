@@ -20,7 +20,7 @@ class Http_Responder_v1_ShowStatementsViewResponderTest extends TestCase
      */
     public function response_ReturnResponse()
     {
-        $countext = [
+        $context = [
             'beginning_date'   => '2019-09-01',
             'end_date'         => '2019-09-30',
             'statements'       => [
@@ -308,7 +308,7 @@ class Http_Responder_v1_ShowStatementsViewResponderTest extends TestCase
         $ViewFactoryMock->shouldReceive('make')->once();
 
         $responder = new ShowStatementsViewResponder($ResponseMock, $ViewFactoryMock);
-        $response = $responder->response($countext);
+        $response = $responder->response($context);
 
         $this->assertTrue(true);
     }
