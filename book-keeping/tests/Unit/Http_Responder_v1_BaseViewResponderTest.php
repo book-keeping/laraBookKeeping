@@ -119,7 +119,7 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
     /**
      * @test
      */
-    public function translateAccountListFormat_FormattedAccountListIsReturned()
+    public function translateAccountListToTitleList_FormattedAccountListIsReturned()
     {
         $accountId_1 = (string) Str::uuid();
         $accountId_2 = (string) Str::uuid();
@@ -228,7 +228,7 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
         $ViewFactoryMock = Mockery::mock(Factory::class);
 
         $responder = new BaseViewResponder($ResponseMock, $ViewFactoryMock);
-        $formattedAccountList_actual = $responder->translateAccountListFormat($accounts);
+        $formattedAccountList_actual = $responder->translateAccountListToTitleList($accounts);
 
         $this->assertSame($formattedAccountList_expected, $formattedAccountList_actual);
     }
