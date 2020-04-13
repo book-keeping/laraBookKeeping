@@ -99,11 +99,12 @@ class BookKeepingService
     /**
      * Retrieve account list.
      *
+     * @param bool   $selectableOnly
      * @param string $bookId
      *
      * @return array
      */
-    public function retrieveAccountsForSelect(string $bookId = null): array
+    public function retrieveAccounts(bool $selectableOnly = false, string $bookId = null): array
     {
         if (is_null($bookId)) {
             $bookId = $this->book->retrieveDefaultBook(Auth::id());
@@ -118,7 +119,7 @@ class BookKeepingService
         ];
 
         foreach ($accounts as $accountsKey => $accountsItem) {
-            if ($accountsItem['selectable'] == true) {
+            if ((!$selectableOnly) || ($accountsItem['selectable'] == true)) {
                 if (!array_key_exists($accountsItem['account_group_id'], $accounts_menu[$accountsItem['account_type']]['groups'])) {
                     $accounts_menu[$accountsItem['account_type']]['groups'][$accountsItem['account_group_id']] = [
                         'isCurrent'    => $accountsItem['is_current'],
