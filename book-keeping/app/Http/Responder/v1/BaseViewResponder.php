@@ -60,6 +60,46 @@ class BaseViewResponder
     }
 
     /**
+     * Translate account list format for view.
+     *
+     * @param array $accounts
+     *
+     * @return array
+     */
+    public function translateAccountsListFormat(array $accounts): array
+    {
+        $account_list = [];
+        $accountTypeTitle = [
+            'asset'     => __('Assets'),
+            'liability' => __('Liabilities'),
+            'expense'   => __('Expense'),
+            'revenue'   => __('Revenue'),
+        ];
+        $trclass = 'evn';
+        foreach ($accounts as $accountTypeKey => $accountType) {
+            foreach ($accountType['groups'] as $accountGroupItem) {
+                foreach ($accountGroupItem['items'] as $accountId => $accountItem) {
+                    $account_list[$accountId] = [
+                        'code'        => is_null($accountItem['bk_code']) ? '-' : $accountItem['bk_code'],
+                        'type'        => $accountTypeTitle[$accountTypeKey],
+                        'group_title' => $accountGroupItem['title'],
+                        'title'       => $accountItem['title'],
+                        'description' => $accountItem['description'],
+                        'trclass'     => $trclass,
+                    ];
+                    if ($trclass == 'evn') {
+                        $trclass = 'odd';
+                    } else {
+                        $trclass = 'evn';
+                    }
+                }
+            }
+        }
+
+        return $account_list;
+    }
+
+    /**
      * Translate account list to title list for view.
      *
      * @param array $accounts
