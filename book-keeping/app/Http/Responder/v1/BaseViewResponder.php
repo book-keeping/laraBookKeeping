@@ -60,13 +60,13 @@ class BaseViewResponder
     }
 
     /**
-     * Translate account list format for view.
+     * Translate account list to title list for view.
      *
      * @param array $accounts
      *
      * @return array
      */
-    public function translateAccountListFormat(array $accounts): array
+    public function translateAccountListToTitleList(array $accounts): array
     {
         $account_title_list = [];
 

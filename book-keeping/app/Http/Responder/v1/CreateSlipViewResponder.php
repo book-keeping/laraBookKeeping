@@ -21,7 +21,7 @@ class CreateSlipViewResponder extends BaseViewResponder
         }
 
         $accounts = $context['accounts'];
-        $account_title_list = $this->translateAccountListFormat(
+        $account_title_list = $this->translateAccountListToTitleList(
             [
                 'asset'     => ['groups' => $this->sortAccountInAscendingCodeOrder($accounts['asset']['groups'])],
                 'liability' => ['groups' => $this->sortAccountInAscendingCodeOrder($accounts['liability']['groups'])],
