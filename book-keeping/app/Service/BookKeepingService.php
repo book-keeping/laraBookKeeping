@@ -130,10 +130,10 @@ class BookKeepingService
                     ];
                 }
                 $accounts_menu[$accountsItem['account_type']]['groups'][$accountsItem['account_group_id']]['items'][$accountsKey] = [
-                    'title'    => $accountsItem['account_title'],
+                    'title'       => $accountsItem['account_title'],
                     'description' => $accountsItem['description'],
-                    'bk_code'  => $accountsItem['account_bk_code'],
-                    'createdAt'=> $accountsItem['created_at'],
+                    'bk_code'     => $accountsItem['account_bk_code'],
+                    'createdAt'   => $accountsItem['created_at'],
                 ];
             }
         }
