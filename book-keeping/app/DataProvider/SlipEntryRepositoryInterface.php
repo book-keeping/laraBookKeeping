@@ -61,9 +61,10 @@ interface SlipEntryRepositoryInterface
      *
      * @param string $fromDate
      * @param string $toDate
+     * @param array  $condition
      * @param string $bookId
      *
      * @return array
      */
-    public function searchSlipEntries(string $fromDate, string $toDate, string $bookId): array;
+    public function searchSlipEntries(string $fromDate, string $toDate, array $condition, string $bookId): array;
 }
