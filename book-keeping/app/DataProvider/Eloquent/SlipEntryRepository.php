@@ -17,11 +17,11 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      */
     public function calculateSum(string $fromDate, string $toDate, string $bookId): array
     {
-        $debitSumList = $this->getSlipEntriesQuery($fromDate, $toDate, $bookId)
+        $debitSumList = $this->getSlipEntriesQuery($fromDate, $toDate, [], $bookId)
             ->groupBy('debit')
             ->selectRaw('debit, sum(amount) as debitsum')
             ->get()->toArray();
-        $creditSumList = $this->getSlipEntriesQuery($fromDate, $toDate, $bookId)
+        $creditSumList = $this->getSlipEntriesQuery($fromDate, $toDate, [], $bookId)
             ->groupBy('credit')
             ->selectRaw('credit, sum(amount) as creditsum')
             ->get()->toArray();
@@ -123,13 +123,14 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      *
      * @param string $fromDate
      * @param string $toDate
+     * @param array  $condition
      * @param string $bookId
      *
      * @return array
      */
-    public function searchSlipEntries(string $fromDate, string $toDate, string $bookId): array
+    public function searchSlipEntries(string $fromDate, string $toDate, array $condition, string $bookId): array
     {
-        $list = $this->getSlipEntriesQuery($fromDate, $toDate, $bookId)
+        $list = $this->getSlipEntriesQuery($fromDate, $toDate, $condition, $bookId)
             ->select(
                 'bk2_0_slips.slip_id',
                 'date',
@@ -153,17 +154,53 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      *
      * @param string $fromDate
      * @param string $toDate
+     * @param array  $condition
      * @param string $bookId
      *
      * @return Illuminate\Database\Query\Builder
      */
-    private function getSlipEntriesQuery(string $fromDate, string $toDate, string $bookId)
+    private function getSlipEntriesQuery(string $fromDate, string $toDate, array $condition, string $bookId)
     {
-        return SlipEntry::join('bk2_0_slips', 'bk2_0_slips.slip_id', '=', 'bk2_0_slip_entries.slip_id')
+        $debit = array_key_exists('debit', $condition) ? $condition['debit'] : null;
+        $credit = array_key_exists('credit', $condition) ? $condition['credit'] : null;
+        $and_or = array_key_exists('and_or', $condition) ? $condition['and_or'] : null;
+        $keyword = array_key_exists('keyword', $condition) ? $condition['keyword'] : null;
+
+        $query = SlipEntry::join('bk2_0_slips', 'bk2_0_slips.slip_id', '=', 'bk2_0_slip_entries.slip_id')
             ->where('book_id', $bookId)
             ->where('is_draft', false)
             ->whereNull('bk2_0_slips.deleted_at')
             ->whereNull('bk2_0_slip_entries.deleted_at')
             ->whereBetween('date', [$fromDate, $toDate]);
+        if (!empty($debit) && empty($credit)) {
+            $query = $query->where('debit', $debit);
+        }
+        if (empty($debit) && !empty($credit)) {
+            $query = $query->where('credit', $credit);
+        }
+        if (!empty($debit) && !empty($credit) && !empty($and_or)) {
+            $sub_account = ['debit' => $debit, 'credit' => $credit];
+            if ($and_or == 'and') {
+                $query = $query
+                    ->where(function ($subquery) use ($sub_account) {
+                        $subquery->where('debit', $sub_account['debit'])->where('credit', $sub_account['credit']);
+                    });
+            }
+            if ($and_or == 'or') {
+                $query = $query
+                    ->where(function ($subquery) use ($sub_account) {
+                        $subquery->where('debit', $sub_account['debit'])->orWhere('credit', $sub_account['credit']);
+                    });
+            }
+        }
+        if (!empty($keyword)) {
+            $query = $query
+                ->where(function ($subquery) use ($keyword) {
+                    $subquery->where('client', 'like binary', "%$keyword%")
+                             ->orWhere('outline', 'like binary', "%$keyword%");
+                });
+        }
+
+        return $query;
     }
 }

@@ -194,7 +194,7 @@ class BookKeepingService
             $bookId = $this->book->retrieveDefaultBook(Auth::id());
         }
         $accounts = $this->account->retrieveAccounts($bookId);
-        $slipEntries = $this->slip->retrieveSlipEntries($fromDate, $toDate, $bookId);
+        $slipEntries = $this->slip->retrieveSlipEntries($fromDate, $toDate, [], $bookId);
         $slips = [];
 
         foreach ($slipEntries as $entry) {
