@@ -211,11 +211,11 @@ class Service_SlipServiceTest extends TestCase
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('searchSlipEntries')
             ->once()
-            ->with($fromDate, $toDate, $bookId)
+            ->with($fromDate, $toDate, [], $bookId)
             ->andReturn($slipEntries_expected);
 
         $slip = new SlipService($slipMock, $slipEntryMock);
-        $slipEntries_actual = $slip->retrieveSlipEntries($fromDate, $toDate, $bookId);
+        $slipEntries_actual = $slip->retrieveSlipEntries($fromDate, $toDate, [], $bookId);
 
         $this->assertSame($slipEntries_expected, $slipEntries_actual);
     }

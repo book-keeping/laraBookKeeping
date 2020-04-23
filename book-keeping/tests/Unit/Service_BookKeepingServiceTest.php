@@ -821,7 +821,7 @@ class Service_BookKeepingServiceTest extends TestCase
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveSlipEntries')
             ->once()
-            ->with($fromDate, $toDate, $bookId)
+            ->with($fromDate, $toDate, [], $bookId)
             ->andReturn($slipEntries);
 
         $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
@@ -854,7 +854,7 @@ class Service_BookKeepingServiceTest extends TestCase
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveSlipEntries')
             ->once()
-            ->with($fromDate, $toDate, $bookId)
+            ->with($fromDate, $toDate, [], $bookId)
             ->andReturn([]);
 
         $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);

@@ -262,7 +262,7 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
         ])->slip_entry_id;
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, $bookId);
+        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, [], $bookId);
 
         $this->assertFalse(count($slipEntries) === 0);
         if (!(count($slipEntries) === 0)) {

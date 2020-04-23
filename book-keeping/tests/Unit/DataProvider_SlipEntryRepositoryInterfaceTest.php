@@ -92,7 +92,7 @@ abstract class DataProvider_SlipEntryRepositoryInterfaceTest extends TestCase
         $toDate = '2019-09-30';
         $bookId = (string) Str::uuid();
 
-        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, $bookId);
+        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, [], $bookId);
 
         $this->assertTrue(is_array($slipEntries));
     }
