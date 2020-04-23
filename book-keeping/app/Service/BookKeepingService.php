@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Auth;
 class BookKeepingService
 {
     /**
+     * The origin date of the system.
+     *
+     * @var string
+     */
+    const ORIGIN_DATE = '1970-01-02';
+
+    /**
      * Account service instance.
      *
      * @var \App\Service\AccountService
@@ -180,21 +187,42 @@ class BookKeepingService
     }
 
     /**
-     * Retrieve slips between the specified date.
+     * Retrieve slips.
      *
      * @param string $fromDate
      * @param string $toDate
+     * @param string $debit
+     * @param string $credit
+     * @param string $and_or
+     * @param string $keyword
      * @param string $bookId
      *
      * @return array
      */
-    public function retrieveSlips(string $fromDate, string $toDate, string $bookId = null): array
+    public function retrieveSlips(?string $fromDate, ?string $toDate, ?string $debit, ?string $credit, ?string $and_or, ?string $keyword, string $bookId = null): array
     {
         if (is_null($bookId)) {
             $bookId = $this->book->retrieveDefaultBook(Auth::id());
         }
         $accounts = $this->account->retrieveAccounts($bookId);
-        $slipEntries = $this->slip->retrieveSlipEntries($fromDate, $toDate, [], $bookId);
+        if (empty($fromDate)) {
+            $fromDate = self::ORIGIN_DATE;
+        }
+        if (empty($toDate)) {
+            $date = new Carbon();
+            $toDate = $date->format('Y-m-d');
+        }
+        $slipEntries = $this->slip->retrieveSlipEntries(
+            $fromDate,
+            $toDate,
+            [
+                'debit'    => $debit,
+                'credit'   => $credit,
+                'and_or'   => $and_or,
+                'keyword'  => $keyword,
+            ],
+            $bookId
+        );
         $slips = [];
 
         foreach ($slipEntries as $entry) {

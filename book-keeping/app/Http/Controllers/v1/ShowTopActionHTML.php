@@ -45,7 +45,7 @@ class ShowTopActionHTML extends AuthenticatedBookKeepingAction
         $context['date'] = $today;
         $context['income_statement'] = $this->BookKeeping->retrieveStatements($today, $today);
         $context['balance_sheet'] = $this->BookKeeping->retrieveStatements('1970-01-01', $today);
-        $context['slips'] = $this->BookKeeping->retrieveSlips($today, $today);
+        $context['slips'] = $this->BookKeeping->retrieveSlips($today, $today, null, null, null, null);
 
         return $this->responder->response($context);
     }
