@@ -868,6 +868,39 @@ class Service_BookKeepingServiceTest extends TestCase
     /**
      * @test
      */
+    public function retrieveSlips_RetrieveTheSpecifiedBookSlipsWithoutDateSpecify()
+    {
+        $bookId = (string) Str::uuid();
+        $slips_expected = [];
+        $condition = ['debit' => null, 'credit' => null, 'and_or' => null, 'keyword' => null];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
+        $bookMock = Mockery::mock(BookService::class);
+        $bookMock->shouldNotReceive('retrieveDefaultBook');
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
+        $accountMock = Mockery::mock(AccountService::class);
+        $accountMock->shouldReceive('retrieveAccounts')
+            ->once()
+            ->with($bookId)
+            ->andReturn([]);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
+        $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveSlipEntries')
+            ->once()
+            ->with(BookKeepingService::ORIGIN_DATE, '2019-10-10', $condition, $bookId)
+            ->andReturn([]);
+        Carbon::setTestNow(new Carbon('2019-10-10 09:59:59'));
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $slips_actual = $BookKeeping->retrieveSlips(null, null, null, null, null, null, $bookId);
+
+        $this->assertSame($slips_expected, $slips_actual);
+    }
+
+    /**
+     * @test
+     */
     public function retrieveStatements_RetrieveTheDefaultBookStatementsForThePeriod()
     {
         $fromDate = '2019-10-01';
