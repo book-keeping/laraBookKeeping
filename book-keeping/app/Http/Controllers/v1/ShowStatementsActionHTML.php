@@ -57,7 +57,7 @@ class ShowStatementsActionHTML extends AuthenticatedBookKeepingAction
         $context['statements'] = $this->BookKeeping->retrieveStatements($beginning_date, $end_date);
         $context['previous_balance_sheet'] = $this->BookKeeping->retrieveStatements('1970-01-01', $end_date_of_previous_period);
         $context['balance_sheet'] = $this->BookKeeping->retrieveStatements('1970-01-01', $end_date);
-        $context['slips'] = $this->BookKeeping->retrieveSlips($beginning_date, $end_date);
+        $context['slips'] = $this->BookKeeping->retrieveSlips($beginning_date, $end_date, null, null, null, null);
 
         return $this->responder->response($context);
     }
