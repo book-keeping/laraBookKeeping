@@ -57,7 +57,7 @@ class Http_Controllers_v1_ShowTopActionHTMLTest extends TestCase
             ->andReturn($context['balance_sheet']);
         $BookKeepingMock->shouldReceive('retrieveSlips')
             ->once()
-            ->with($today, $today)
+            ->with($today, $today, null, null, null, null)
             ->andReturn($context['slips']);
         /** @var \App\Http\Responder\v1\ShowTopViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(ShowTopViewResponder::class);

@@ -69,7 +69,7 @@ class Http_Controllers_v1_ShowStatementsActionHTMLTest extends TestCase
             ->andReturn($context['balance_sheet']);
         $BookKeepingMock->shouldReceive('retrieveSlips')
             ->once()
-            ->with($beginning_date, $end_date)
+            ->with($beginning_date, $end_date, null, null, null, null)
             ->andReturn($context['slips']);
         /** @var \App\Http\Responder\v1\ShowStatementsViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(ShowStatementsViewResponder::class);
@@ -151,7 +151,7 @@ class Http_Controllers_v1_ShowStatementsActionHTMLTest extends TestCase
             ->andReturn($context['balance_sheet']);
         $BookKeepingMock->shouldReceive('retrieveSlips')
             ->once()
-            ->with($beginning_date, $end_date)
+            ->with($beginning_date, $end_date, null, null, null, null)
             ->andReturn($context['slips']);
         /** @var \App\Http\Responder\v1\ShowStatementsViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(ShowStatementsViewResponder::class);

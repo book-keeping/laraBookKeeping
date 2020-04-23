@@ -803,6 +803,7 @@ class Service_BookKeepingServiceTest extends TestCase
                 ],
             ],
         ];
+        $condition = ['debit' => null, 'credit' => null, 'and_or' => null, 'keyword' => null];
         /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldReceive('retrieveDefaultBook')
@@ -821,11 +822,11 @@ class Service_BookKeepingServiceTest extends TestCase
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveSlipEntries')
             ->once()
-            ->with($fromDate, $toDate, [], $bookId)
+            ->with($fromDate, $toDate, $condition, $bookId)
             ->andReturn($slipEntries);
 
         $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
-        $slips_actual = $BookKeeping->retrieveSlips($fromDate, $toDate);
+        $slips_actual = $BookKeeping->retrieveSlips($fromDate, $toDate, null, null, null, null);
 
         $this->assertSame($slips_expected, $slips_actual);
     }
@@ -839,6 +840,7 @@ class Service_BookKeepingServiceTest extends TestCase
         $toDate = '2019-10-31';
         $bookId = (string) Str::uuid();
         $slips_expected = [];
+        $condition = ['debit' => null, 'credit' => null, 'and_or' => null, 'keyword' => null];
         /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
         $bookMock = Mockery::mock(BookService::class);
         $bookMock->shouldNotReceive('retrieveDefaultBook');
@@ -854,11 +856,11 @@ class Service_BookKeepingServiceTest extends TestCase
         $slipMock = Mockery::mock(SlipService::class);
         $slipMock->shouldReceive('retrieveSlipEntries')
             ->once()
-            ->with($fromDate, $toDate, [], $bookId)
+            ->with($fromDate, $toDate, $condition, $bookId)
             ->andReturn([]);
 
         $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
-        $slips_actual = $BookKeeping->retrieveSlips($fromDate, $toDate, $bookId);
+        $slips_actual = $BookKeeping->retrieveSlips($fromDate, $toDate, null, null, null, null, $bookId);
 
         $this->assertSame($slips_expected, $slips_actual);
     }
