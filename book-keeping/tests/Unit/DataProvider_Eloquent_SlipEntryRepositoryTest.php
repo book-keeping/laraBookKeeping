@@ -230,6 +230,506 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
     /**
      * @test
      */
+    public function searchSlipEntries_ReturnArrayWithSpecifiedCredit()
+    {
+        $fromDate = '2019-01-01';
+        $toDate = '2019-01-31';
+        $bookId = (string) Str::uuid();
+        $slipOutline = 'slip_outline51';
+        $memo = 'memo51';
+        $date = '2019-01-10';
+        $isDraft = false;
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $accountId3 = (string) Str::uuid();
+        $accountId4 = (string) Str::uuid();
+        $accountId5 = (string) Str::uuid();
+        $accountId6 = (string) Str::uuid();
+        $accountId7 = (string) Str::uuid();
+        $accountId8 = (string) Str::uuid();
+        $amount1 = 1000;
+        $amount2 = 2000;
+        $amount3 = 3000;
+        $amount4 = 4000;
+        $amount5 = 5000;
+        $amount6 = 6000;
+        $keyword = 'keyword1';
+        $client2 = 'client512';
+        $client3 = 'client513';
+        $client4 = 'client514';
+        $client5 = 'client515';
+        $client6 = 'client516';
+        $outline1 = 'outline511';
+        $outline2 = 'outline512';
+        $outline3 = 'outline513';
+        $outline5 = 'outline515';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipId = factory(Slip::class)->create([
+            'book_id'       => $bookId,
+            'slip_outline'  => $slipOutline,
+            'slip_memo'     => $memo,
+            'date'          => $date,
+            'is_draft'      => $isDraft,
+        ])->slip_id;
+        $slipEntryId1 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => $amount1,
+            'client'        => $keyword,
+            'outline'       => $outline1,
+        ])->slip_entry_id;
+        $slipEntryId2 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId3,
+            'amount'        => $amount2,
+            'client'        => $client2,
+            'outline'       => $outline2,
+        ])->slip_entry_id;
+        $slipEntryId3 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId4,
+            'credit'        => $accountId3,
+            'amount'        => $amount3,
+            'client'        => $client3,
+            'outline'       => $outline3,
+        ])->slip_entry_id;
+        $slipEntryId4 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId5,
+            'credit'        => $accountId3,
+            'amount'        => $amount4,
+            'client'        => $client4,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        $slipEntryId5 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId6,
+            'credit'        => $accountId3,
+            'amount'        => $amount5,
+            'client'        => $client5,
+            'outline'       => $outline5,
+        ])->slip_entry_id;
+        $slipEntryId6 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId7,
+            'credit'        => $accountId8,
+            'amount'        => $amount6,
+            'client'        => $client6,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $condition = ['credit' => $accountId3];
+
+        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, $condition, $bookId);
+
+        $this->assertSame(4, count($slipEntries));
+    }
+
+    /**
+     * @test
+     */
+    public function searchSlipEntries_ReturnArrayWithSpecifiedDebit()
+    {
+        $fromDate = '2019-02-01';
+        $toDate = '2019-02-31';
+        $bookId = (string) Str::uuid();
+        $slipOutline = 'slip_outline52';
+        $memo = 'memo52';
+        $date = '2019-02-10';
+        $isDraft = false;
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $accountId3 = (string) Str::uuid();
+        $accountId4 = (string) Str::uuid();
+        $accountId5 = (string) Str::uuid();
+        $accountId6 = (string) Str::uuid();
+        $accountId7 = (string) Str::uuid();
+        $accountId8 = (string) Str::uuid();
+        $amount1 = 1000;
+        $amount2 = 2000;
+        $amount3 = 3000;
+        $amount4 = 4000;
+        $amount5 = 5000;
+        $amount6 = 6000;
+        $keyword = 'keyword2';
+        $client2 = 'client522';
+        $client3 = 'client523';
+        $client4 = 'client524';
+        $client5 = 'client525';
+        $client6 = 'client526';
+        $outline1 = 'outline521';
+        $outline2 = 'outline522';
+        $outline3 = 'outline523';
+        $outline5 = 'outline525';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipId = factory(Slip::class)->create([
+            'book_id'       => $bookId,
+            'slip_outline'  => $slipOutline,
+            'slip_memo'     => $memo,
+            'date'          => $date,
+            'is_draft'      => $isDraft,
+        ])->slip_id;
+        $slipEntryId1 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => $amount1,
+            'client'        => $keyword,
+            'outline'       => $outline1,
+        ])->slip_entry_id;
+        $slipEntryId2 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId3,
+            'amount'        => $amount2,
+            'client'        => $client2,
+            'outline'       => $outline2,
+        ])->slip_entry_id;
+        $slipEntryId3 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId4,
+            'credit'        => $accountId3,
+            'amount'        => $amount3,
+            'client'        => $client3,
+            'outline'       => $outline3,
+        ])->slip_entry_id;
+        $slipEntryId4 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId5,
+            'credit'        => $accountId3,
+            'amount'        => $amount4,
+            'client'        => $client4,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        $slipEntryId5 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId6,
+            'credit'        => $accountId3,
+            'amount'        => $amount5,
+            'client'        => $client5,
+            'outline'       => $outline5,
+        ])->slip_entry_id;
+        $slipEntryId6 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId7,
+            'credit'        => $accountId8,
+            'amount'        => $amount6,
+            'client'        => $client6,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $condition = ['debit' => $accountId1];
+
+        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, $condition, $bookId);
+
+        $this->assertSame(2, count($slipEntries));
+    }
+
+    /**
+     * @test
+     */
+    public function searchSlipEntries_ReturnArrayWithSpecifiedDebitAndCredit()
+    {
+        $fromDate = '2019-03-01';
+        $toDate = '2019-03-31';
+        $bookId = (string) Str::uuid();
+        $slipOutline = 'slip_outline53';
+        $memo = 'memo53';
+        $date = '2019-03-10';
+        $isDraft = false;
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $accountId3 = (string) Str::uuid();
+        $accountId4 = (string) Str::uuid();
+        $accountId5 = (string) Str::uuid();
+        $accountId6 = (string) Str::uuid();
+        $accountId7 = (string) Str::uuid();
+        $accountId8 = (string) Str::uuid();
+        $amount1 = 1000;
+        $amount2 = 2000;
+        $amount3 = 3000;
+        $amount4 = 4000;
+        $amount5 = 5000;
+        $amount6 = 6000;
+        $keyword = 'keyword3';
+        $client2 = 'client532';
+        $client3 = 'client533';
+        $client4 = 'client534';
+        $client5 = 'client535';
+        $client6 = 'client536';
+        $outline1 = 'outline531';
+        $outline2 = 'outline532';
+        $outline3 = 'outline533';
+        $outline5 = 'outline535';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipId = factory(Slip::class)->create([
+            'book_id'       => $bookId,
+            'slip_outline'  => $slipOutline,
+            'slip_memo'     => $memo,
+            'date'          => $date,
+            'is_draft'      => $isDraft,
+        ])->slip_id;
+        $slipEntryId1 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => $amount1,
+            'client'        => $keyword,
+            'outline'       => $outline1,
+        ])->slip_entry_id;
+        $slipEntryId2 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId3,
+            'amount'        => $amount2,
+            'client'        => $client2,
+            'outline'       => $outline2,
+        ])->slip_entry_id;
+        $slipEntryId3 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId4,
+            'credit'        => $accountId3,
+            'amount'        => $amount3,
+            'client'        => $client3,
+            'outline'       => $outline3,
+        ])->slip_entry_id;
+        $slipEntryId4 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId5,
+            'credit'        => $accountId3,
+            'amount'        => $amount4,
+            'client'        => $client4,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        $slipEntryId5 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId6,
+            'credit'        => $accountId3,
+            'amount'        => $amount5,
+            'client'        => $client5,
+            'outline'       => $outline5,
+        ])->slip_entry_id;
+        $slipEntryId6 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId7,
+            'credit'        => $accountId8,
+            'amount'        => $amount6,
+            'client'        => $client6,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $condition = ['debit' => $accountId1, 'credit' => $accountId3, 'and_or' => 'and'];
+
+        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, $condition, $bookId);
+
+        $this->assertSame(1, count($slipEntries));
+    }
+
+    /**
+     * @test
+     */
+    public function searchSlipEntries_ReturnArrayWithSpecifiedDebitOrCredit()
+    {
+        $fromDate = '2019-04-01';
+        $toDate = '2019-04-31';
+        $bookId = (string) Str::uuid();
+        $slipOutline = 'slip_outline54';
+        $memo = 'memo54';
+        $date = '2019-04-10';
+        $isDraft = false;
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $accountId3 = (string) Str::uuid();
+        $accountId4 = (string) Str::uuid();
+        $accountId5 = (string) Str::uuid();
+        $accountId6 = (string) Str::uuid();
+        $accountId7 = (string) Str::uuid();
+        $accountId8 = (string) Str::uuid();
+        $amount1 = 1000;
+        $amount2 = 2000;
+        $amount3 = 3000;
+        $amount4 = 4000;
+        $amount5 = 5000;
+        $amount6 = 6000;
+        $keyword = 'keyword4';
+        $client2 = 'client542';
+        $client3 = 'client543';
+        $client4 = 'client544';
+        $client5 = 'client545';
+        $client6 = 'client546';
+        $outline1 = 'outline541';
+        $outline2 = 'outline542';
+        $outline3 = 'outline543';
+        $outline5 = 'outline545';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipId = factory(Slip::class)->create([
+            'book_id'       => $bookId,
+            'slip_outline'  => $slipOutline,
+            'slip_memo'     => $memo,
+            'date'          => $date,
+            'is_draft'      => $isDraft,
+        ])->slip_id;
+        $slipEntryId1 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => $amount1,
+            'client'        => $keyword,
+            'outline'       => $outline1,
+        ])->slip_entry_id;
+        $slipEntryId2 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId3,
+            'amount'        => $amount2,
+            'client'        => $client2,
+            'outline'       => $outline2,
+        ])->slip_entry_id;
+        $slipEntryId3 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId4,
+            'credit'        => $accountId3,
+            'amount'        => $amount3,
+            'client'        => $client3,
+            'outline'       => $outline3,
+        ])->slip_entry_id;
+        $slipEntryId4 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId5,
+            'credit'        => $accountId3,
+            'amount'        => $amount4,
+            'client'        => $client4,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        $slipEntryId5 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId6,
+            'credit'        => $accountId3,
+            'amount'        => $amount5,
+            'client'        => $client5,
+            'outline'       => $outline5,
+        ])->slip_entry_id;
+        $slipEntryId6 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId7,
+            'credit'        => $accountId8,
+            'amount'        => $amount6,
+            'client'        => $client6,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $condition = ['debit' => $accountId1, 'credit' => $accountId3, 'and_or' => 'or'];
+
+        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, $condition, $bookId);
+
+        $this->assertSame(5, count($slipEntries));
+    }
+
+    /**
+     * @test
+     */
+    public function searchSlipEntries_ReturnArrayWithSpecifiedKeyword()
+    {
+        $fromDate = '2019-05-01';
+        $toDate = '2019-05-31';
+        $bookId = (string) Str::uuid();
+        $slipOutline = 'slip_outline55';
+        $memo = 'memo55';
+        $date = '2019-05-10';
+        $isDraft = false;
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $accountId3 = (string) Str::uuid();
+        $accountId4 = (string) Str::uuid();
+        $accountId5 = (string) Str::uuid();
+        $accountId6 = (string) Str::uuid();
+        $accountId7 = (string) Str::uuid();
+        $accountId8 = (string) Str::uuid();
+        $amount1 = 1000;
+        $amount2 = 2000;
+        $amount3 = 3000;
+        $amount4 = 4000;
+        $amount5 = 5000;
+        $amount6 = 6000;
+        $keyword = 'keyword5';
+        $client2 = 'client552';
+        $client3 = 'client553';
+        $client4 = 'client554';
+        $client5 = 'client555';
+        $client6 = 'client556';
+        $outline1 = 'outline551';
+        $outline2 = 'outline552';
+        $outline3 = 'outline553';
+        $outline5 = 'outline555';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipId = factory(Slip::class)->create([
+            'book_id'       => $bookId,
+            'slip_outline'  => $slipOutline,
+            'slip_memo'     => $memo,
+            'date'          => $date,
+            'is_draft'      => $isDraft,
+        ])->slip_id;
+        $slipEntryId1 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId2,
+            'amount'        => $amount1,
+            'client'        => $keyword,
+            'outline'       => $outline1,
+        ])->slip_entry_id;
+        $slipEntryId2 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId1,
+            'credit'        => $accountId3,
+            'amount'        => $amount2,
+            'client'        => $client2,
+            'outline'       => $outline2,
+        ])->slip_entry_id;
+        $slipEntryId3 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId4,
+            'credit'        => $accountId3,
+            'amount'        => $amount3,
+            'client'        => $client3,
+            'outline'       => $outline3,
+        ])->slip_entry_id;
+        $slipEntryId4 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId5,
+            'credit'        => $accountId3,
+            'amount'        => $amount4,
+            'client'        => $client4,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        $slipEntryId5 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId6,
+            'credit'        => $accountId3,
+            'amount'        => $amount5,
+            'client'        => $client5,
+            'outline'       => $outline5,
+        ])->slip_entry_id;
+        $slipEntryId6 = factory(SlipEntry::class)->create([
+            'slip_id'       => $slipId,
+            'debit'         => $accountId7,
+            'credit'        => $accountId8,
+            'amount'        => $amount6,
+            'client'        => $client6,
+            'outline'       => $keyword,
+        ])->slip_entry_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $condition = ['keyword' => $keyword];
+
+        $slipEntries = $this->slipEntry->searchSlipEntries($fromDate, $toDate, $condition, $bookId);
+
+        $this->assertSame(3, count($slipEntries));
+    }
+
+    /**
+     * @test
+     */
     public function searchSlipEntries_ReturnedArrayHasKeysAsSlipEntry()
     {
         $fromDate = '2019-09-15';
