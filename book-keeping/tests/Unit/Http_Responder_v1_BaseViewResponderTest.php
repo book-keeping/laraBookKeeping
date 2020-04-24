@@ -813,7 +813,7 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
             ],
         ];
         $slipentryline_expected = [
-            [
+            '9d7d0222-ef76-487c-8319-220b2e6911a7' => [
                 'no'      => '9d7d02..',
                 'slipno'  => '3238ed..',
                 'date'    => '2019-09-01',
@@ -823,7 +823,7 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
                 'client'  => 'client1',
                 'outline' => 'outline1',
             ],
-            [
+            '2847e922-8a45-48f4-97f8-cdeee40ed8f9' => [
                 'no'      => '2847e9..',
                 'slipno'  => 'bd9ca0..',
                 'date'    => '2019-09-05',
@@ -833,7 +833,7 @@ class Http_Responder_v1_BaseViewResponderTest extends TestCase
                 'client'  => 'client2',
                 'outline' => 'outline2',
             ],
-            [
+            'e5cade29-f4e4-477b-8e3c-e4ab6ca7caa8' => [
                 'no'      => 'e5cade..',
                 'slipno'  => 'bd9ca0..',
                 'date'    => '2019-09-05',
