@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::match(['get', 'post', 'delete'], '/settings/tokens', Settings\UpdateAccessTokenActionHTML::class)->name('settings_tokens');
 
 Route::get('/page/v1/top', v1\ShowTopActionHTML::class)->name('v1_top');
+Route::match(['get', 'post'], '/page/v1/findslips', v1\FindSlipsActionHTML::class)->name('v1_findslips');
 Route::match(['get', 'post'], '/page/v1/slip', v1\CreateSlipActionHTML::class)->name('v1_slip');
 Route::match(['get', 'post'], '/page/v1/statements', v1\ShowStatementsActionHTML::class)->name('v1_statements');
 Route::get('/page/v1/accountslist', v1\ShowAccountsListActionHTML::class)->name('v1_accountslist');
