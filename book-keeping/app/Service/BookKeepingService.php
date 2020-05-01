@@ -149,6 +149,23 @@ class BookKeepingService
     }
 
     /**
+     * Retrieve account list.
+     *
+     * @param string $bookId
+     *
+     * @return array
+     */
+    public function retrieveAccountsList(string $bookId = null): array
+    {
+        if (is_null($bookId)) {
+            $bookId = $this->book->retrieveDefaultBook(Auth::id());
+        }
+        $accounts = $this->account->retrieveAccounts($bookId);
+
+        return $accounts;
+    }
+
+    /**
      * Retrieve draft slips.
      *
      * @param string $bookId
