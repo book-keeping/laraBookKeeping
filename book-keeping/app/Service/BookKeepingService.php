@@ -334,4 +334,27 @@ class BookKeepingService
             $this->slip->submitSlip($draftSlips[0]['slip_id']);
         }
     }
+
+    /**
+     * Validate date format.
+     *
+     * @param string $date
+     *
+     * @return bool
+     */
+    public function validateDateFormat(string $date): bool
+    {
+        $success = false;
+
+        if (strptime($date, '%Y-%m-%d')) {
+            $d = Carbon::createFromFormat('Y-m-d', $date);
+            if ($d) {
+                if ($d->format('Y-m-d') == $date) {
+                    $success = true;
+                }
+            }
+        }
+
+        return $success;
+    }
 }

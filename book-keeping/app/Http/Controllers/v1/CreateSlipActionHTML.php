@@ -73,7 +73,7 @@ class CreateSlipActionHTML extends AuthenticatedBookKeepingAction
                     }
                     break;
                 case 'submit':
-                    if ($this->validateDateFormat($date)) {
+                    if ($this->BookKeeping->validateDateFormat($date)) {
                         $this->BookKeeping->submitDraftSlip($date);
                     }
                     break;
@@ -98,29 +98,6 @@ class CreateSlipActionHTML extends AuthenticatedBookKeepingAction
         $context['totalamount'] = $totalamount;
 
         return $this->responder->response($context);
-    }
-
-    /**
-     * Validate date format.
-     *
-     * @param string $date
-     *
-     * @return bool
-     */
-    private function validateDateFormat(string $date): bool
-    {
-        $success = false;
-
-        if (strptime($date, '%Y-%m-%d')) {
-            $d = Carbon::createFromFormat('Y-m-d', $date);
-            if ($d) {
-                if ($d->format('Y-m-d') == $date) {
-                    $success = true;
-                }
-            }
-        }
-
-        return $success;
     }
 
     /**
