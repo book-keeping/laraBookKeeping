@@ -405,6 +405,10 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldNotReceive('createSlipEntryAsDraft');
         $BookKeepingMock->shouldNotReceive('deleteSlipEntryAsDraft');
+        $BookKeepingMock->shouldReceive('validateDateFormat')
+            ->once()
+            ->with($context['slipdate'])
+            ->andReturn(true);
         $BookKeepingMock->shouldReceive('submitDraftSlip')
             ->once()
             ->with($context['slipdate']);
@@ -520,42 +524,6 @@ class Http_Controllers_v1_CreateSlipActionHTMLTest extends TestCase
         $response_actual = $controller->__invoke($requestMock);
 
         $this->assertSame($response_expected, $response_actual);
-    }
-
-    /**
-     * @test
-     * @dataProvider forTestValidateDateFormat
-     */
-    public function validateDateFormat($date, $success_expected)
-    {
-        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
-        $BookKeepingMock = Mockery::mock(BookKeepingService::class);
-        /** @var \App\Http\Responder\v1\CreateSlipViewResponder|\Mockery\MockInterface $responderMock */
-        $responderMock = Mockery::mock(CreateSlipViewResponder::class);
-
-        $controller = new CreateSlipActionHTML($BookKeepingMock, $responderMock);
-        $reflection = new ReflectionClass($controller);
-        $method = $reflection->getMethod('validateDateFormat');
-        $method->setAccessible(true);
-        $success_actual = $method->invoke($controller, $date);
-
-        $this->assertSame($success_expected, $success_actual);
-    }
-
-    public function forTestValidateDateFormat()
-    {
-        return [
-            ['2019-01-32', false],
-            ['2019-02-29', false],
-            ['2020-02-29', true],
-            ['2020-04-31', false],
-            ['2020-03-01', true],
-            ['2020/03/01', false],
-            ['20200301',   false],
-            ['2020-03-1',  false],
-            ['2020-3-1',   false],
-            ['2020-3-01',  false],
-        ];
     }
 
     /**
