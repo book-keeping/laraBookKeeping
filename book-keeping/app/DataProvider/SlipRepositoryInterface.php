@@ -36,6 +36,15 @@ interface SlipRepositoryInterface
     public function findAllDraftByBookId(string $bookId): array;
 
     /**
+     * Find a slip.
+     *
+     * @param string $slipId
+     *
+     * @return array|null
+     */
+    public function findById(string $slipId): ?array;
+
+    /**
      * Update the specified slip.
      *
      * @param string $slipId

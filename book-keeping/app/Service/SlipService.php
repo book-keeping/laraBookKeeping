@@ -122,6 +122,18 @@ class SlipService
     }
 
     /**
+     * Retrieve a slip.
+     *
+     * @param string $slipId
+     *
+     * @return array|null
+     */
+    public function retrieveSlip(string $slipId): ?array
+    {
+        return $this->slip->findById($slipId);
+    }
+
+    /**
      * Retrieve slip entries between specified date.
      *
      * @param string $fromDate
