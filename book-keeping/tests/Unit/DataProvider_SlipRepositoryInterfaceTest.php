@@ -72,6 +72,22 @@ abstract class DataProvider_SlipRepositoryInterfaceTest extends TestCase
     /**
      * @test
      */
+    public function findById_ReturnValueTypeIsArrayOrNull()
+    {
+        $slipId = (string) Str::uuid();
+
+        $slip = $this->slip->findById($slipId);
+
+        if (is_null($slip)) {
+            $this->assertNull($slip);
+        } else {
+            $this->assertIsArray($slip);
+        }
+    }
+
+    /**
+     * @test
+     */
     public function update_CalledWithStringAndArray()
     {
         $slipId = (string) Str::uuid();
