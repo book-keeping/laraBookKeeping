@@ -114,6 +114,31 @@ class DataProvider_Eloquent_SlipRepositoryTest extends DataProvider_SlipReposito
     /**
      * @test
      */
+    public function findById_ReturnSlip()
+    {
+        $bookId = (string) Str::uuid();
+        $outline = 'outline120';
+        $memo = 'memo120';
+        $date = '2019-01-22';
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $slipId = factory(Slip::class)->create([
+            'book_id'       => $bookId,
+            'slip_outline'  => $outline,
+            'slip_memo'     => $memo,
+            'date'          => $date,
+            'is_draft'      => false,
+        ])->slip_id;
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $slip_expected = ['book_id' => $bookId, 'slip_id' => $slipId, 'date' => $date, 'slip_outline' => $outline, 'slip_memo' => $memo];
+
+        $slip_actual = $this->slip->findById($slipId);
+
+        $this->assertSame($slip_expected, $slip_actual);
+    }
+
+    /**
+     * @test
+     */
     public function update_OneRecordIsUpdated()
     {
         $bookId = (string) Str::uuid();
