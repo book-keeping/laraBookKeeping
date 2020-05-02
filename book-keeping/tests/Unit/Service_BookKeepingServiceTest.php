@@ -24,6 +24,94 @@ class Service_BookKeepingServiceTest extends TestCase
     /**
      * @test
      */
+    public function createSlip_CreateNewSlipForTheDefaultBook()
+    {
+        $bookId = (string) Str::uuid();
+        $userId = 30;
+        $user = new User();
+        $user->id = $userId;
+        $this->be($user);
+        $outline = 'slip_outline34';
+        $date = '2019-01-08';
+        $memo = 'memo36';
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $accountId3 = (string) Str::uuid();
+        $accountId4 = (string) Str::uuid();
+        $entries = [
+            ['debit' => $accountId1, 'credit' => $accountId2, 'amount' => 4200, 'client' => 'client42', 'outline' => 'outline42'],
+            ['debit' => $accountId3, 'credit' => $accountId4, 'amount' => 4300, 'client' => 'client43', 'outline' => 'outline43'],
+        ];
+        $slipId_expected = (string) Str::uuid();
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
+        $bookMock = Mockery::mock(BookService::class);
+        $bookMock->shouldReceive('retrieveDefaultBook')
+            ->once()
+            ->with($userId)
+            ->andReturn($bookId);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
+        $accountMock = Mockery::mock(AccountService::class);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
+        $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('createSlipAsDraft')
+            ->once()
+            ->with($bookId, $outline, $date, $entries, $memo)
+            ->andReturn($slipId_expected);
+        $slipMock->shouldReceive('submitSlip')
+            ->once()
+            ->with($slipId_expected);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $slipId_actual = $BookKeeping->createSlip($outline, $date, $entries, $memo);
+
+        $this->assertSame($slipId_expected, $slipId_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function createSlip_CreateNewSlipForTheSpecifiedBook()
+    {
+        $bookId = (string) Str::uuid();
+        $outline = 'slip_outline78';
+        $date = '2019-01-16';
+        $memo = 'memo80';
+        $accountId1 = (string) Str::uuid();
+        $accountId2 = (string) Str::uuid();
+        $accountId3 = (string) Str::uuid();
+        $accountId4 = (string) Str::uuid();
+        $entries = [
+            ['debit' => $accountId1, 'credit' => $accountId2, 'amount' => 860, 'client' => 'client86', 'outline' => 'outline86'],
+            ['debit' => $accountId3, 'credit' => $accountId4, 'amount' => 870, 'client' => 'client87', 'outline' => 'outline87'],
+        ];
+        $slipId_expected = (string) Str::uuid();
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
+        $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
+        $accountMock = Mockery::mock(AccountService::class);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
+        $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('createSlipAsDraft')
+            ->once()
+            ->with($bookId, $outline, $date, $entries, $memo)
+            ->andReturn($slipId_expected);
+        $slipMock->shouldReceive('submitSlip')
+            ->once()
+            ->with($slipId_expected);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $slipId_actual = $BookKeeping->createSlip($outline, $date, $entries, $memo, $bookId);
+
+        $this->assertSame($slipId_expected, $slipId_actual);
+    }
+
+    /**
+     * @test
+     */
     public function createSlipEntryAsDraft_CreateNewSlipForTheDefaultBook()
     {
         $bookId = (string) Str::uuid();
@@ -789,6 +877,127 @@ class Service_BookKeepingServiceTest extends TestCase
 
         $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
         $slips_actual = $BookKeeping->retrieveDraftSlips($bookId);
+
+        $this->assertSame($slips_expected, $slips_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function retrieveSlip_SlipIsFoundByIdAndRetrieved()
+    {
+        $bookId = (string) Str::uuid();
+        $slipId = (string) Str::uuid();
+        $accountId_1 = (string) Str::uuid();
+        $accountId_2 = (string) Str::uuid();
+        $accountId_3 = (string) Str::uuid();
+        $accountId_4 = (string) Str::uuid();
+        $slipEntryId_1 = (string) Str::uuid();
+        $slipEntryId_2 = (string) Str::uuid();
+        $date = '2020-04-30';
+        $slip_outline = 'slipOutline_1';
+        $slip_memo = 'slipMemo_1';
+        $slip_head = ['book_id' => $bookId, 'slip_id' => $slipId, 'date' => $date, 'slip_outline' => $slip_outline, 'slip_memo' => $slip_memo];
+        $accounts = [
+            $accountId_1 => ['account_title' => 'accountTitle_1'],
+            $accountId_2 => ['account_title' => 'accountTitle_2'],
+            $accountId_3 => ['account_title' => 'accountTitle_3'],
+            $accountId_4 => ['account_title' => 'accountTitle_4'],
+        ];
+        $slipEntries = [
+            [
+                'slip_entry_id' => $slipEntryId_1,
+                'slip_id'       => $slipId,
+                'debit'         => $accountId_1,
+                'credit'        => $accountId_2,
+                'amount'        => 100,
+                'client'        => 'client_1',
+                'outline'       => 'outline_1',
+            ],
+            [
+                'slip_entry_id' => $slipEntryId_2,
+                'slip_id'       => $slipId,
+                'debit'         => $accountId_3,
+                'credit'        => $accountId_4,
+                'amount'        => 30000,
+                'client'        => 'client_2',
+                'outline'       => 'outline_2',
+            ],
+        ];
+        $slips_expected = [
+            $slipId => [
+                'date'         => $date,
+                'slip_outline' => $slip_outline,
+                'slip_memo'    => $slip_memo,
+                'items'        => [
+                    $slipEntryId_1 => [
+                        'debit'   => ['account_id' => $accountId_1, 'account_title' => 'accountTitle_1'],
+                        'credit'  => ['account_id' => $accountId_2, 'account_title' => 'accountTitle_2'],
+                        'amount'  => 100,
+                        'client'  => 'client_1',
+                        'outline' => 'outline_1',
+                    ],
+                    $slipEntryId_2 => [
+                        'debit'   => ['account_id' => $accountId_3, 'account_title' => 'accountTitle_3'],
+                        'credit'  => ['account_id' => $accountId_4, 'account_title' => 'accountTitle_4'],
+                        'amount'  => 30000,
+                        'client'  => 'client_2',
+                        'outline' => 'outline_2',
+                    ],
+                ],
+            ],
+        ];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
+        $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
+        $accountMock = Mockery::mock(AccountService::class);
+        $accountMock->shouldReceive('retrieveAccounts')
+            ->once()
+            ->with($bookId)
+            ->andReturn($accounts);
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
+        $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveSlip')
+            ->once()
+            ->with($slipId)
+            ->andReturn($slip_head);
+        $slipMock->shouldReceive('retrieveSlipEntriesBoundTo')
+            ->once()
+            ->with($slipId)
+            ->andReturn($slipEntries);
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $slips_actual = $BookKeeping->retrieveSlip($slipId);
+
+        $this->assertSame($slips_expected, $slips_actual);
+    }
+
+    /**
+     * @test
+     */
+    public function retrieveSlip_SlipIsNotFound()
+    {
+        $slipId = (string) Str::uuid();
+        $slips_expected = [];
+        /** @var \App\Service\BookService|\Mockery\MockInterface $bookMock */
+        $bookMock = Mockery::mock(BookService::class);
+        /** @var \App\Service\AccountService|\Mockery\MockInterface $accountMock */
+        $accountMock = Mockery::mock(AccountService::class);
+        $accountMock->shouldNotReceive('retrieveAccounts');
+        /** @var \App\Service\BudgetService|\Mockery\MockInterface $budgetMock */
+        $budgetMock = Mockery::mock(BudgetService::class);
+        /** @var \App\Service\SlipService|\Mockery\MockInterface $slipMock */
+        $slipMock = Mockery::mock(SlipService::class);
+        $slipMock->shouldReceive('retrieveSlip')
+            ->once()
+            ->with($slipId)
+            ->andReturn(null);
+        $slipMock->shouldNotReceive('retrieveSlipEntriesBoundTo');
+
+        $BookKeeping = new BookKeepingService($bookMock, $accountMock, $budgetMock, $slipMock);
+        $slips_actual = $BookKeeping->retrieveSlip($slipId);
 
         $this->assertSame($slips_expected, $slips_actual);
     }
