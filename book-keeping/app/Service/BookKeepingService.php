@@ -59,6 +59,28 @@ class BookKeepingService
     }
 
     /**
+     * Create a new slip.
+     *
+     * @param string $outline
+     * @param string $date
+     * @param array  $entries
+     * @param string $memo
+     * @param string $bookId
+     *
+     * @return string
+     */
+    public function createSlip(string $outline, string $date, array $entries, ?string $memo, string $bookId = null): string
+    {
+        if (is_null($bookId)) {
+            $bookId = $this->book->retrieveDefaultBook(Auth::id());
+        }
+        $slipId = $this->slip->createSlipAsDraft($bookId, $outline, $date, $entries, $memo);
+        $this->slip->submitSlip($slipId);
+
+        return $slipId;
+    }
+
+    /**
      * Add a new slip entry as draft.
      *
      * @param string $debit
@@ -191,6 +213,41 @@ class BookKeepingService
             $slipEntriesList = $this->slip->retrieveSlipEntriesBoundTo($slipItem['slip_id']);
             foreach ($slipEntriesList as $slipEntryItem) {
                 $slips[$slipItem['slip_id']]['items'][$slipEntryItem['slip_entry_id']] = [
+                    'debit'   => ['account_id' => $slipEntryItem['debit'], 'account_title' => $accounts[$slipEntryItem['debit']]['account_title']],
+                    'credit'  => ['account_id' => $slipEntryItem['credit'], 'account_title' => $accounts[$slipEntryItem['credit']]['account_title']],
+                    'amount'  => $slipEntryItem['amount'],
+                    'client'  => $slipEntryItem['client'],
+                    'outline' => $slipEntryItem['outline'],
+                ];
+            }
+        }
+
+        return $slips;
+    }
+
+    /**
+     * Retrieve a slip.
+     *
+     * @param string $slipId
+     *
+     * @return array
+     */
+    public function retrieveSlip(string $slipId): array
+    {
+        $slips = [];
+        $slip_head = $this->slip->retrieveSlip($slipId);
+        if (!is_null($slip_head)) {
+            $bookId = $slip_head['book_id'];
+            $accounts = $this->account->retrieveAccounts($bookId);
+            $slips[$slipId] = [
+                'date'         => $slip_head['date'],
+                'slip_outline' => $slip_head['slip_outline'],
+                'slip_memo'    => $slip_head['slip_memo'],
+                'items'        => [],
+            ];
+            $slipEntriesList = $this->slip->retrieveSlipEntriesBoundTo($slipId);
+            foreach ($slipEntriesList as $slipEntryItem) {
+                $slips[$slipId]['items'][$slipEntryItem['slip_entry_id']] = [
                     'debit'   => ['account_id' => $slipEntryItem['debit'], 'account_title' => $accounts[$slipEntryItem['debit']]['account_title']],
                     'credit'  => ['account_id' => $slipEntryItem['credit'], 'account_title' => $accounts[$slipEntryItem['credit']]['account_title']],
                     'amount'  => $slipEntryItem['amount'],
