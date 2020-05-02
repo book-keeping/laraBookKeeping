@@ -181,6 +181,29 @@ class Service_SlipServiceTest extends TestCase
     /**
      * @test
      */
+    public function retrieveSlip_CallRepositoryWithArgumentsAsItIs()
+    {
+        $bookId = (string) Str::uuid();
+        $slipId = (string) Str::uuid();
+        $slip_expected = ['book_id' => $bookId, 'slip_id' => $slipId, 'date' => '2019-11-03', 'slip_outline' => 'outline', 'slip_memo' => 'memo'];
+        /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
+        $slipMock = Mockery::mock(SlipRepositoryInterface::class);
+        $slipMock->shouldReceive('findById')
+            ->once()
+            ->with($slipId)
+            ->andReturn($slip_expected);
+        /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
+        $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
+
+        $slip = new SlipService($slipMock, $slipEntryMock);
+        $slip_actual = $slip->retrieveSlip($slipId);
+
+        $this->assertSame($slip_expected, $slip_actual);
+    }
+
+    /**
+     * @test
+     */
     public function retrieveSlipEntries_CallRepositoryWithArgumentsAsItIs()
     {
         $fromDate = '2019-08-10';
