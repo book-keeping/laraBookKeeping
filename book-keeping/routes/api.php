@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/v1/accounts', api\v1\GetAccountsActionApi::class);
+
+Route::post('/v1/slips', api\v1\PostSlipsActionApi::class);
