@@ -50,14 +50,21 @@ class ShowStatementsActionHTML extends AuthenticatedBookKeepingAction
             $beginning_date = $today;
             $end_date = $today;
         }
-        $end_date_of_previous_period = date('Y-m-d', strtotime($beginning_date) - 86400);
 
         $context['beginning_date'] = $beginning_date;
         $context['end_date'] = $end_date;
-        $context['statements'] = $this->BookKeeping->retrieveStatements($beginning_date, $end_date);
-        $context['previous_balance_sheet'] = $this->BookKeeping->retrieveStatements('1970-01-01', $end_date_of_previous_period);
-        $context['balance_sheet'] = $this->BookKeeping->retrieveStatements('1970-01-01', $end_date);
-        $context['slips'] = $this->BookKeeping->retrieveSlips($beginning_date, $end_date, null, null, null, null);
+        if (!empty($beginning_date) && !empty($end_date) && $this->BookKeeping->validatePeriod($beginning_date, $end_date)) {
+            $context['statements'] = $this->BookKeeping->retrieveStatements($beginning_date, $end_date);
+            $end_date_of_previous_period = date('Y-m-d', strtotime($beginning_date) - 86400);
+            $context['previous_balance_sheet'] = $this->BookKeeping->retrieveStatements('1970-01-01', $end_date_of_previous_period);
+            $context['balance_sheet'] = $this->BookKeeping->retrieveStatements('1970-01-01', $end_date);
+            $context['slips'] = $this->BookKeeping->retrieveSlips($beginning_date, $end_date, null, null, null, null);
+            $context['message'] = null;
+            $context['display_statements'] = true;
+        } else {
+            $context['message'] = __('There is no item to be shown.');
+            $context['display_statements'] = false;
+        }
 
         return $this->responder->response($context);
     }

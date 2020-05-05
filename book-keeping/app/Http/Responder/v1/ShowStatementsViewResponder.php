@@ -15,15 +15,17 @@ class ShowStatementsViewResponder extends BaseViewResponder
      */
     public function response(array $context): Response
     {
-        $statements = $context['statements'];
-        $PreviousBalanceSheet = $context['previous_balance_sheet'];
-        $balanceSheet = $context['balance_sheet'];
-        $slips = $context['slips'];
-        $this->response->setContent($this->view->make('bookkeeping.v1.pagestatements', [
-            'navilinks'        => $this->navilinks(),
-            'beginning_date'   => $context['beginning_date'],
-            'end_date'         => $context['end_date'],
-            'income_statement' => $this->translateIncomeStatementFormat([
+        $income_statement = [];
+        $trial_balance_of_real_flow = [];
+        $previous_balance_sheet = [];
+        $balance_sheet = [];
+        $formatted_slips = [];
+        if ($context['display_statements']) {
+            $statements = $context['statements'];
+            $PreviousBalanceSheet = $context['previous_balance_sheet'];
+            $balanceSheet = $context['balance_sheet'];
+            $slips = $context['slips'];
+            $income_statement = $this->translateIncomeStatementFormat([
                 'expense' => [
                     'amount' => $statements['expense']['amount'],
                     'groups' => $this->sortAccountInAscendingCodeOrder($statements['expense']['groups']),
@@ -33,8 +35,8 @@ class ShowStatementsViewResponder extends BaseViewResponder
                     'groups' => $this->sortAccountInAscendingCodeOrder($statements['revenue']['groups']),
                 ],
                 'net_income' => $statements['net_income'],
-            ]),
-            'trial_balance_of_real_flow' => $this->translateBalanceSheetFormat([
+            ]);
+            $trial_balance_of_real_flow = $this->translateBalanceSheetFormat([
                 'asset' => [
                     'amount' => $statements['asset']['amount'],
                     'groups' => $this->sortAccountInAscendingCodeOrder($statements['asset']['groups']),
@@ -44,8 +46,8 @@ class ShowStatementsViewResponder extends BaseViewResponder
                     'groups' => $this->sortAccountInAscendingCodeOrder($statements['liability']['groups']),
                 ],
                 'net_asset' => $statements['net_asset'],
-            ]),
-            'previous_balance_sheet' => $this->translateBalanceSheetFormat([
+            ]);
+            $previous_balance_sheet = $this->translateBalanceSheetFormat([
                 'asset' => [
                     'amount' => $PreviousBalanceSheet['asset']['amount'],
                     'groups' => $this->sortAccountInAscendingCodeOrder($PreviousBalanceSheet['asset']['groups']),
@@ -55,8 +57,8 @@ class ShowStatementsViewResponder extends BaseViewResponder
                     'groups' => $this->sortAccountInAscendingCodeOrder($PreviousBalanceSheet['liability']['groups']),
                 ],
                 'net_asset' => $PreviousBalanceSheet['net_asset'],
-            ]),
-            'balance_sheet' => $this->translateBalanceSheetFormat([
+            ]);
+            $balance_sheet = $this->translateBalanceSheetFormat([
                 'asset' => [
                     'amount' => $balanceSheet['asset']['amount'],
                     'groups' => $this->sortAccountInAscendingCodeOrder($balanceSheet['asset']['groups']),
@@ -66,8 +68,20 @@ class ShowStatementsViewResponder extends BaseViewResponder
                     'groups' => $this->sortAccountInAscendingCodeOrder($balanceSheet['liability']['groups']),
                 ],
                 'net_asset' => $balanceSheet['net_asset'],
-            ]),
-            'slips' => $this->translateSlipsFormat($slips),
+            ]);
+            $formatted_slips = $this->translateSlipsFormat($slips);
+        }
+        $this->response->setContent($this->view->make('bookkeeping.v1.pagestatements', [
+            'navilinks'                  => $this->navilinks(),
+            'beginning_date'             => $context['beginning_date'],
+            'end_date'                   => $context['end_date'],
+            'display_statements'         => $context['display_statements'],
+            'income_statement'           => $income_statement,
+            'trial_balance_of_real_flow' => $trial_balance_of_real_flow,
+            'previous_balance_sheet'     => $previous_balance_sheet,
+            'balance_sheet'              => $balance_sheet,
+            'slips'                      => $formatted_slips,
+            'message'                    => $context['message'],
         ]));
         $this->response->setStatusCode(Response::HTTP_OK);
 
