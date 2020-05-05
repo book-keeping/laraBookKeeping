@@ -30,6 +30,6 @@
     <hr>
     @yield('content')
     @endguest
-    <address>Copyright(C) 2007-2019 haessal. All rights reserved.</address>
+    <address>(C) 2007 haessal&nbsp</address>
 </body>
 </html>
