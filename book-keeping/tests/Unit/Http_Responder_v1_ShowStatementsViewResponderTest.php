@@ -314,4 +314,29 @@ class Http_Responder_v1_ShowStatementsViewResponderTest extends TestCase
 
         $this->assertTrue(true);
     }
+
+    /**
+     * @test
+     */
+    public function response_ReturnResponseWithoutStatementsData()
+    {
+        $context = [
+            'beginning_date'     => '2019-10-01',
+            'end_date'           => '2019-10-30',
+            'message'            => 'message',
+            'display_statements' => false,
+        ];
+        /** @var \Illuminate\Http\Response|\Mockery\MockInterface $ResponseMock */
+        $ResponseMock = Mockery::mock(Response::class);
+        $ResponseMock->shouldReceive('setContent')->once();
+        $ResponseMock->shouldReceive('setStatusCode')->once();
+        /** @var \Illuminate\Contracts\View\Factory|\Mockery\MockInterface $ViewFactoryMock */
+        $ViewFactoryMock = Mockery::mock(Factory::class);
+        $ViewFactoryMock->shouldReceive('make')->once();
+
+        $responder = new ShowStatementsViewResponder($ResponseMock, $ViewFactoryMock);
+        $response = $responder->response($context);
+
+        $this->assertTrue(true);
+    }
 }
