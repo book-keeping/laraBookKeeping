@@ -66,10 +66,14 @@ class FindSlipsActionHTML extends AuthenticatedBookKeepingAction
             $and_or = $request->input('ANDOR');
             $keyword = trim($request->input('KEYWORD'));
             if (!empty($beginning_date) || !empty($end_date) || !empty($debit) || !empty($credit) || !empty($keyword)) {
-                $slips = $this->BookKeeping->retrieveSlips($beginning_date, $end_date, $debit, $credit, $and_or, $keyword);
-                $message = null;
-                if (empty($slips)) {
-                    $message = __('No items that match the condition.');
+                if ($this->BookKeeping->validatePeriod($beginning_date, $end_date)) {
+                    $slips = $this->BookKeeping->retrieveSlips($beginning_date, $end_date, $debit, $credit, $and_or, $keyword);
+                    $message = null;
+                    if (empty($slips)) {
+                        $message = __('No items that match the condition.');
+                    }
+                } else {
+                    $message = __('Invalid date format.');
                 }
             }
         }
