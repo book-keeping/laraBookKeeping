@@ -115,6 +115,10 @@ class Http_Controllers_v1_FindSlipsActionHTMLTest extends TestCase
         $BookKeepingMock->shouldReceive('deleteSlipEntryAsDraft')
             ->once()
             ->andReturn($slipEntryId_1);
+        $BookKeepingMock->shouldReceive('validatePeriod')
+            ->once()
+            ->with($context['beginning_date'], $context['end_date'])
+            ->andReturn(true);
         $BookKeepingMock->shouldReceive('retrieveSlips')
             ->once()
             ->andReturn([]);
@@ -225,6 +229,10 @@ class Http_Controllers_v1_FindSlipsActionHTMLTest extends TestCase
             ->once()
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldNotReceive('deleteSlipEntryAsDraft');
+        $BookKeepingMock->shouldReceive('validatePeriod')
+            ->once()
+            ->with($context['beginning_date'], $context['end_date'])
+            ->andReturn(true);
         $BookKeepingMock->shouldReceive('retrieveSlips')
             ->once()
             ->andReturn($context['slips']);
@@ -315,6 +323,7 @@ class Http_Controllers_v1_FindSlipsActionHTMLTest extends TestCase
             ->once()
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldNotReceive('deleteSlipEntryAsDraft');
+        $BookKeepingMock->shouldNotReceive('validatePeriod');
         $BookKeepingMock->shouldNotReceive('retrieveSlips');
         /** @var \App\Http\Responder\v1\FindSlipsViewResponder|\Mockery\MockInterface $responderMock */
         $responderMock = Mockery::mock(FindSlipsViewResponder::class);
@@ -405,6 +414,10 @@ class Http_Controllers_v1_FindSlipsActionHTMLTest extends TestCase
             ->once()
             ->andReturn($context['accounts']);
         $BookKeepingMock->shouldNotReceive('deleteSlipEntryAsDraft');
+        $BookKeepingMock->shouldReceive('validatePeriod')
+            ->once()
+            ->with($context['beginning_date'], $context['end_date'])
+            ->andReturn(true);
         $BookKeepingMock->shouldReceive('retrieveSlips')
             ->once()
             ->andReturn([]);
