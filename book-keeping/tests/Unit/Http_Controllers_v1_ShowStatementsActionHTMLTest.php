@@ -51,10 +51,16 @@ class Http_Controllers_v1_ShowStatementsActionHTMLTest extends TestCase
                     'items'        => [],
                 ],
             ],
+            'message'            => null,
+            'display_statements' => true,
         ];
         $response_expected = new Response();
         /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
+        $BookKeepingMock->shouldReceive('validatePeriod')
+            ->once()
+            ->with($beginning_date, $end_date)
+            ->andReturn(true);
         $BookKeepingMock->shouldReceive('retrieveStatements')
             ->once()
             ->with($beginning_date, $end_date)
@@ -133,10 +139,16 @@ class Http_Controllers_v1_ShowStatementsActionHTMLTest extends TestCase
                     'items'        => [],
                 ],
             ],
+            'message'            => null,
+            'display_statements' => true,
         ];
         $response_expected = new Response();
         /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
         $BookKeepingMock = Mockery::mock(BookKeepingService::class);
+        $BookKeepingMock->shouldReceive('validatePeriod')
+            ->once()
+            ->with($beginning_date, $end_date)
+            ->andReturn(true);
         $BookKeepingMock->shouldReceive('retrieveStatements')
             ->once()
             ->with($beginning_date, $end_date)
