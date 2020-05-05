@@ -290,6 +290,100 @@ class Http_Controllers_v1_FindSlipsActionHTMLTest extends TestCase
     /**
      * @test
      */
+    public function __invoke_MakeContextAndReturnResponseToHandlePOSTForSearchRequestWithInvalidPeriod()
+    {
+        $accountId_1 = (string) Str::uuid();
+        $accountId_2 = (string) Str::uuid();
+        $context = [
+            'accounts' => [
+                'asset' => [
+                    'groups' => [],
+                ],
+                'liability' => [
+                    'groups' => [],
+                ],
+                'expense' => [
+                    'groups' => [],
+                ],
+                'revenue' => [
+                    'groups' => [],
+                ],
+            ],
+            'beginning_date' => '2020-01-01',
+            'end_date'       => '2019-01-01',
+            'debit'          => $accountId_1,
+            'credit'         => $accountId_2,
+            'and_or'         => 'and',
+            'keyword'        => null,
+            'slips'          => [],
+            'message'        => __('Invalid date format.'),
+        ];
+        $response_expected = new Response();
+        /** @var \App\Service\BookKeepingService|\Mockery\MockInterface $BookKeepingMock */
+        $BookKeepingMock = Mockery::mock(BookKeepingService::class);
+        $BookKeepingMock->shouldReceive('retrieveAccounts')
+            ->once()
+            ->andReturn($context['accounts']);
+        $BookKeepingMock->shouldNotReceive('deleteSlipEntryAsDraft');
+        $BookKeepingMock->shouldReceive('validatePeriod')
+            ->once()
+            ->with($context['beginning_date'], $context['end_date'])
+            ->andReturn(false);
+        $BookKeepingMock->shouldNotReceive('retrieveSlips');
+        /** @var \App\Http\Responder\v1\FindSlipsViewResponder|\Mockery\MockInterface $responderMock */
+        $responderMock = Mockery::mock(FindSlipsViewResponder::class);
+        $responderMock->shouldReceive('response')
+            ->once()
+            ->with($context)
+            ->andReturn($response_expected);
+        /** @var \Illuminate\Http\Request|\Mockery\MockInterface $requestMock */
+        $requestMock = Mockery::mock(Request::class);
+        $requestMock->shouldReceive('isMethod')
+            ->once()
+            ->with('post')
+            ->andReturn(true);
+        $requestMock->shouldReceive('input')
+            ->once()
+            ->with('buttons')
+            ->andReturn(['search' => 'Search']);
+        $requestMock->shouldReceive('input')
+            ->once()
+            ->with('modifyno')
+            ->andReturn(null);
+        $requestMock->shouldReceive('input')
+            ->once()
+            ->with('BEGINNING')
+            ->andReturn($context['beginning_date']);
+        $requestMock->shouldReceive('input')
+            ->once()
+            ->with('END')
+            ->andReturn($context['end_date']);
+        $requestMock->shouldReceive('input')
+            ->once()
+            ->with('debit')
+            ->andReturn($context['debit']);
+        $requestMock->shouldReceive('input')
+            ->once()
+            ->with('credit')
+            ->andReturn($context['credit']);
+        $requestMock->shouldReceive('input')
+            ->once()
+            ->with('ANDOR')
+            ->andReturn($context['and_or']);
+        $requestMock->shouldReceive('input')
+            ->once()
+            ->with('KEYWORD')
+            ->andReturn(null);
+
+        $controller = new FindSlipsActionHTML($BookKeepingMock, $responderMock);
+        $response_actual = $controller->__invoke($requestMock);
+
+        $this->assertSame($response_expected, $response_actual);
+    }
+
+    /**
+     * @test
+     */
     public function __invoke_MakeContextAndReturnResponseToHandlePOSTForSearchRequestWithoutConditions()
     {
         $context = [
