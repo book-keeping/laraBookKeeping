@@ -23,6 +23,7 @@
         </tr>
         <tr>
             <td class="main">
+                @if ($display_statements)
                 <table>
                     <tr>
                         <td colspan="2">
@@ -58,6 +59,10 @@
                         </td>
                     </tr>
                 </table>
+                @endif
+                @isset($message)
+                    {{ $message }}
+                @endisset
             </td>
         </tr>
     </table>
