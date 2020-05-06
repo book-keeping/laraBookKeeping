@@ -22,6 +22,7 @@ class CreateAccountGroupsTable extends Migration
             $table->unsignedBigInteger('bk_uid')->nullable();
             $table->unsignedBigInteger('account_group_bk_code')->nullable();
             $table->boolean('is_current');
+            $table->bigInteger('display_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,6 +19,7 @@ class CreateSlipGroupEntriesTable extends Migration
             $table->foreign('slip_group_id')->references('slip_group_id')->on('bk2_0_slip_groups');
             $table->uuid('related_slip');
             $table->foreign('related_slip')->references('slip_id')->on('bk2_0_slips');
+            $table->bigInteger('display_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

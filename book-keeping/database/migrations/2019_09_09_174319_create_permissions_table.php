@@ -22,6 +22,7 @@ class CreatePermissionsTable extends Migration
             $table->boolean('modifiable');
             $table->boolean('is_owner');
             $table->boolean('is_default');
+            $table->bigInteger('display_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->unique(['permitted_user', 'readable_book']);

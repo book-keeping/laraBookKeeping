@@ -24,6 +24,7 @@ class CreateSlipEntriesTable extends Migration
             $table->bigInteger('amount');
             $table->string('client', 40);
             $table->string('outline', 200);
+            $table->bigInteger('display_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
