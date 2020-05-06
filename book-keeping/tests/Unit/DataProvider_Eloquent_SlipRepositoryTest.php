@@ -39,7 +39,7 @@ class DataProvider_Eloquent_SlipRepositoryTest extends DataProvider_SlipReposito
         $isDraft = false;
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $slipId = $this->slip->create($bookId, $outline, $date, $memo, $isDraft);
+        $slipId = $this->slip->create($bookId, $outline, $date, $memo, null, $isDraft);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $this->assertDatabaseHas('bk2_0_slips', [

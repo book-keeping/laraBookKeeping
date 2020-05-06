@@ -33,24 +33,25 @@ class Service_SlipServiceTest extends TestCase
             ['debit' => $accountId1, 'credit' => $accountId2, 'amount' => 1100, 'client' => 'client11', 'outline' => 'outline11'],
             ['debit' => $accountId3, 'credit' => $accountId4, 'amount' => 2200, 'client' => 'client22', 'outline' => 'outline22'],
         ];
+        $displayOrder = 1;
         $slipId_expected = (string) Str::uuid();
         /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
         $slipMock->shouldReceive('create')
             ->once()
-            ->with($bookId, $outline, $date, $memo, true)
+            ->with($bookId, $outline, $date, $memo, $displayOrder, true)
             ->andReturn($slipId_expected);
         /** @var \App\DataProvider\SlipEntryRepositoryInterface|\Mockery\MockInterface $slipEntryMock */
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('create')
             ->once()
-            ->with($slipId_expected, $entries[0]['debit'], $entries[0]['credit'], $entries[0]['amount'], $entries[0]['client'], $entries[0]['outline']);
+            ->with($slipId_expected, $entries[0]['debit'], $entries[0]['credit'], $entries[0]['amount'], $entries[0]['client'], $entries[0]['outline'], null);
         $slipEntryMock->shouldReceive('create')
             ->once()
-            ->with($slipId_expected, $entries[1]['debit'], $entries[1]['credit'], $entries[1]['amount'], $entries[1]['client'], $entries[1]['outline']);
+            ->with($slipId_expected, $entries[1]['debit'], $entries[1]['credit'], $entries[1]['amount'], $entries[1]['client'], $entries[1]['outline'], null);
 
         $slip = new SlipService($slipMock, $slipEntryMock);
-        $slipId_actual = $slip->createSlipAsDraft($bookId, $outline, $date, $entries, $memo);
+        $slipId_actual = $slip->createSlipAsDraft($bookId, $outline, $date, $entries, $memo, $displayOrder);
 
         $this->assertSame($slipId_expected, $slipId_actual);
     }
@@ -66,6 +67,7 @@ class Service_SlipServiceTest extends TestCase
         $amount = 6400;
         $client = 'client4';
         $outline = 'outline4';
+        $displayOrder = 1;
         $slipEntryId_expected = (string) Str::uuid();
         /** @var \App\DataProvider\SlipRepositoryInterface|\Mockery\MockInterface $slipMock */
         $slipMock = Mockery::mock(SlipRepositoryInterface::class);
@@ -73,11 +75,11 @@ class Service_SlipServiceTest extends TestCase
         $slipEntryMock = Mockery::mock(SlipEntryRepositoryInterface::class);
         $slipEntryMock->shouldReceive('create')
             ->once()
-            ->with($slipId, $debit, $credit, $amount, $client, $outline)
+            ->with($slipId, $debit, $credit, $amount, $client, $outline, $displayOrder)
             ->andReturn($slipEntryId_expected);
 
         $slip = new SlipService($slipMock, $slipEntryMock);
-        $slipEntryId_actual = $slip->createSlipEntry($slipId, $debit, $credit, $amount, $client, $outline);
+        $slipEntryId_actual = $slip->createSlipEntry($slipId, $debit, $credit, $amount, $client, $outline, $displayOrder);
 
         $this->assertSame($slipEntryId_expected, $slipEntryId_actual);
     }
