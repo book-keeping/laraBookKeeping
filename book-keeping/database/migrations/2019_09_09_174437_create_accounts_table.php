@@ -22,6 +22,7 @@ class CreateAccountsTable extends Migration
             $table->boolean('selectable');
             $table->unsignedBigInteger('bk_uid')->nullable();
             $table->unsignedBigInteger('account_bk_code')->nullable();
+            $table->bigInteger('display_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -16,6 +16,7 @@ class CreateBooksTable extends Migration
         Schema::create('bk2_0_books', function (Blueprint $table) {
             $table->uuid('book_id')->primary();
             $table->string('book_name');
+            $table->bigInteger('display_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

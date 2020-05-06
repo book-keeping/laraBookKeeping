@@ -19,6 +19,7 @@ class CreateSlipGroupsTable extends Migration
             $table->foreign('book_id')->references('book_id')->on('bk2_0_books');
             $table->string('slip_group_outline', 200);
             $table->string('slip_group_memo', 500)->nullable();
+            $table->bigInteger('display_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

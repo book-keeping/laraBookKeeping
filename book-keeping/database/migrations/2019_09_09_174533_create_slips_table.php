@@ -21,6 +21,7 @@ class CreateSlipsTable extends Migration
             $table->string('slip_memo', 500)->nullable();
             $table->date('date');
             $table->boolean('is_draft');
+            $table->bigInteger('display_order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
