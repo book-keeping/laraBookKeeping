@@ -97,6 +97,7 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
         $list = SlipEntry::select('slip_entry_id', 'slip_id', 'debit', 'credit', 'amount', 'client', 'outline')
             ->where('slip_id', $slipId)
             ->orderBy('created_at')
+            ->orderBy('display_order')
             ->get()->toArray();
 
         return $list;
@@ -144,6 +145,9 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
                 'outline'
             )
             ->orderBy('date')
+            ->orderBy('bk2_0_slip_entries.created_at')
+            ->orderBy('bk2_0_slips.display_order')
+            ->orderBy('bk2_0_slip_entries.display_order')
             ->get()->toArray();
 
         return $list;
