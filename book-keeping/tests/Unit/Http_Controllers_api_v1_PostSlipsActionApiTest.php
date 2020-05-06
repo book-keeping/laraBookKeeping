@@ -37,11 +37,12 @@ class Http_Controllers_api_v1_PostSlipsActionApiTest extends TestCase
             'date'    => '2020-01-01',
             'entries' => [
                 [
-                    'debit'   => $accountId_1,
-                    'credit'  => $accountId_2,
-                    'amount'  => 380,
-                    'client'  => 'client39',
-                    'outline' => 'outline40',
+                    'debit'         => $accountId_1,
+                    'credit'        => $accountId_2,
+                    'amount'        => 380,
+                    'client'        => 'client39',
+                    'outline'       => 'outline40',
+                    'display_order' => 0,
                 ],
             ],
             'memo' => 'memo43',

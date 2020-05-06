@@ -105,7 +105,7 @@ class DataProvider_Eloquent_SlipEntryRepositoryTest extends DataProvider_SlipEnt
         $outline = 'outline1';
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $slipEntryId = $this->slipEntry->create($slipId, $debit, $credit, $amount, $client, $outline);
+        $slipEntryId = $this->slipEntry->create($slipId, $debit, $credit, $amount, $client, $outline, null);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $this->assertDatabaseHas('bk2_0_slip_entries', [

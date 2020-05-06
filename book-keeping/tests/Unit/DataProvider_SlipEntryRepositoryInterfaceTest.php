@@ -33,9 +33,10 @@ abstract class DataProvider_SlipEntryRepositoryInterfaceTest extends TestCase
         $amount = 10000;
         $client = 'client1';
         $outline = 'outline1';
+        $displayOrder = 1;
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $slipEntryId = $this->slipEntry->create($slipId, $debit, $credit, $amount, $client, $outline);
+        $slipEntryId = $this->slipEntry->create($slipId, $debit, $credit, $amount, $client, $outline, $displayOrder);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $this->assertTrue(is_string($slipEntryId));

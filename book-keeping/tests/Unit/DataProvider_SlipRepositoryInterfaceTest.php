@@ -17,10 +17,11 @@ abstract class DataProvider_SlipRepositoryInterfaceTest extends TestCase
         $outline = 'outline1';
         $date = '2019-07-01';
         $memo = 'memo1';
+        $displayOrder = 1;
         $isDraft = true;
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $slipId = $this->slip->create($bookId, $outline, $date, $memo, $isDraft);
+        $slipId = $this->slip->create($bookId, $outline, $date, $memo, $displayOrder, $isDraft);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $this->assertTrue(is_string($slipId));
@@ -37,7 +38,7 @@ abstract class DataProvider_SlipRepositoryInterfaceTest extends TestCase
         $isDraft = true;
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $slipId = $this->slip->create($bookId, $outline, $date, null, $isDraft);
+        $slipId = $this->slip->create($bookId, $outline, $date, null, null, $isDraft);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $this->assertTrue(is_string($slipId));
