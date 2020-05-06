@@ -41,14 +41,19 @@ class SlipService
      * @param string $date
      * @param array  $entries
      * @param string $memo
+     * @param string $displayOrder
      *
      * @return string $slipId
      */
-    public function createSlipAsDraft(string $bookId, string $outline, string $date, array $entries, string $memo = null): string
+    public function createSlipAsDraft(string $bookId, string $outline, string $date, array $entries, string $memo = null, int $displayOrder = null): string
     {
-        $slipId = $this->slip->create($bookId, $outline, $date, $memo, true);
+        $slipId = $this->slip->create($bookId, $outline, $date, $memo, $displayOrder, true);
         foreach ($entries as &$entry) {
-            $this->slipEntry->create($slipId, $entry['debit'], $entry['credit'], $entry['amount'], $entry['client'], $entry['outline']);
+            $slipEntryDisplayOrder = null;
+            if (array_key_exists('display_order', $entry)) {
+                $slipEntryDisplayOrder = $entry['display_order'];
+            }
+            $this->slipEntry->create($slipId, $entry['debit'], $entry['credit'], $entry['amount'], $entry['client'], $entry['outline'], $slipEntryDisplayOrder);
         }
 
         return $slipId;
@@ -63,12 +68,13 @@ class SlipService
      * @param int    $amount
      * @param string $client
      * @param string $outline
+     * @param int    $displayOrder
      *
      * @return string $slipEntryId
      */
-    public function createSlipEntry(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline): string
+    public function createSlipEntry(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline, int $displayOrder = null): string
     {
-        return $this->slipEntry->create($slipId, $debit, $credit, $amount, $client, $outline);
+        return $this->slipEntry->create($slipId, $debit, $credit, $amount, $client, $outline, $displayOrder);
     }
 
     /**

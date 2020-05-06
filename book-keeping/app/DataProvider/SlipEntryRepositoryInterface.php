@@ -24,10 +24,11 @@ interface SlipEntryRepositoryInterface
      * @param int    $amount
      * @param string $client
      * @param string $outline
+     * @param int    $displayOrder
      *
      * @return string $slipEntryId
      */
-    public function create(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline): string;
+    public function create(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline, ?int $displayOrder): string;
 
     /**
      * Delete the specified slip entry.

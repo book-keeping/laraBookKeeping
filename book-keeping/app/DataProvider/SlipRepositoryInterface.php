@@ -11,11 +11,12 @@ interface SlipRepositoryInterface
      * @param string $outline
      * @param string $date
      * @param string $memo
+     * @param int    $displayOrder
      * @param bool   $isDraft
      *
      * @return string $slipId
      */
-    public function create(string $bookId, string $outline, string $date, $memo, bool $isDraft): string;
+    public function create(string $bookId, string $outline, string $date, $memo, ?int $displayOrder, bool $isDraft): string;
 
     /**
      * Delete the specified slip.
