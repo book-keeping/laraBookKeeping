@@ -45,7 +45,11 @@ class PostSlipsActionApi extends AuthenticatedBookKeepingActionApi
         $result = $this->validateAndTrimDraftSlip($request->all(), $accounts);
         if ($result['success']) {
             $slip = $result['slip'];
-            $slipId = $this->BookKeeping->createSlip($slip['outline'], $slip['date'], $slip['entries'], $slip['memo']);
+            foreach ($slip['entries'] as $index => $slipEntry) {
+                $slipEntry['display_order'] = $index;
+                $slipEntries[] = $slipEntry;
+            }
+            $slipId = $this->BookKeeping->createSlip($slip['outline'], $slip['date'], $slipEntries, $slip['memo']);
             $context['slips'] = $this->BookKeeping->retrieveSlip($slipId);
             $response = $this->responder->response($context);
         } else {

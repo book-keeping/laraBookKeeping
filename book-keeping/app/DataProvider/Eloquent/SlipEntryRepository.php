@@ -53,10 +53,11 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
      * @param int    $amount
      * @param string $client
      * @param string $outline
+     * @param int    $displayOrder
      *
      * @return string $slipEntryId
      */
-    public function create(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline): string
+    public function create(string $slipId, string $debit, string $credit, int $amount, string $client, string $outline, ?int $displayOrder): string
     {
         $slipEntry = new SlipEntry();
         $slipEntry->slip_id = $slipId;
@@ -65,6 +66,7 @@ class SlipEntryRepository implements SlipEntryRepositoryInterface
         $slipEntry->amount = $amount;
         $slipEntry->client = $client;
         $slipEntry->outline = $outline;
+        $slipEntry->display_order = $displayOrder;
         $slipEntry->save();
 
         return $slipEntry->slip_entry_id;
