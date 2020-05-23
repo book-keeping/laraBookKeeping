@@ -34,13 +34,14 @@ class AccountsJsonResponder extends BaseJsonResponder
         $account_list = [];
 
         foreach ($accounts as $accountId => $accountItem) {
+            $isCurrent = ($accountItem['is_current'] == 0) ? false : true;
             $account_list[] = [
                 'id'          => $accountId,
                 'title'       => $accountItem['account_title'],
                 'description' => $accountItem['description'],
                 'group'       => $accountItem['account_group_id'],
                 'group_title' => $accountItem['account_group_title'],
-                'is_current'  => $accountItem['is_current'],
+                'is_current'  => $isCurrent,
                 'type'        => $accountItem['account_type'],
             ];
         }
