@@ -12,8 +12,8 @@
                 @csrf
                     <tr>
                         <td class="intop">
-                            From: <input value="{{{ $beginning_date }}}" size="14" name="BEGINNING" type="text" /> 
-                            To: <input value="{{{ $end_date }}}" size="14" name="END" type="text" />
+                            {{ __('From') }} <input value="{{{ $beginning_date }}}" size="14" name="BEGINNING" type="text" /> &nbsp;&nbsp;
+                            {{ __('To') }} <input value="{{{ $end_date }}}" size="14" name="END" type="text" />
                             <input name="buttons[OK]" value="OK" type="submit" />
                         </td>
                     </tr>
@@ -27,7 +27,7 @@
                 <table>
                     <tr>
                         <td colspan="2">
-                            <b>{{ __("Accounting period") }} {{ __("From:") }}{{{ $beginning_date }}} {{ __("To:") }}{{{ $end_date }}}</b>
+                            <b>{{ __('Accounting period') }} &nbsp;&nbsp;{{ __('From') }}: {{{ $beginning_date }}} &nbsp;&nbsp;{{ __('To') }}: {{{ $end_date }}}</b>
                         </td>
                     </tr>
                     <tr>

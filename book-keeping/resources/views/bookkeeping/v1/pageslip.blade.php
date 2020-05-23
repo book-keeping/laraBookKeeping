@@ -11,11 +11,11 @@
                     <form method="POST" action="{{ route('v1_slip') }}">
                     @csrf
                         <tr>
-                            <td class="intop">{{ __('Debit') }}:</td>
-                            <td class="intop">{{ __('Client') }}:</td>
-                            <td class="intop">{{ __('Outline') }}:</td>
-                            <td class="intop">{{ __('Credit') }}:</td>
-                            <td class="intop">{{ __('Amount') }}:</td>
+                            <td class="intop">{{ __('Debit') }}</td>
+                            <td class="intop">{{ __('Client') }}</td>
+                            <td class="intop">{{ __('Outline') }}</td>
+                            <td class="intop">{{ __('Credit') }}</td>
+                            <td class="intop">{{ __('Amount') }}</td>
                             <td></td>
                         </tr>
                         <tr>
