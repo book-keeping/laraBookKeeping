@@ -12,13 +12,13 @@
                     <table>
                         <tr>
                             <td class="intop">
-                                {{ __('From:') }} <input value="{{ $beginning_date }}" size="14" name="BEGINNING" type="text" />
-                                {{ __('To:') }} <input value="{{ $end_date }}" size="14" name="END" type="text" />
+                                {{ __('From') }} <input value="{{ $beginning_date }}" size="14" name="BEGINNING" type="text" />&nbsp;&nbsp;
+                                {{ __('To') }} <input value="{{ $end_date }}" size="14" name="END" type="text" />
                             </td>
                         </tr>
                         <tr>
                             <td class="intop">
-                                {{ __('Debit') }}: <select name="debit">
+                                {{ __('Debit') }} <select name="debit">
                                     <option value="0"></option>
                                     @foreach ($account_title_list as $account_key => $account_title)
                                     @if ($debit == $account_key)
@@ -27,21 +27,22 @@
                                     <option value="{{ $account_key }}">{{ $account_title }}</option>
                                     @endif
                                     @endforeach
-                                </select>
+                                </select>&nbsp;&nbsp;
                                 [
                                 @if ($and_or == 'and')
                                 <input name="ANDOR" value="and" type="radio" checked/>
                                 @else
                                 <input name="ANDOR" value="and" type="radio" />
                                 @endif
-                                {{ __('And') }} /
+                                and /
                                 @if ($and_or == 'or')
                                 <input name="ANDOR" value="or"  type="radio" checked/>
                                 @else
                                 <input name="ANDOR" value="or"  type="radio" />
                                 @endif
-                                {{ __('Or') }}]
-                                {{ __('Credit') }}: <select name="credit">
+                                or
+                                ]&nbsp;&nbsp;
+                                {{ __('Credit') }} <select name="credit">
                                     <option value="0"></option>
                                     @foreach ($account_title_list as $account_key => $account_title)
                                     @if ($credit == $account_key)
@@ -55,7 +56,7 @@
                         </tr>
                         <tr>
                             <td class="intop">
-                                {{ __('Keyword') }}: <input value="{{ $keyword }}" size="24" name="KEYWORD" type="text" />
+                                {{ __('Keyword') }} <input value="{{ $keyword }}" size="24" name="KEYWORD" type="text" />
                             </td>
                         </tr>
                         <tr>
