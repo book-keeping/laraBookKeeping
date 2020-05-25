@@ -11,7 +11,7 @@
                 <div class="text-right">
                     <form method="POST" action="{{ route('settings_tokens') }}">
                         @csrf
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-success">
                             {{ __('Generate new token') }}
                         </button>
                     </form>
