@@ -19,6 +19,9 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/settings', function () {
+    return redirect()->route('settings_tokens');
+})->name('settings');
 Route::match(['get', 'post', 'delete'], '/settings/tokens', Settings\UpdateAccessTokenActionHTML::class)->name('settings_tokens');
 
 Route::get('/page/v1/top', v1\ShowTopActionHTML::class)->name('v1_top');
