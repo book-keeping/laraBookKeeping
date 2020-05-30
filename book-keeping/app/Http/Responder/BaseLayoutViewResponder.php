@@ -32,4 +32,16 @@ class BaseLayoutViewResponder
         $this->response = $response;
         $this->view = $view;
     }
+
+    /**
+     * List of links for dropdown menu in page header.
+     *
+     * @return array
+     */
+    public function dropdownMenuLinks(): array
+    {
+        return [
+            ['link' => 'v1_top', 'caption' => __('Switch to Previous version')],
+        ];
+    }
 }
