@@ -25,6 +25,7 @@ class UpdateAccessTokenViewResponder extends SettingsViewResponder
             $message_for_no_token = __('There is no token available.');
         }
         $this->response->setContent($this->view->make('settings.accesstokens', [
+            'dropdownmenuLinks'     => $this->dropdownMenuLinks(),
             'selflinkname'          => 'settings_tokens',
             'settingnavilinks'      => $this->navilinks(),
             'message_for_new_token' => $message_for_new_token,

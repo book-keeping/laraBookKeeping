@@ -1,5 +1,7 @@
 @extends('settings.settings')
 
+@section('pagetitle', 'Personal access tokens')
+
 @section('settings_content')
 <div class="card">
     <div class="card-header">{{ __('Personal access tokens') }}</div>
