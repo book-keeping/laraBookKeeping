@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.bookkeeping')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid py-4">
     <div class="row justify-content-center">
         <div class="col-md-12 col-lg-2 p-2">
             <ul class="nav flex-column bg-white border-top border-left border-right">

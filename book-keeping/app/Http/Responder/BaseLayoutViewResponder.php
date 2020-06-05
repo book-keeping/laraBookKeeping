@@ -42,6 +42,7 @@ class BaseLayoutViewResponder
     {
         return [
             ['link' => 'v1_top', 'caption' => __('Switch to Previous version')],
+            ['link' => 'settings', 'caption' => __('Settings')],
         ];
     }
 }
