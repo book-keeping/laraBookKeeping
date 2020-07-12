@@ -45,6 +45,6 @@ jobs:
       - run: mysql -h 127.0.0.1 -u root -e "create database testing_circleci;"
       # run tests with phpunit or codecept
       - run:
-          command: vendor/bin/phpunit --coverage-clover ../build/logs/clover.xml
+          command: vendor/bin/phpunit -d memory_limit=512M --coverage-clover ../build/logs/clover.xml
           working_directory: ~/laraBookKeeping/book-keeping
       - run: php book-keeping/vendor/bin/php-coveralls -vvv
