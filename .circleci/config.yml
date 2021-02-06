@@ -23,6 +23,11 @@ jobs:
             sudo -E docker-php-ext-install pdo_mysql
             sudo apt update
             sudo apt install -y default-mysql-client
+      - run:
+          name: Install Composer 1.x
+          command: |
+            sudo curl -sS -o /usr/local/bin/composer https://getcomposer.org/composer-1.phar
+            sudo chmod a+x /usr/local/bin/composer
       # Download and cache dependencies
       - restore_cache:
           keys:
