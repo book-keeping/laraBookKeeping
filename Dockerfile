@@ -15,8 +15,8 @@ RUN docker-php-ext-install pdo_mysql
 
 # Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
+RUN curl -sS -o /usr/local/bin/composer https://getcomposer.org/composer-1.phar \
+    && chmod a+x /usr/local/bin/composer
 
 # Copy the code of BookKeeping
 COPY ./book-keeping /var/book-keeping
