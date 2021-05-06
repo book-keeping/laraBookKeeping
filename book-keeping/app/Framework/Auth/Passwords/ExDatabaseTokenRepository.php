@@ -26,6 +26,7 @@ class ExDatabaseTokenRepository extends DatabaseTokenRepository
      * @param string                                   $hashKey
      * @param string                                   $index_name
      * @param int                                      $expires
+     * @param int                                      $throttle
      *
      * @return void
      */
@@ -35,13 +36,15 @@ class ExDatabaseTokenRepository extends DatabaseTokenRepository
         $table,
         $hashKey,
         $index_name,
-        $expires = 60
+        $expires = 60,
+        $throttle = 60
     ) {
         $this->table = $table;
         $this->hasher = $hasher;
         $this->hashKey = $hashKey;
         $this->expires = $expires * 60;
         $this->connection = $connection;
+        $this->throttle = $throttle;
         $this->index_name = $index_name;
     }
 
@@ -111,5 +114,22 @@ class ExDatabaseTokenRepository extends DatabaseTokenRepository
         return $record &&
                !$this->tokenExpired($record['created_at']) &&
                  $this->hasher->check($token, $record['token']);
+    }
+
+    /**
+     * Determine if the given user recently created a password reset token.
+     *
+     * @param \Illuminate\Contracts\Auth\CanResetPassword $user
+     *
+     * @return bool
+     */
+    public function recentlyCreatedToken(CanResetPasswordContract $user)
+    {
+        $record = (array) $this->getTable()->where(
+            $this->index_name,
+            $user->getIndexForPasswordReset($this->index_name)
+        )->first();
+
+        return $record && $this->tokenRecentlyCreated($record['created_at']);
     }
 }

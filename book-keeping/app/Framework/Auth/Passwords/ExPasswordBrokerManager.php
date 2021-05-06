@@ -30,7 +30,8 @@ class ExPasswordBrokerManager extends PasswordBrokerManager
             $config['table'],
             $key,
             $config['index_name'],
-            $config['expire']
+            $config['expire'],
+            $config['throttle'] ?? 0
         );
     }
 }
